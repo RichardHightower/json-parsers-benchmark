@@ -40,7 +40,7 @@ public class BoonBenchmark {
 
     private Object parse(byte[] bytes) throws Exception {
         char[] chars = getChars(new String(bytes, StandardCharsets.UTF_8));
-        return JsonParser.fullParseMap(chars);
+        return JsonParser.parseMap(chars);
     }
 
     @GenerateMicroBenchmark
