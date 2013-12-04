@@ -41,11 +41,11 @@ public class JsonSmartBenchmark {
         return new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE).parse(bytes);
     }
 
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
-    public void actionLabel(BlackHole bh) throws Exception {
-        bh.consume(parse(ACTION_LABEL_BYTES));
-    }
+//    @GenerateMicroBenchmark
+//    @OutputTimeUnit(TimeUnit.SECONDS)
+//    public void actionLabel(BlackHole bh) throws Exception {
+//        bh.consume(parse(ACTION_LABEL_BYTES));
+//    }
 
     @GenerateMicroBenchmark
     @OutputTimeUnit(TimeUnit.SECONDS)
@@ -53,39 +53,39 @@ public class JsonSmartBenchmark {
         bh.consume(parse(CITM_CATALOG_BYTES));
     }
 
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
-    public void medium(BlackHole bh) throws Exception {
-        bh.consume(parse(MEDIUM_BYTES));
-    }
-
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
-    public void menu(BlackHole bh) throws Exception {
-        bh.consume(parse(MENU_BYTES));
-    }
-
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
-    public void sgml(BlackHole bh) throws Exception {
-        bh.consume(parse(SGML_BYTES));
-    }
-
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
-    public void small(BlackHole bh) throws Exception {
-        bh.consume(parse(SMALL_BYTES));
-    }
-
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
-    public void webxml(BlackHole bh) throws Exception {
-        bh.consume(parse(WEBXML_BYTES));
-    }
-
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
-    public void widget(BlackHole bh) throws Exception {
-        bh.consume(parse(WIDGET_BYTES));
-    }
+//    @GenerateMicroBenchmark
+//    @OutputTimeUnit(TimeUnit.SECONDS)
+//    public void medium(BlackHole bh) throws Exception {
+//        bh.consume(parse(MEDIUM_BYTES));
+//    }
+//
+//    @GenerateMicroBenchmark
+//    @OutputTimeUnit(TimeUnit.SECONDS)
+//    public void menu(BlackHole bh) throws Exception {
+//        bh.consume(parse(MENU_BYTES));
+//    }
+//
+//    @GenerateMicroBenchmark
+//    @OutputTimeUnit(TimeUnit.SECONDS)
+//    public void sgml(BlackHole bh) throws Exception {
+//        bh.consume(parse(SGML_BYTES));
+//    }
+//
+//    @GenerateMicroBenchmark
+//    @OutputTimeUnit(TimeUnit.SECONDS)
+//    public void small(BlackHole bh) throws Exception {
+//        bh.consume(parse(SMALL_BYTES));
+//    }
+//
+//    @GenerateMicroBenchmark
+//    @OutputTimeUnit(TimeUnit.SECONDS)
+//    public void webxml(BlackHole bh) throws Exception {
+//        bh.consume(parse(WEBXML_BYTES));
+//    }
+//
+//    @GenerateMicroBenchmark
+//    @OutputTimeUnit(TimeUnit.SECONDS)
+//    public void widget(BlackHole bh) throws Exception {
+//        bh.consume(parse(WIDGET_BYTES));
+//    }
 }
