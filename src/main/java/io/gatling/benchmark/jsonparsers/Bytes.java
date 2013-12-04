@@ -17,7 +17,7 @@ public class Bytes {
 
     private static byte[] readBytes(String path) {
         try {
-            return IOUtils.toByteArray(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/medium.json"));
+            return IOUtils.toByteArray(Thread.currentThread().getContextClassLoader().getResourceAsStream(path));
         } catch (IOException e) {
             throw new ExceptionInInitializerError(e);
         }

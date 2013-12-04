@@ -4,7 +4,7 @@
 
 Jackson and regular Boon are basically equivalent, Boon being slighly faster.
 
-BoonOverlay delays value parsing, so it's promissing if you're only interested in a small part of your JSON tree.
+BoonOverlay delays value parsing, so it's promising if you're only interested in a small part of your JSON tree.
 
 ## How to
 
