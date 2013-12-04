@@ -20,7 +20,7 @@ BoonOverlay delays value parsing, so it's promising if you're only interested in
 
 Build with `mvn clean package`
 
-Run with `java -jar target/microbenchmarks.jar ".*" -wi 5 -r 2 -i 5 -f 1 -t 8`
+Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
 
 ## Figures
 
@@ -31,66 +31,66 @@ Here are the results on my machine:
 * Intel Core i7 2,7 GHz
 
 Benchmark                                     Mode Thr     Count  Sec         Mean   Mean error    Units
-BoonOverlayBenchmark.actionLabel             thrpt   8         5    2  1068294,827     5601,188    ops/s
-BoonOverlayUseValuesBenchmark.actionLabel    thrpt   8         5    2  1064954,287    13579,677    ops/s
-BoonBenchmark.actionLabel                    thrpt   8         5    2   823934,387   100451,180    ops/s
-JacksonASTBenchmark.actionLabel              thrpt   8         5    2   669864,977    30823,709    ops/s
-JacksonObjectBenchmark.actionLabel           thrpt   8         5    2   633946,047     7543,007    ops/s
-JsonSmartBenchmark.actionLabel               thrpt   8         5    2   587014,007    52624,797    ops/s
-GSONBenchmark.actionLabel                    thrpt   8         5    2   485704,213     8755,187    ops/s
+BoonOverlayUseValuesBenchmark.actionLabel    thrpt   8         5    2  1062961,957    46121,726    ops/s
+BoonOverlayBenchmark.actionLabel             thrpt   8         5    2  1020327,587    71035,655    ops/s
+BoonBenchmark.actionLabel                    thrpt   8         5    2   866659,787    81312,219    ops/s
+JacksonASTBenchmark.actionLabel              thrpt   8         5    2   657474,827    21224,877    ops/s
+JsonSmartBenchmark.actionLabel               thrpt   8         5    2   607153,890    34306,642    ops/s
+JacksonObjectBenchmark.actionLabel           thrpt   8         5    2   584123,507    76015,668    ops/s
+GSONBenchmark.actionLabel                    thrpt   8         5    2   465000,087    41854,192    ops/s
 
-JacksonObjectBenchmark.citmCatalog           thrpt   8         5    2      538,430       24,877    ops/s
-JacksonASTBenchmark.citmCatalog              thrpt   8         5    2      507,720       26,056    ops/s
-GSONBenchmark.citmCatalog                    thrpt   8         5    2      503,147       27,695    ops/s
-JsonSmartBenchmark.citmCatalog               thrpt   8         5    2      448,437       83,213    ops/s
-BoonOverlayUseValuesBenchmark.citmCatalog    thrpt   8         5    2      391,643       20,264    ops/s
-BoonOverlayBenchmark.citmCatalog             thrpt   8         5    2      373,130       61,214    ops/s
-BoonBenchmark.citmCatalog                    thrpt   8         5    2      341,950       13,474    ops/s
+JacksonObjectBenchmark.citmCatalog           thrpt   8         5    2      523,747       75,108    ops/s
+JacksonASTBenchmark.citmCatalog              thrpt   8         5    2      505,293       76,214    ops/s
+GSONBenchmark.citmCatalog                    thrpt   8         5    2      493,313       48,052    ops/s
+JsonSmartBenchmark.citmCatalog               thrpt   8         5    2      466,147       47,255    ops/s
+BoonOverlayBenchmark.citmCatalog             thrpt   8         5    2      365,973       97,886    ops/s
+BoonBenchmark.citmCatalog                    thrpt   8         5    2      350,973       58,406    ops/s
+BoonOverlayUseValuesBenchmark.citmCatalog    thrpt   8         5    2      339,557       62,196    ops/s
 
-BoonOverlayBenchmark.medium                  thrpt   8         5    2   694742,400    55116,165    ops/s
-BoonOverlayUseValuesBenchmark.medium         thrpt   8         5    2   674185,747    50935,106    ops/s
-BoonBenchmark.medium                         thrpt   8         5    2   487278,430    12214,492    ops/s
-JacksonASTBenchmark.medium                   thrpt   8         5    2   437368,343    11441,632    ops/s
-JacksonObjectBenchmark.medium                thrpt   8         5    2   424664,777    43412,785    ops/s
-JsonSmartBenchmark.medium                    thrpt   8         5    2   365513,400    31685,541    ops/s
-GSONBenchmark.medium                         thrpt   8         5    2   304126,100    31500,907    ops/s
+BoonOverlayBenchmark.medium                  thrpt   8         5    2   677838,777    19785,286    ops/s
+BoonOverlayUseValuesBenchmark.medium         thrpt   8         5    2   677217,327    19138,809    ops/s
+BoonBenchmark.medium                         thrpt   8         5    2   472803,637    32543,489    ops/s
+JacksonASTBenchmark.medium                   thrpt   8         5    2   423047,263    30355,190    ops/s
+JacksonObjectBenchmark.medium                thrpt   8         5    2   428952,800    13490,733    ops/s
+JsonSmartBenchmark.medium                    thrpt   8         5    2   372056,543    47864,022    ops/s
+GSONBenchmark.medium                         thrpt   8         5    2   315321,577    19551,929    ops/s
 
-BoonOverlayBenchmark.menu                    thrpt   8         5    2  3344725,563   220739,049    ops/s
-BoonOverlayUseValuesBenchmark.menu           thrpt   8         5    2  3271076,737   146237,691    ops/s
-BoonBenchmark.menu                           thrpt   8         5    2  2433783,297   196748,652    ops/s
-JacksonASTBenchmark.menu                     thrpt   8         5    2  1971944,700    66832,674    ops/s
-JsonSmartBenchmark.menu                      thrpt   8         5    2  1914820,760   117082,888    ops/s
-JacksonObjectBenchmark.menu                  thrpt   8         5    2  1861000,550    55140,905    ops/s
-GSONBenchmark.menu                           thrpt   8         5    2   846423,570    60840,691    ops/s
+BoonOverlayUseValuesBenchmark.menu           thrpt   8         5    2  3315182,003   320620,709    ops/s
+BoonOverlayBenchmark.menu                    thrpt   8         5    2  3235793,937   225455,764    ops/s
+BoonBenchmark.menu                           thrpt   8         5    2  2490420,853   123599,184    ops/s
+JacksonASTBenchmark.menu                     thrpt   8         5    2  1946907,660   174405,812    ops/s
+JsonSmartBenchmark.menu                      thrpt   8         5    2  1877384,597    95945,398    ops/s
+JacksonObjectBenchmark.menu                  thrpt   8         5    2  1820128,510    65374,528    ops/s
+GSONBenchmark.menu                           thrpt   8         5    2   830056,570    86771,148    ops/s
 
-BoonOverlayUseValuesBenchmark.sgml           thrpt   8         5    2  1956326,197    85282,700    ops/s
-BoonOverlayBenchmark.sgml                    thrpt   8         5    2  1946052,680   150570,081    ops/s
-BoonBenchmark.sgml                           thrpt   8         5    2  1391541,897    43746,545    ops/s
-JacksonASTBenchmark.sgml                     thrpt   8         5    2  1243308,097    39304,806    ops/s
-JacksonObjectBenchmark.sgml                  thrpt   8         5    2  1091648,117    94900,960    ops/s
-JsonSmartBenchmark.sgml                      thrpt   8         5    2  1010991,047   135997,355    ops/s
-GSONBenchmark.sgml                           thrpt   8         5    2   735690,060    44579,995    ops/s
+BoonOverlayUseValuesBenchmark.sgml           thrpt   8         5    2  1925716,883   207260,636    ops/s
+BoonOverlayBenchmark.sgml                    thrpt   8         5    2  1902968,240    54084,994    ops/s
+BoonBenchmark.sgml                           thrpt   8         5    2  1362402,113    53022,432    ops/s
+JacksonASTBenchmark.sgml                     thrpt   8         5    2  1217097,047    81860,969    ops/s
+JacksonObjectBenchmark.sgml                  thrpt   8         5    2  1149081,437    81725,863    ops/s
+JsonSmartBenchmark.sgml                      thrpt   8         5    2   974234,527   163274,791    ops/s
+GSONBenchmark.sgml                           thrpt   8         5    2   747821,627    54873,413    ops/s
 
-BoonOverlayUseValuesBenchmark.small          thrpt   8         5    2 17128129,157   375964,177    ops/s
-BoonOverlayBenchmark.small                   thrpt   8         5    2 17046853,847   485384,021    ops/s
-BoonBenchmark.small                          thrpt   8         5    2 11262531,033   516444,319    ops/s
-JacksonASTBenchmark.small                    thrpt   8         5    2  8806269,483   787799,796    ops/s
-JsonSmartBenchmark.small                     thrpt   8         5    2  7857383,170   258983,499    ops/s
-JacksonObjectBenchmark.small                 thrpt   8         5    2  3482681,697   259746,915    ops/s
-GSONBenchmark.small                          thrpt   8         5    2  1245247,570    55684,511    ops/s
+BoonOverlayUseValuesBenchmark.small          thrpt   8         5    2 17041602,563   909497,356    ops/s
+BoonOverlayBenchmark.small                   thrpt   8         5    2 16908584,157   993726,047    ops/s
+BoonBenchmark.small                          thrpt   8         5    2 11091223,857   435660,786    ops/s
+JacksonASTBenchmark.small                    thrpt   8         5    2  8614927,580   963332,534    ops/s
+JsonSmartBenchmark.small                     thrpt   8         5    2  8162157,220   378917,273    ops/s
+JacksonObjectBenchmark.small                 thrpt   8         5    2  3538664,207    97811,901    ops/s
+GSONBenchmark.small                          thrpt   8         5    2  1287765,810    24477,291    ops/s
 
-BoonOverlayBenchmark.webxml                  thrpt   8         5    2   373443,407    20000,912    ops/s
-BoonOverlayUseValuesBenchmark.webxml         thrpt   8         5    2   356831,263     9256,476    ops/s
-BoonBenchmark.webxml                         thrpt   8         5    2   253886,783     9789,672    ops/s
-JacksonObjectBenchmark.webxml                thrpt   8         5    2   223812,533     8046,606    ops/s
-JacksonASTBenchmark.webxml                   thrpt   8         5    2   208272,520    11278,966    ops/s
-JsonSmartBenchmark.webxml                    thrpt   8         5    2   179489,020     6043,467    ops/s
-GSONBenchmark.webxml                         thrpt   8         5    2   151219,670    10214,736    ops/s
+BoonOverlayBenchmark.webxml                  thrpt   8         5    2   366903,577    12639,355    ops/s
+BoonOverlayUseValuesBenchmark.webxml         thrpt   8         5    2   353483,927    20062,405    ops/s
+BoonBenchmark.webxml                         thrpt   8         5    2   246991,500    15948,107    ops/s
+JacksonObjectBenchmark.webxml                thrpt   8         5    2   223489,673    10302,025    ops/s
+JacksonASTBenchmark.webxml                   thrpt   8         5    2   214008,963    38140,989    ops/s
+JsonSmartBenchmark.webxml                    thrpt   8         5    2   199469,593    15809,418    ops/s
+GSONBenchmark.webxml                         thrpt   8         5    2   152600,343    20934,888    ops/s
 
-BoonOverlayBenchmark.widget                  thrpt   8         5    2  1919098,073   125247,468    ops/s
-BoonOverlayUseValuesBenchmark.widget         thrpt   8         5    2  1916807,237   147873,153    ops/s
-BoonBenchmark.widget                         thrpt   8         5    2  1260125,100    24488,355    ops/s
-JacksonASTBenchmark.widget                   thrpt   8         5    2  1090080,720    97876,014    ops/s
-JacksonObjectBenchmark.widget                thrpt   8         5    2  1045555,867    43791,297    ops/s
-JsonSmartBenchmark.widget                    thrpt   8         5    2   872514,167    67707,190    ops/s
-GSONBenchmark.widget                         thrpt   8         5    2   698191,337     7437,340    ops/s
+BoonOverlayUseValuesBenchmark.widget         thrpt   8         5    2  1916605,860   103995,415    ops/s
+BoonOverlayBenchmark.widget                  thrpt   8         5    2  1900958,443    69651,769    ops/s
+BoonBenchmark.widget                         thrpt   8         5    2  1187603,717    24366,161    ops/s
+JacksonASTBenchmark.widget                   thrpt   8         5    2  1108853,063    81942,792    ops/s
+JacksonObjectBenchmark.widget                thrpt   8         5    2  1031457,037    85314,738    ops/s
+JsonSmartBenchmark.widget                    thrpt   8         5    2   870911,923    11616,332    ops/s
+GSONBenchmark.widget                         thrpt   8         5    2   673113,010    38864,970    ops/s
