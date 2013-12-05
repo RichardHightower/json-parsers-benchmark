@@ -87,4 +87,9 @@ public class GSONBenchmark extends AbstractBenchmark {
     public void widget(BlackHole bh) throws Exception {
         super.widget(bh);
     }
+
+    @GenerateMicroBenchmark
+    public void roundRobin(ThreadState state, BlackHole bh) throws Exception {
+        super.roundRobin(state, bh);
+    }
 }

@@ -14,6 +14,8 @@ public class Bytes {
     public static final byte[] SMALL_BYTES = readBytes("data/small.json");
     public static final byte[] WEBXML_BYTES = readBytes("data/webxml.json");
     public static final byte[] WIDGET_BYTES = readBytes("data/widget.json");
+    
+    public static final byte[][] ALL_BYTES = {ACTION_LABEL_BYTES, MEDIUM_BYTES, MENU_BYTES, SGML_BYTES, SMALL_BYTES, WEBXML_BYTES, WIDGET_BYTES};
 
     private static byte[] readBytes(String path) {
         try {
