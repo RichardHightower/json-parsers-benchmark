@@ -24,6 +24,23 @@ Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
 
 ## Figures
 
+
+Don't like losing so I wrote a UTF-8 direct decoder.
+It is not done yet, but it works for most languages of the world.
+It needs some elbow grease.
+
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonUTF8BenchMark.citmCatalog                thrpt   8         5    1      452.143       64.105    ops/s
+i.g.b.j.JacksonASTBenchmark.citmCatalog              thrpt   8         5    1      375.823       94.691    ops/s
+i.g.b.j.GSONBenchmark.citmCatalog                    thrpt   8         5    1      360.707       50.222    ops/s
+i.g.b.j.JacksonObjectBenchmark.citmCatalog           thrpt   8         5    1      325.630      203.290    ops/s
+i.g.b.j.BoonOverlayBenchmark.citmCatalog             thrpt   8         5    1      303.947      110.573    ops/s
+i.g.b.j.BoonBenchmark.citmCatalog                    thrpt   8         5    1      293.320       78.960    ops/s
+i.g.b.j.JsonSmartBenchmark.citmCatalog               thrpt   8         5    1      286.890       51.478    ops/s
+i.g.b.j.BoonOverlayUseValuesBenchmark.citmCatalog    thrpt   8         5    1      275.387      102.080    ops/s
+```
+
 I reran after tightening the decodeValue loop a bit.
 
 ```

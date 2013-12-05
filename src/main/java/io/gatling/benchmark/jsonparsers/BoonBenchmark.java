@@ -26,21 +26,21 @@
 package io.gatling.benchmark.jsonparsers;
 
 import static io.gatling.benchmark.jsonparsers.Bytes.*;
-import static io.gatling.benchmark.util.UnsafeUtil.*;
-
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
 import org.boon.json.JsonParser;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.logic.BlackHole;
 
+@State
 public class BoonBenchmark {
 
+    private final JsonParser parser = new JsonParser ();
+
     private Object parse(byte[] bytes) throws Exception {
-        char[] chars = getChars(new String(bytes, StandardCharsets.UTF_8));
-        return JsonParser.parseMap(chars);
+        return parser.decode ( bytes );
     }
 
 //    @GenerateMicroBenchmark

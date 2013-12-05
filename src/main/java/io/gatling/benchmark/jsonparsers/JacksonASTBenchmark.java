@@ -26,7 +26,9 @@
 package io.gatling.benchmark.jsonparsers;
 
 import static io.gatling.benchmark.jsonparsers.Bytes.*;
+import static io.gatling.benchmark.util.UnsafeUtil.getChars;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
@@ -38,6 +40,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class JacksonASTBenchmark {
 
     private static final ObjectMapper JACKSON_MAPPER = new ObjectMapper();
+
+
 
     private Object parse(byte[] bytes) throws Exception {
         return JACKSON_MAPPER.readTree(bytes);
