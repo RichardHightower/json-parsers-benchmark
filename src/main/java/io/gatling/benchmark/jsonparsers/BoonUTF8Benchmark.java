@@ -26,22 +26,19 @@
 package io.gatling.benchmark.jsonparsers;
 
 import static io.gatling.benchmark.jsonparsers.Bytes.*;
-import static io.gatling.benchmark.util.UnsafeUtil.*;
 
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
-import org.boon.json.JsonIndexOverlayParser;
+import org.boon.json.JsonUTF8Parser;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.logic.BlackHole;
 
 @OutputTimeUnit(TimeUnit.SECONDS)
-public class BoonOverlayUseValuesBenchmark {
+public class BoonUTF8Benchmark {
 
     private Object parse(byte[] bytes) throws Exception {
-        char[] chars = getChars(new String(bytes, StandardCharsets.UTF_8));
-        return JsonIndexOverlayParser.parseMapUseValue(chars);
+        return JsonUTF8Parser.parseMap(bytes);
     }
 
     @GenerateMicroBenchmark
