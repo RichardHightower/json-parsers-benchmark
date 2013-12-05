@@ -41,6 +41,148 @@ i.g.b.j.JsonSmartBenchmark.citmCatalog               thrpt   8         5    1   
 i.g.b.j.BoonOverlayUseValuesBenchmark.citmCatalog    thrpt   8         5    1      275.387      102.080    ops/s
 ```
 
+(When I added more UTF processing, the parser got slower.)
+
+
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+
+i.g.b.j.UTF8BoonBenchMark.citmCatalog                thrpt   8         5    1      388.137      164.962    ops/s
+i.g.b.j.JacksonASTBenchmark.citmCatalog              thrpt   8         5    1      362.200       15.880    ops/s
+i.g.b.j.JacksonObjectBenchmark.citmCatalog           thrpt   8         5    1      344.530       19.037    ops/s
+i.g.b.j.GSONBenchmark.citmCatalog                    thrpt   8         5    1      330.493       16.969    ops/s
+i.g.b.j.BoonOverlayUseValuesBenchmark.citmCatalog    thrpt   8         5    1      293.547       14.697    ops/s
+i.g.b.j.BoonOverlayBenchmark.citmCatalog             thrpt   8         5    1      296.190       17.858    ops/s
+i.g.b.j.BoonBenchmark.citmCatalog                    thrpt   8         5    1      267.823      120.213    ops/s
+i.g.b.j.JsonSmartBenchmark.citmCatalog               thrpt   8         5    1      264.960       51.405    ops/s
+
+```
+Boon wins for large files (as long as you are using UTF-8).
+
+
+Boon 1st, 5th.
+
+Full run....
+
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+
+i.g.b.j.BoonOverlayUseValuesBenchmark.actionLabel    thrpt   8         5    1   700386.517    26057.289    ops/s
+i.g.b.j.BoonOverlayBenchmark.actionLabel             thrpt   8         5    1   687795.613    60328.627    ops/s
+i.g.b.j.BoonBenchmark.actionLabel                    thrpt   8         5    1   591279.377   217157.451    ops/s
+i.g.b.j.UTF8BoonBenchMark.actionLabel                thrpt   8         5    1   469742.763    94292.506    ops/s
+i.g.b.j.JacksonObjectBenchmark.actionLabel           thrpt   8         5    1   435435.813     1986.267    ops/s
+i.g.b.j.JacksonASTBenchmark.actionLabel              thrpt   8         5    1   435277.763    83070.620    ops/s
+i.g.b.j.JsonSmartBenchmark.actionLabel               thrpt   8         5    1   389862.850    21393.479    ops/s
+i.g.b.j.GSONBenchmark.actionLabel                    thrpt   8         5    1   334006.553     4034.842    ops/s
+
+```
+
+Boon comes in 1st, 2nd, 3rd, and 4th.
+
+actionLabel is a sample JSON file from json.org.
+
+
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.UTF8BoonBenchMark.medium                     thrpt   8         5    1   281333.790    40445.658    ops/s
+i.g.b.j.BoonOverlayUseValuesBenchmark.medium         thrpt   8         5    1   478665.880    15013.553    ops/s
+i.g.b.j.BoonOverlayBenchmark.medium                  thrpt   8         5    1   460493.740     6264.658    ops/s
+i.g.b.j.BoonBenchmark.medium                         thrpt   8         5    1   342462.600     6829.679    ops/s
+i.g.b.j.JacksonASTBenchmark.medium                   thrpt   8         5    1   299431.113     6196.001    ops/s
+i.g.b.j.JsonSmartBenchmark.medium                    thrpt   8         5    1   226984.033    19883.827    ops/s
+i.g.b.j.JacksonObjectBenchmark.medium                thrpt   8         5    1   281073.947    27209.735    ops/s
+i.g.b.j.GSONBenchmark.medium                         thrpt   8         5    1   170840.277    36009.590    ops/s
+```
+
+Boon comes in 1st, 2nd, 3rd, and 4th.
+
+medium is a sample JSON file from json.org.
+
+
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonOverlayUseValuesBenchmark.menu           thrpt   8         5    1  2202578.033   284081.834    ops/s
+i.g.b.j.BoonOverlayBenchmark.menu                    thrpt   8         5    1  2291626.220    70534.694    ops/s
+i.g.b.j.BoonBenchmark.menu                           thrpt   8         5    1  1665647.143   131866.242    ops/s
+i.g.b.j.JacksonASTBenchmark.menu                     thrpt   8         5    1  1495032.533    15397.196    ops/s
+i.g.b.j.UTF8BoonBenchMark.menu                       thrpt   8         5    1  1486328.550   773895.002    ops/s
+i.g.b.j.JsonSmartBenchmark.menu                      thrpt   8         5    1  1268697.987    45441.041    ops/s
+i.g.b.j.JacksonObjectBenchmark.menu                  thrpt   8         5    1  1304778.207    66882.043    ops/s
+i.g.b.j.GSONBenchmark.menu                           thrpt   8         5    1   704230.710    74884.076    ops/s
+```
+
+Boon comes in 1st, 2nd, and 3rd (and 5th).
+menu is a sample JSON file from json.org.
+
+
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonOverlayUseValuesBenchmark.sgml           thrpt   8         5    1  1332346.363    20730.967    ops/s
+i.g.b.j.BoonOverlayBenchmark.sgml                    thrpt   8         5    1  1189660.957   236957.554    ops/s
+i.g.b.j.BoonBenchmark.sgml                           thrpt   8         5    1   980327.000    50314.583    ops/s
+i.g.b.j.JacksonASTBenchmark.sgml                     thrpt   8         5    1   849571.953    32276.910    ops/s
+i.g.b.j.UTF8BoonBenchMark.sgml                       thrpt   8         5    1   842125.773   248563.659    ops/s
+i.g.b.j.JacksonObjectBenchmark.sgml                  thrpt   8         5    1   807085.117    42436.085    ops/s
+i.g.b.j.JsonSmartBenchmark.sgml                      thrpt   8         5    1   580780.117    90164.203    ops/s
+i.g.b.j.GSONBenchmark.sgml                           thrpt   8         5    1   519062.947   102652.691    ops/s
+```
+
+Boon comes 1st, 2nd, 3rd and 5th.
+
+
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonOverlayBenchmark.small                   thrpt   8         5    1 11088905.173   440024.225    ops/s
+i.g.b.j.BoonOverlayUseValuesBenchmark.small          thrpt   8         5    1 10993422.690   603981.371    ops/s
+i.g.b.j.UTF8BoonBenchMark.small                      thrpt   8         5    1 10654614.890   234500.853    ops/s
+i.g.b.j.BoonBenchmark.small                          thrpt   8         5    1  7530059.907   116605.772    ops/s
+i.g.b.j.JsonSmartBenchmark.small                     thrpt   8         5    1  6172540.803   124415.890    ops/s
+i.g.b.j.JacksonASTBenchmark.small                    thrpt   8         5    1  6553357.653    86596.741    ops/s
+i.g.b.j.JacksonObjectBenchmark.small                 thrpt   8         5    1  3134028.990     8574.558    ops/s
+i.g.b.j.GSONBenchmark.small                          thrpt   8         5    1  1024879.003    40824.852    ops/s
+```
+
+Boon is pretty damn fast. It comes in first four places by wide margins.
+10x faster than GSON.
+
+
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonOverlayBenchmark.webxml                  thrpt   8         5    1   249220.297    15737.331    ops/s
+i.g.b.j.BoonOverlayUseValuesBenchmark.webxml         thrpt   8         5    1   243986.650    15273.389    ops/s
+i.g.b.j.BoonBenchmark.webxml                         thrpt   8         5    1   172174.797     2376.368    ops/s
+i.g.b.j.UTF8BoonBenchMark.webxml                     thrpt   8         5    1   141293.230     9575.312    ops/s
+i.g.b.j.JsonSmartBenchmark.webxml                    thrpt   8         5    1   135640.167     1018.724    ops/s
+i.g.b.j.JacksonASTBenchmark.webxml                   thrpt   8         5    1   163216.223     2581.035    ops/s
+i.g.b.j.JacksonObjectBenchmark.webxml                thrpt   8         5    1   155777.900     9121.396    ops/s
+i.g.b.j.GSONBenchmark.webxml                         thrpt   8         5    1   115457.220     2131.953    ops/s
+```
+
+Boon comes in first 4 places.
+
+
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonOverlayBenchmark.widget                  thrpt   8         5    1  1214457.967    83969.895    ops/s
+i.g.b.j.BoonOverlayUseValuesBenchmark.widget         thrpt   8         5    1  1249334.607    51364.905    ops/s
+i.g.b.j.UTF8BoonBenchMark.widget                     thrpt   8         5    1   838309.223     2168.186    ops/s
+i.g.b.j.BoonBenchmark.widget                         thrpt   8         5    1   829675.247    94757.843    ops/s
+i.g.b.j.JacksonASTBenchmark.widget                   thrpt   8         5    1   783792.747    45841.043    ops/s
+i.g.b.j.JacksonObjectBenchmark.widget                thrpt   8         5    1   739040.463    23122.330    ops/s
+i.g.b.j.JsonSmartBenchmark.widget                    thrpt   8         5    1   593591.270     7663.080    ops/s
+i.g.b.j.GSONBenchmark.widget                         thrpt   8         5    1   495515.850    40145.539    ops/s
+```
+
+
+Boon comes in first 4 places.
+
+
+```
+
+
+Historical....
+
 I reran after tightening the decodeValue loop a bit.
 
 ```
