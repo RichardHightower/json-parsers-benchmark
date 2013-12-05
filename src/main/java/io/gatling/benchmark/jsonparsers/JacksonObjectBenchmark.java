@@ -25,8 +25,6 @@
 
 package io.gatling.benchmark.jsonparsers;
 
-import static io.gatling.benchmark.jsonparsers.Bytes.*;
-
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -37,51 +35,51 @@ import org.openjdk.jmh.logic.BlackHole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @OutputTimeUnit(TimeUnit.SECONDS)
-public class JacksonObjectBenchmark {
+public class JacksonObjectBenchmark extends AbstractBenchmark {
 
     private static final ObjectMapper JACKSON_MAPPER = new ObjectMapper();
 
-    private Object parse(byte[] bytes) throws Exception {
+    protected Object parse(byte[] bytes) throws Exception {
         return JACKSON_MAPPER.readValue(bytes, Map.class);
     }
 
     @GenerateMicroBenchmark
     public void actionLabel(BlackHole bh) throws Exception {
-        bh.consume(parse(ACTION_LABEL_BYTES));
+        super.actionLabel(bh);
     }
 
     @GenerateMicroBenchmark
     public void citmCatalog(BlackHole bh) throws Exception {
-        bh.consume(parse(CITM_CATALOG_BYTES));
+        super.citmCatalog(bh);
     }
 
     @GenerateMicroBenchmark
     public void medium(BlackHole bh) throws Exception {
-        bh.consume(parse(MEDIUM_BYTES));
+        super.medium(bh);
     }
 
     @GenerateMicroBenchmark
     public void menu(BlackHole bh) throws Exception {
-        bh.consume(parse(MENU_BYTES));
+        super.menu(bh);
     }
 
     @GenerateMicroBenchmark
     public void sgml(BlackHole bh) throws Exception {
-        bh.consume(parse(SGML_BYTES));
+        super.sgml(bh);
     }
 
     @GenerateMicroBenchmark
     public void small(BlackHole bh) throws Exception {
-        bh.consume(parse(SMALL_BYTES));
+        super.small(bh);
     }
 
     @GenerateMicroBenchmark
     public void webxml(BlackHole bh) throws Exception {
-        bh.consume(parse(WEBXML_BYTES));
+        super.webxml(bh);
     }
 
     @GenerateMicroBenchmark
     public void widget(BlackHole bh) throws Exception {
-        bh.consume(parse(WIDGET_BYTES));
+        super.widget(bh);
     }
 }
