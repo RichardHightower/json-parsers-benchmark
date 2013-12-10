@@ -26,9 +26,12 @@
 package io.gatling.benchmark.jsonparsers;
 
 import static io.gatling.benchmark.jsonparsers.Bytes.*;
+
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.boon.json.JsonParser;
+import org.boon.json.JsonParserFactory;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.State;
@@ -37,10 +40,10 @@ import org.openjdk.jmh.logic.BlackHole;
 @State
 public class BoonBenchmark {
 
-    private final JsonParser parser = new JsonParser ();
+    private final JsonParser parser = new JsonParserFactory ().create ();
 
     private Object parse(byte[] bytes) throws Exception {
-        return parser.decode ( bytes );
+        return parser.parse ( Map.class, bytes );
     }
 
     @GenerateMicroBenchmark

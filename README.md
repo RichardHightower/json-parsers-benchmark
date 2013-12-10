@@ -22,6 +22,79 @@ Build with `mvn clean package`
 
 Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
 
+
+12/9/2013
+
+```
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonBenchmark.actionLabel             thrpt   8         5    1   952181.033    49994.359    ops/s
+i.g.b.j.GSONBenchmark.actionLabel             thrpt   8         5    1   454655.750    38697.027    ops/s
+i.g.b.j.JacksonASTBenchmark.actionLabel       thrpt   8         5    1   687899.190    92115.124    ops/s
+i.g.b.j.JacksonObjectBenchmark.actionLabel    thrpt   8         5    1   631883.253    58187.074    ops/s
+i.g.b.j.JsonSmartBenchmark.actionLabel        thrpt   8         5    1   638245.510    28490.542    ops/s
+Winner boon
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonBenchmark.citmCatalog             thrpt   8         5    1      595.320      226.746    ops/s
+i.g.b.j.GSONBenchmark.citmCatalog             thrpt   8         5    1      519.460       67.587    ops/s
+i.g.b.j.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      522.447      132.712    ops/s
+i.g.b.j.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      560.960       70.337    ops/s
+i.g.b.j.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      498.567       20.052    ops/s
+Winner boon
+
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonBenchmark.medium                  thrpt   8         5    1   717076.143    66137.610    ops/s
+i.g.b.j.GSONBenchmark.medium                  thrpt   8         5    1   323030.350    28039.737    ops/s
+i.g.b.j.JacksonASTBenchmark.medium            thrpt   8         5    1   466943.663    40722.303    ops/s
+i.g.b.j.JacksonObjectBenchmark.medium         thrpt   8         5    1   452389.270    38322.667    ops/s
+i.g.b.j.JsonSmartBenchmark.medium             thrpt   8         5    1   385977.377    29823.120    ops/s
+Winner boon
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonBenchmark.menu                    thrpt   8         5    1  3160492.197   280592.358    ops/s
+i.g.b.j.GSONBenchmark.menu                    thrpt   8         5    1   821103.300    53954.500    ops/s
+i.g.b.j.JacksonASTBenchmark.menu              thrpt   8         5    1  2042108.620   208072.795    ops/s
+i.g.b.j.JacksonObjectBenchmark.menu           thrpt   8         5    1  1880851.927   222762.253    ops/s
+i.g.b.j.JsonSmartBenchmark.menu               thrpt   8         5    1  2025717.690    85594.849    ops/s
+Winner boon
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonBenchmark.sgml                    thrpt   8         5    1  2008532.590   196291.511    ops/s
+i.g.b.j.GSONBenchmark.sgml                    thrpt   8         5    1   718620.370    42423.609    ops/s
+i.g.b.j.JacksonASTBenchmark.sgml              thrpt   8         5    1  1323524.563   154470.599    ops/s
+i.g.b.j.JacksonObjectBenchmark.sgml           thrpt   8         5    1  1222662.750   140235.072    ops/s
+i.g.b.j.JsonSmartBenchmark.sgml               thrpt   8         5    1  1074628.607   118118.963    ops/s
+Winner boon
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonBenchmark.small                   thrpt   8         5    1 15826710.817  1045854.168    ops/s
+i.g.b.j.GSONBenchmark.small                   thrpt   8         5    1  1214721.220    26642.421    ops/s
+i.g.b.j.JacksonASTBenchmark.small             thrpt   8         5    1  8717521.267   803443.056    ops/s
+i.g.b.j.JacksonObjectBenchmark.small          thrpt   8         5    1  3596064.317   109024.645    ops/s
+i.g.b.j.JsonSmartBenchmark.small              thrpt   8         5    1  8496899.873   519262.035    ops/s
+Winner boon
+
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonBenchmark.webxml                  thrpt   8         5    1   371945.473    37984.891    ops/s
+i.g.b.j.GSONBenchmark.webxml                  thrpt   8         5    1   166292.277    14117.248    ops/s
+i.g.b.j.JacksonASTBenchmark.webxml            thrpt   8         5    1   244590.407    24276.624    ops/s
+i.g.b.j.JacksonObjectBenchmark.webxml         thrpt   8         5    1   235309.430    20480.132    ops/s
+i.g.b.j.JsonSmartBenchmark.webxml             thrpt   8         5    1   206388.830    20392.364    ops/s
+Winner boon
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.b.j.BoonBenchmark.widget                  thrpt   8         5    1  1896055.073   122966.480    ops/s
+i.g.b.j.GSONBenchmark.widget                  thrpt   8         5    1   655790.267    37677.131    ops/s
+i.g.b.j.JacksonASTBenchmark.widget            thrpt   8         5    1  1162009.513   116017.073    ops/s
+i.g.b.j.JacksonObjectBenchmark.widget         thrpt   8         5    1  1073394.043    52104.314    ops/s
+i.g.b.j.JsonSmartBenchmark.widget             thrpt   8         5    1   893633.533    60634.631    ops/s
+Winner boon
+
+
+```
+
 ## Figures
 
 
