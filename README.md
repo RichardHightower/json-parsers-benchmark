@@ -1,26 +1,290 @@
 # Json to Map microbenchmark for the JVM
 
-## Use case
 
-Input is byte arrays.
+Boon is the all around fastest JSON parser out of GSON, Jackson and JsonSmart (so far).
+Boon now has input stream, reader, byte[], char[], CharSequence and String support.
 
-If the parser can't guess encoding by itself, we try to decode in the most efficient possible way, but encoding time is accounted for.
-
-## tl;dr
-
-* Jackson is the most polyvalent (having a valence of three or more).
-* Boon is very interesting if you can make use of the overlay parser (ie you actually only need a small part of the values in the JSON tree) and if your JSON payloads not too big (citmCatalog is about 1,5Mb).
-* GSON is very bad for this use case
-
-Jackson and regular Boon are basically equivalent, Boon being slighly faster.
-
-BoonOverlay delays value parsing, so it's promising if you're only interested in a small part of your JSON tree.
 
 ## How to
 
 Build with `mvn clean package`
 
 Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
+
+
+12/12/13
+
+I reversed the logic in an if statement so all of the tests from last time were in fact using Index Overlay.
+I was wondering why Boon Original was faster than usual.
+Boon wins with and without Index Overlay, but it kills with Index Overlay.
+
+Eagle eye Stephane caught it.
+
+"Iron sharpens iron, and one man sharpens another." Stéphane Landelle keeps me sharp.
+
+In my defense, it was 2:00 AM, and I just spent a lot of time figuring out how to make
+the reader and input stream fast for small json objects, which seemed easy at first.
+Ok... no excuses. When I err in the future, I will try to not make it so beneficial for Boon in the benchmarks.
+Then again, if it had been un-beneficial, I would have investigated more, and been up until 3:00 AM.
+
+
+
+
+```
+
+InputStream:
+
+java -jar target/microbenchmarks.jar ".*inputStream.*Catalog" -wi 1 -i 5 -f 1 -t 8
+
+
+2 MB file
+Benchmark                                                Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonBenchmark.citmCatalog             thrpt   8         5    1      519.593       69.776    ops/s
+i.g.j.inputStream.GSONBenchmark.citmCatalog             thrpt   8         5    1      451.263       53.521    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      445.817      103.189    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      435.343      177.298    ops/s
+i.g.j.inputStream.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1        1.520        0.078    ops/s
+
+```
+
+So boon still wins but it is a bit more of a barn burner. It only wins by 10% vs 20% so the index overlay is worth 10% bump.
+I don't know why JsonSmart is crapping out with input stream.
+Seems like a bug.
+
+
+```
+Reader:
+
+java -jar target/microbenchmarks.jar ".*reader.*Catalog" -wi 1 -i 5 -f 1 -t 8
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.citmCatalog             thrpt   8         5    1      523.957       98.658    ops/s
+i.g.j.r.GSONBenchmark.citmCatalog             thrpt   8         5    1      470.943       59.258    ops/s
+i.g.j.r.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      348.013      130.373    ops/s
+i.g.j.r.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      305.013      224.284    ops/s
+i.g.j.r.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      167.630      107.602    ops/s
+
+```
+Boon wins.
+
+Here is an area were Jackson probably has some low hanging fruit. I/O should be an easy thing to fix.
+Ditto JsonSmart, it should be easy to patch it to go faster with readers.
+
+
+Doing 2 MB files for I/O is not really Jackson's and JsonSmart's tihng. Boon is not optimized for large JSON files.
+Boon will break at some upper level as it reads in the whole file. I can change that for larger files as part of the factory.
+
+
+String:
+
+```
+java -jar target/microbenchmarks.jar ".*string.*Catalog" -wi 1 -i 5 -f 1 -t 8
+
+
+Benchmark                                              Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.citmCatalog                     thrpt   8         5    1      662.233      183.344    ops/s
+i.g.j.s.BoonCharacterSequenceBenchMark.citmCatalog    thrpt   8         5    1      667.513      194.512    ops/s
+i.g.j.s.GSONBenchmark.citmCatalog                     thrpt   8         5    1      588.087       75.207    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog               thrpt   8         5    1      457.517       45.140    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog            thrpt   8         5    1      433.327      105.863    ops/s
+i.g.j.s.JsonSmartBenchmark.citmCatalog                thrpt   8         5    1      493.080       37.880    ops/s
+
+```
+This is what Boon was designed for direct buffer parsing so it "should" win.
+
+Byte []:
+
+```
+
+java -jar target/microbenchmarks.jar ".*byte.*Catalog" -wi 1 -i 5 -f 1 -t 8
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.citmCatalog             thrpt   8         5    1      579.000       64.515    ops/s
+i.g.j.b.GSONBenchmark.citmCatalog             thrpt   8         5    1      515.243       64.504    ops/s
+i.g.j.b.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      542.937       73.014    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      537.670      149.332    ops/s
+i.g.j.b.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      508.993       50.435    ops/s
+
+```
+This one is really close. Jackson and JsonSmart are very good at handling buffers.
+Boon barely pulls ahead. It is a squeaker.
+If you add more warm-up, then boon does gets a bit more faster
+
+
+Byte [] with 3 warm-up runs
+
+```
+
+java -jar target/microbenchmarks.jar ".*byte.*Catalog" -wi 3 -i 5 -f 1 -t 8
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.citmCatalog             thrpt   8         5    1      602.967       32.908    ops/s
+i.g.j.b.GSONBenchmark.citmCatalog             thrpt   8         5    1      545.617        7.057    ops/s
+i.g.j.b.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      532.730       32.427    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      552.733       17.726    ops/s
+i.g.j.b.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      490.960       25.297    ops/s
+```
+
+Boon does have some buffers that it will reuse and they grow to a certain size,
+but it is determined at runtime so if it has a longer warm-up, it does a bit better.
+It wins with or without warmup by design.
+
+
+
+Byte [] with no warm-up runs
+```
+java -jar target/microbenchmarks.jar ".*byte.*Catalog" -wi 0 -i 5 -f 1 -t 8
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.citmCatalog             thrpt   8         5    1      501.190      294.544    ops/s
+i.g.j.b.GSONBenchmark.citmCatalog             thrpt   8         5    1      465.920      248.137    ops/s
+i.g.j.b.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      462.120      330.133    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      447.237      436.156    ops/s
+i.g.j.b.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      422.917      157.837    ops/s
+```
+
+But is also does the best with no warm up too. This took a bit of doing, which is why I point it out.
+There was some engineering trade-offs to get it to the point where it could win with no warm-up and win with a lot of warm-up.
+
+
+So how does Boon do for small files? Glad you asked!        (42 byte files)
+```
+Byte []:
+java -jar target/microbenchmarks.jar ".*byte.*small" -wi 1 -i 5 -f 1 -t 8
+
+
+42 bytes
+Benchmark                                Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.small             thrpt   8         5    1 15123035.083   693984.145    ops/s
+i.g.j.b.GSONBenchmark.small             thrpt   8         5    1  1192185.707    25317.681    ops/s
+i.g.j.b.JacksonASTBenchmark.small       thrpt   8         5    1  9021593.730   793040.461    ops/s
+i.g.j.b.JacksonObjectBenchmark.small    thrpt   8         5    1  3541216.870   287244.838    ops/s
+i.g.j.b.JsonSmartBenchmark.small        thrpt   8         5    1  8081251.127   530501.696    ops/s
+
+
+medium      2K file
+
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.medium             thrpt   8         5    1   429419.907     5534.696    ops/s
+i.g.j.b.GSONBenchmark.medium             thrpt   8         5    1   334178.480      942.534    ops/s
+i.g.j.b.JacksonASTBenchmark.medium       thrpt   8         5    1   460427.767    32371.545    ops/s
+i.g.j.b.JacksonObjectBenchmark.medium    thrpt   8         5    1   443674.033    20546.285    ops/s
+i.g.j.b.JsonSmartBenchmark.medium        thrpt   8         5    1   393696.657     9828.938    ops/s
+
+
+
+4K file
+
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.webxml             thrpt   8         5    1   245015.280    14697.453    ops/s
+i.g.j.b.GSONBenchmark.webxml             thrpt   8         5    1   165580.290    10785.195    ops/s
+i.g.j.b.JacksonASTBenchmark.webxml       thrpt   8         5    1   236637.437    29521.703    ops/s
+i.g.j.b.JacksonObjectBenchmark.webxml    thrpt   8         5    1   220641.790    14118.598    ops/s
+i.g.j.b.JsonSmartBenchmark.webxml        thrpt   8         5    1   189752.833    12327.982    ops/s
+
+```
+
+Jackson does good at this test! Boon wins overall, but Jackson wins the medium by a nose.
+
+
+```
+
+String parse:
+
+42 byte file
+Benchmark                                        Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.small                     thrpt   8         5    1 10398494.800   761673.116    ops/s
+i.g.j.s.BoonCharacterSequenceBenchMark.small    thrpt   8         5    1  9182087.223   476059.086    ops/s
+i.g.j.s.GSONBenchmark.small                     thrpt   8         5    1  3890901.160    76851.698    ops/s
+i.g.j.s.JacksonASTBenchmark.small               thrpt   8         5    1  5194224.027   570461.814    ops/s
+i.g.j.s.JacksonObjectBenchmark.small            thrpt   8         5    1  3342081.950   144442.432    ops/s
+i.g.j.s.JsonSmartBenchmark.small                thrpt   8         5    1  9044707.127   599709.622    ops/s
+
+
+
+2K file
+Benchmark                                         Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.medium                     thrpt   8         5    1   616710.030    47455.348    ops/s
+i.g.j.s.BoonCharacterSequenceBenchMark.medium    thrpt   8         5    1   587532.047    42655.252    ops/s
+i.g.j.s.GSONBenchmark.medium                     thrpt   8         5    1   398540.567    24613.368    ops/s
+i.g.j.s.JacksonASTBenchmark.medium               thrpt   8         5    1   363896.803    54004.333    ops/s
+i.g.j.s.JacksonObjectBenchmark.medium            thrpt   8         5    1   366004.663    15697.203    ops/s
+i.g.j.s.JsonSmartBenchmark.medium                thrpt   8         5    1   410287.210    32399.409    ops/s
+
+4K file
+Benchmark                                         Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.webxml                     thrpt   8         5    1   301771.997    30260.172    ops/s
+i.g.j.s.BoonCharacterSequenceBenchMark.webxml    thrpt   8         5    1   301385.873    23396.885    ops/s
+i.g.j.s.GSONBenchmark.webxml                     thrpt   8         5    1   188973.330    10277.004    ops/s
+i.g.j.s.JacksonASTBenchmark.webxml               thrpt   8         5    1   200984.880    24122.348    ops/s
+i.g.j.s.JacksonObjectBenchmark.webxml            thrpt   8         5    1   204084.740    13711.697    ops/s
+i.g.j.s.JsonSmartBenchmark.webxml                thrpt   8         5    1   217610.740    22550.308    ops/s
+
+```
+
+String parsing is Boon home turf. The original was just working with strings direct.
+
+So how does Boon do for input streams? Glad you asked!
+
+```
+Input Stream:
+
+42 byte file
+Benchmark                                          Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonBenchmark.small             thrpt   8         5    1   200480.753   151900.093    ops/s
+i.g.j.inputStream.GSONBenchmark.small             thrpt   8         5    1    49230.283    61934.864    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.small       thrpt   8         5    1    78701.830    82360.907    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.small    thrpt   8         5    1    80853.560    87854.756    ops/s
+i.g.j.inputStream.JsonSmartBenchmark.small        thrpt   8         5    1     5702.100     2590.905    ops/s
+
+2K file
+Benchmark                                           Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonBenchmark.medium             thrpt   8         5    1   129235.727   137370.866    ops/s
+i.g.j.inputStream.GSONBenchmark.medium             thrpt   8         5    1    30266.503    46403.880    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.medium       thrpt   8         5    1    50367.613    68028.710    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.medium    thrpt   8         5    1    38941.223    64478.924    ops/s
+i.g.j.inputStream.JsonSmartBenchmark.medium        thrpt   8         5    1       91.240       14.803    ops/s
+
+4K file
+Benchmark                                           Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonBenchmark.webxml             thrpt   8         5    1    32539.403    42163.956    ops/s
+i.g.j.inputStream.GSONBenchmark.webxml             thrpt   8         5    1    23009.150    31557.954    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.webxml       thrpt   8         5    1    27000.077    40663.720    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.webxml    thrpt   8         5    1    18180.853    33141.042    ops/s
+i.g.j.inputStream.JsonSmartBenchmark.webxml        thrpt   8         5    1       51.310        4.512    ops/s
+
+```
+
+Boon wins all.
+
+```
+Reader:
+
+Benchmark                                Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.small             thrpt   8         5    1    64920.943    36417.121    ops/s
+i.g.j.r.GSONBenchmark.small             thrpt   8         5    1    49324.087    45658.575    ops/s
+i.g.j.r.JacksonASTBenchmark.small       thrpt   8         5    1    57271.130    41800.493    ops/s
+i.g.j.r.JacksonObjectBenchmark.small    thrpt   8         5    1    51874.413    51769.722    ops/s
+i.g.j.r.JsonSmartBenchmark.small        thrpt   8         5    1    58998.330    54932.838    ops/s
+
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.webxml             thrpt   8         5    1    25590.903    38271.319    ops/s
+i.g.j.r.GSONBenchmark.webxml             thrpt   8         5    1    20976.117    27406.970    ops/s
+i.g.j.r.JacksonASTBenchmark.webxml       thrpt   8         5    1    19280.653    25890.651    ops/s
+i.g.j.r.JacksonObjectBenchmark.webxml    thrpt   8         5    1     9324.493    10121.377    ops/s
+i.g.j.r.JsonSmartBenchmark.webxml        thrpt   8         5    1    11982.480    17529.240    ops/s
+
+
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.medium             thrpt   8         5    1    38104.587    50422.018    ops/s
+i.g.j.r.GSONBenchmark.medium             thrpt   8         5    1    14186.850    15325.914    ops/s
+i.g.j.r.JacksonASTBenchmark.medium       thrpt   8         5    1    23821.507    31810.843    ops/s
+i.g.j.r.JacksonObjectBenchmark.medium    thrpt   8         5    1    15184.610    20938.918    ops/s
+i.g.j.r.JsonSmartBenchmark.medium        thrpt   8         5    1    20156.300    29831.316    ops/s
+
+```
+Boon wins all.
+
 
 
 
