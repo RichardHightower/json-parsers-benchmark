@@ -48,6 +48,6 @@ public class Buffers {
 
 
     private static char [] readChars(String path) {
-        return Reflection.toCharArray (IO.read (path ));
+        return IO.readCharBuffer ( IO.path ( path) );
     }
 }
