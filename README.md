@@ -23,6 +23,110 @@ Build with `mvn clean package`
 Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
 
 
+
+12/11/2013
+
+Cleaned up API and added support for streams and Readers.
+
+```
+Now to create you always use:
+
+    private final JsonParser parser = new JsonParserFactory ().create ();
+
+The above should create the fastest version.
+
+
+Reading from an input stream (no overlay)
+
+        return parser.parse ( Map.class, Files.newInputStream ( IO.path (str) ) );
+
+
+
+Benchmark                                                Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonBenchmark.citmCatalog             thrpt   8         5    1      591.030       95.022    ops/s
+i.g.j.inputStream.GSONBenchmark.citmCatalog             thrpt   8         5    1      454.740       72.404    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      343.510      130.131    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      306.750      232.646    ops/s
+i.g.j.inputStream.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      170.573      108.242    ops/s
+
+
+Boon!
+
+
+Reading from a reader: (1 warm up)
+
+        return parser.parse ( Map.class, Files.newBufferedReader ( IO.path (str), StandardCharsets.UTF_8) );
+
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.citmCatalog             thrpt   8         5    1      605.507       64.301    ops/s
+i.g.j.r.GSONBenchmark.citmCatalog             thrpt   8         5    1      464.417       87.228    ops/s
+i.g.j.r.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      346.737      123.593    ops/s
+i.g.j.r.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      322.493      140.439    ops/s
+i.g.j.r.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      159.227      104.295    ops/s
+
+Boon!
+
+
+
+
+Reading from a byte array
+
+        return parser.parse ( Map.class, bytes );
+
+
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.citmCatalog             thrpt   8         5    1      702.777       90.096    ops/s
+i.g.j.b.GSONBenchmark.citmCatalog             thrpt   8         5    1      526.280       63.247    ops/s
+i.g.j.b.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      549.133       58.235    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      499.567      106.604    ops/s
+i.g.j.b.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      449.580       32.700    ops/s
+
+
+
+Reading from a string (just 1 warm up, no overlay)
+
+    private final JsonParser parser = new JsonParserFactory ().create (); //BoonBenchmark
+    private final JsonParser parser = new JsonParserFactory ().neverUseDirectBytes ().preferCharSequence ().create ();
+                                                                //BoonCharacterSequenceBenchMark
+
+
+        return parser.parse ( Map.class, str );
+
+
+
+Benchmark                                              Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.citmCatalog                     thrpt   8         5    1      872.547       54.457    ops/s
+i.g.j.s.BoonCharacterSequenceBenchMark.citmCatalog    thrpt   8         5    1      877.577       54.432    ops/s
+i.g.j.s.GSONBenchmark.citmCatalog                     thrpt   8         5    1      597.723       44.193    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog               thrpt   8         5    1      430.503       55.879    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog            thrpt   8         5    1      427.220       27.186    ops/s
+i.g.j.s.JsonSmartBenchmark.citmCatalog                thrpt   8         5    1      491.897       21.479    ops/s
+
+
+
+It wins with Stings, char[], reader, input stream and byte [] for large and small files.
+
+The tricky part was getting the reader and input stream to work for both the big files and the small files.
+
+
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.medium             thrpt   8         5    1   207489.560     5370.610    ops/s
+i.g.j.r.GSONBenchmark.medium             thrpt   8         5    1   158347.813     3512.490    ops/s
+i.g.j.r.JacksonASTBenchmark.medium       thrpt   8         5    1   154176.247     8947.828    ops/s
+i.g.j.r.JacksonObjectBenchmark.medium    thrpt   8         5    1   148923.023     7604.071    ops/s
+i.g.j.r.JsonSmartBenchmark.medium        thrpt   8         5    1    99780.213    35766.399    ops/s
+
+
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.webxml             thrpt   8         5    1   172111.203     5963.459    ops/s
+i.g.j.r.GSONBenchmark.webxml             thrpt   8         5    1   110256.410     3945.778    ops/s
+i.g.j.r.JacksonASTBenchmark.webxml       thrpt   8         5    1   114400.587    30624.423    ops/s
+i.g.j.r.JacksonObjectBenchmark.webxml    thrpt   8         5    1   105170.040    41050.383    ops/s
+i.g.j.r.JsonSmartBenchmark.webxml        thrpt   8         5    1    60521.663    23001.652    ops/s
+
+```
 12/9/2013
 
 ```
