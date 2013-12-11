@@ -1,21 +1,21 @@
 package io.gatling.benchmark.jsonparsers;
 
-import java.util.Map;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
+
+import net.minidev.json.parser.JSONParser;
 
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.logic.BlackHole;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 @OutputTimeUnit(TimeUnit.SECONDS)
-public class JacksonObjectBenchmark extends AbstractBenchmark {
-
-	private static final ObjectMapper JACKSON_MAPPER = new ObjectMapper();
+public class JsonSmartReaderBenchmark extends AbstractBenchmark {
 
 	protected Object parse(byte[] bytes) throws Exception {
-		return JACKSON_MAPPER.readValue(bytes, Map.class);
+		return new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE).parse(new InputStreamReader(new ByteArrayInputStream(bytes), StandardCharsets.UTF_8));
 	}
 
 	@GenerateMicroBenchmark
