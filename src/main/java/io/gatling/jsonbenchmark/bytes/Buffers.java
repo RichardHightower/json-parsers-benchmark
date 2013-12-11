@@ -1,11 +1,11 @@
-package io.gatling.benchmark.jsonparsers;
+package io.gatling.jsonbenchmark.bytes;
 
 import org.boon.IO;
+import org.boon.core.reflection.Reflection;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
-public class Bytes {
+public class Buffers {
 
     public static final byte[] ACTION_LABEL_BYTES = readBytes( "data/actionLabel.json" );
     public static final byte[] CITM_CATALOG_BYTES = readBytes( "data/citm_catalog.json" );
@@ -25,6 +25,16 @@ public class Bytes {
     public static final String STR_WEBXML_BYTES = readStr( "data/webxml.json" );
     public static final String STR_WIDGET_BYTES = readStr( "data/widget.json" );
 
+
+    public static final char[] CHR_ACTION_LABEL_BYTES = readChars ( "data/actionLabel.json" );
+    public static final char[] CHR_CITM_CATALOG_BYTES = readChars ( "data/citm_catalog.json" );
+    public static final char[] CHR_MEDIUM_BYTES = readChars ( "data/medium.json" );
+    public static final char[] CHR_MENU_BYTES = readChars ( "data/menu.json" );
+    public static final char[] CHR_SGML_BYTES = readChars ( "data/sgml.json" );
+    public static final char[] CHR_SMALL_BYTES = readChars ( "data/small.json" );
+    public static final char[] CHR_WEBXML_BYTES = readChars ( "data/webxml.json" );
+    public static final char[] CHR_WIDGET_BYTES = readChars ( "data/widget.json" );
+
     private static byte[] readBytes(String path) {
             return IO.read (path ).getBytes ( StandardCharsets.UTF_8 );
 
@@ -33,5 +43,11 @@ public class Bytes {
 
     private static String readStr(String path) {
         return IO.read (path );
+    }
+
+
+
+    private static char [] readChars(String path) {
+        return Reflection.toCharArray (IO.read (path ));
     }
 }

@@ -1,4 +1,4 @@
-package io.gatling.benchmark.justboon;
+package io.gatling.jsonbenchmark.bufferofchoice;
 
 import org.boon.json.JsonParser;
 import org.boon.json.JsonParserFactory;
@@ -10,8 +10,8 @@ import org.openjdk.jmh.logic.BlackHole;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static io.gatling.benchmark.jsonparsers.Bytes.*;
-import static io.gatling.benchmark.jsonparsers.Bytes.WIDGET_BYTES;
+import static io.gatling.jsonbenchmark.bytes.Buffers.*;
+import static io.gatling.jsonbenchmark.bytes.Buffers.WIDGET_BYTES;
 
 @State
 public class BoonBenchMarkDirectBytes {

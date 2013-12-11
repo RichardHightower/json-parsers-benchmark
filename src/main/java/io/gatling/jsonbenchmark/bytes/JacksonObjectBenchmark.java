@@ -23,27 +23,25 @@
  * questions.
  */
 
-package io.gatling.benchmark.jsonparsers;
+package io.gatling.jsonbenchmark.bytes;
 
-import static io.gatling.benchmark.jsonparsers.Bytes.*;
+import static io.gatling.jsonbenchmark.bytes.Buffers.*;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import org.boon.json.JsonParser;
-import org.boon.json.JsonParserFactory;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.logic.BlackHole;
 
-@State
-public class BoonBenchmark {
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-    private final JsonParser parser = new JsonParserFactory ().create ();
+public class JacksonObjectBenchmark {
+
+    private static final ObjectMapper JACKSON_MAPPER = new ObjectMapper();
 
     private Object parse(byte[] bytes) throws Exception {
-        return parser.parse ( Map.class, bytes );
+        return JACKSON_MAPPER.readValue(bytes, Map.class);
     }
 
     @GenerateMicroBenchmark

@@ -23,9 +23,9 @@
  * questions.
  */
 
-package io.gatling.benchmark.jsonparsers;
+package io.gatling.jsonbenchmark.bytes;
 
-import static io.gatling.benchmark.jsonparsers.Bytes.*;
+import static io.gatling.jsonbenchmark.bytes.Buffers.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;

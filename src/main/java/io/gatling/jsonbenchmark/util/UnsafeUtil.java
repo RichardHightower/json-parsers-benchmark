@@ -1,4 +1,4 @@
-package io.gatling.benchmark.util;
+package io.gatling.jsonbenchmark.util;
 
 import java.lang.reflect.Field;
 
