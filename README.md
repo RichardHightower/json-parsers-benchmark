@@ -309,7 +309,7 @@ i.g.j.b.BoonCharacterSequenceBenchMark.webxml    thrpt   8         5    1   2699
 
 Boon JSON is really a series of parsers that it picks from depending on what type of stream, buffer, reader you give it.
 
-It can work diretly with CharacterBuffer, StringBuilder, String, char[], byte[], etc.
+It can work directly with CharacterBuffer, StringBuilder, String, char[], byte[], etc.
 
 
 
