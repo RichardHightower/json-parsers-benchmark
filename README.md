@@ -285,6 +285,31 @@ i.g.j.r.JsonSmartBenchmark.medium        thrpt   8         5    1    20156.300  
 ```
 Boon wins all.
 
+The real test is boon vs. boon :)
+
+```
+Benchmark                                        Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchMarkBasic.small                thrpt   8         5    1 10061212.913  4015127.331    ops/s
+i.g.j.b.BoonBenchMarkDirectBytes.small          thrpt   8         5    1 12372399.087  3663465.705    ops/s
+i.g.j.b.BoonBenchMarkOverlay.small              thrpt   8         5    1 20446467.293 10435890.799    ops/s
+i.g.j.b.BoonCharacterSequenceBenchMark.small    thrpt   8         5    1 12480818.117  5979164.569    ops/s
+
+Benchmark                                         Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchMarkBasic.medium                thrpt   8         5    1   572797.510   230423.843    ops/s
+i.g.j.b.BoonBenchMarkDirectBytes.medium          thrpt   8         5    1   391813.253   195272.691    ops/s
+i.g.j.b.BoonBenchMarkOverlay.medium              thrpt   8         5    1   790967.587   257303.284    ops/s
+i.g.j.b.BoonCharacterSequenceBenchMark.medium    thrpt   8         5    1   543188.530   218936.620    ops/s
+
+Benchmark                                         Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchMarkBasic.webxml                thrpt   8         5    1   278279.273   111067.899    ops/s
+i.g.j.b.BoonBenchMarkDirectBytes.webxml          thrpt   8         5    1   192240.527   113846.316    ops/s
+i.g.j.b.BoonBenchMarkOverlay.webxml              thrpt   8         5    1   399702.727   129631.653    ops/s
+i.g.j.b.BoonCharacterSequenceBenchMark.webxml    thrpt   8         5    1   269917.560   120388.408    ops/s
+```
+
+Boon JSON is really a series of parsers that it picks from depending on what type of stream, buffer, reader you give it.
+
+It can work diretly with CharacterBuffer, StringBuilder, String, char[], byte[], etc.
 
 
 
