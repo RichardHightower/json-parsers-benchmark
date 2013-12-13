@@ -31,13 +31,13 @@ Here are the results on my machine:
 * Intel Core i7 2,7 GHz
 
 Benchmark                               Mode Thr     Count  Sec         Mean   Mean error    Units
-BoonCharArrayBenchmark.roundRobin      thrpt  16        20    1   728637,749    33788,999    ops/s
-JacksonASTBenchmark.roundRobin         thrpt  16        20    1   648126,547    68926,526    ops/s
-JacksonObjectBenchmark.roundRobin      thrpt  16        20    1   625373,468    29713,740    ops/s
-JsonSmartStringBenchmark.roundRobin    thrpt  16        20    1   554507,738    17355,724    ops/s
-JsonSmartBytesBenchmark.roundRobin     thrpt  16        20    1   548681,071    23638,098    ops/s
-GSONStringBenchmark.roundRobin         thrpt  16        20    1   509019,675    27328,786    ops/s
-GSONReaderBenchmark.roundRobin         thrpt  16        20    1   429658,645    17885,251    ops/s
-BoonDirectBytesBenchmark.roundRobin    thrpt  16        20    1   389449,467    17550,011    ops/s
-JsonSmartStreamBenchmark.roundRobin    thrpt  16        20    1   345438,873    55877,116    ops/s
-JsonSmartReaderBenchmark.roundRobin    thrpt  16        20    1   101966,373     8217,541    ops/s
+BoonCharArrayBenchmark.roundRobin      thrpt  16        10    1   724815,875    54339,825    ops/s
+JacksonObjectBenchmark.roundRobin      thrpt  16        10    1   580014,875   145097,700    ops/s
+JsonSmartBytesBenchmark.roundRobin     thrpt  16        10    1   575548,435    64202,618    ops/s
+JsonSmartStringBenchmark.roundRobin    thrpt  16        10    1   541212,220    45144,815    ops/s
+GSONStringBenchmark.roundRobin         thrpt  16        10    1   522947,175    65572,427    ops/s
+BoonDirectBytesBenchmark.roundRobin    thrpt  16        10    1   521528,912    41366,197    ops/s
+JacksonASTBenchmark.roundRobin         thrpt  16        10    1   512564,205   300704,545    ops/s
+GSONReaderBenchmark.roundRobin         thrpt  16        10    1   446322,220    41327,496    ops/s
+JsonSmartStreamBenchmark.roundRobin    thrpt  16        10    1   276399,298   130055,340    ops/s
+JsonSmartReaderBenchmark.roundRobin    thrpt  16        10    1    86789,825    17690,031    ops/s
