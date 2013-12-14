@@ -30,6 +30,7 @@ Here are the results on my machine:
 * Hotspot 1.7.0_45
 * Intel Core i7 2,7 GHz
 
+```
 Benchmark                               Mode Thr     Count  Sec         Mean   Mean error    Units
 BoonCharArrayBenchmark.roundRobin      thrpt  16        10    1   724815,875    54339,825    ops/s
 JacksonObjectBenchmark.roundRobin      thrpt  16        10    1   580014,875   145097,700    ops/s
@@ -41,3 +42,4 @@ JacksonASTBenchmark.roundRobin         thrpt  16        10    1   512564,205   3
 GSONReaderBenchmark.roundRobin         thrpt  16        10    1   446322,220    41327,496    ops/s
 JsonSmartStreamBenchmark.roundRobin    thrpt  16        10    1   276399,298   130055,340    ops/s
 JsonSmartReaderBenchmark.roundRobin    thrpt  16        10    1    86789,825    17690,031    ops/s
+```
