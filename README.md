@@ -11,8 +11,89 @@ Build with `mvn clean package`
 
 Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
 
+12/15/13
+
+3 warm-ups
+Optimization 2 2MB file
+
+```
+java -jar target/microbenchmarks.jar "(.*string.*Catalog|.*byte.*Catalog|.*inputStream.*Catalog)" -wi 3 -i 5 -f 1 -t 8
+
+Benchmark                                                   Mode Thr     Count  Sec         Mean   Mean error    Units
+bytes
+i.g.j.bytes.BoonBenchmark.citmCatalog                      thrpt   8         5    1      567.957       28.914    ops/s
+i.g.j.bytes.GSONBenchmark.citmCatalog                      thrpt   8         5    1      454.070       37.305    ops/s
+i.g.j.bytes.JacksonASTBenchmark.citmCatalog                thrpt   8         5    1      444.917       37.230    ops/s
+i.g.j.bytes.JacksonObjectBenchmark.citmCatalog             thrpt   8         5    1      369.067       79.432    ops/s
+i.g.j.bytes.JsonSmartBenchmark.citmCatalog                 thrpt   8         5    1      310.707       30.617    ops/s
+stream
+i.g.j.inputStream.BoonBenchmark.citmCatalog                thrpt   8         5    1      432.913       42.389    ops/s
+i.g.j.inputStream.GSONBenchmark.citmCatalog                thrpt   8         5    1      348.263       29.406    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.citmCatalog          thrpt   8         5    1      309.323       62.159    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.citmCatalog       thrpt   8         5    1      350.983       21.199    ops/s
+string
+i.g.j.string.BoonBenchmark.citmCatalog                     thrpt   8         5    1      589.603       32.688    ops/s
+i.g.j.string.BoonCharacterSequenceBenchMark.citmCatalog    thrpt   8         5    1      590.683       22.074    ops/s
+i.g.j.string.GSONBenchmark.citmCatalog                     thrpt   8         5    1      419.830       40.693    ops/s
+i.g.j.string.JacksonASTBenchmark.citmCatalog               thrpt   8         5    1      306.390       15.029    ops/s
+i.g.j.string.JacksonObjectBenchmark.citmCatalog            thrpt   8         5    1      318.053       16.880    ops/s
+i.g.j.string.JsonSmartBenchmark.citmCatalog                thrpt   8         5    1      355.843       22.255    ops/s
+
+```
+
+
+1 warm-up
+Optimization 2
+
+```
+Benchmark                                              Mode Thr     Count  Sec         Mean   Mean error    Units
+bytes
+i.g.j.bytes.BoonBenchmark.medium                      thrpt   8         5    1   399243.743    62196.133    ops/s
+i.g.j.bytes.GSONBenchmark.medium                      thrpt   8         5    1   272056.607    81816.346    ops/s
+i.g.j.bytes.JacksonASTBenchmark.medium                thrpt   8         5    1   374466.083    53820.539    ops/s
+i.g.j.bytes.JacksonObjectBenchmark.medium             thrpt   8         5    1   301776.590   120239.705    ops/s
+i.g.j.bytes.JsonSmartBenchmark.medium                 thrpt   8         5    1   276518.383    45386.617    ops/s
+stream
+i.g.j.inputStream.BoonBenchmark.medium                thrpt   8         5    1   160257.603    36129.635    ops/s
+i.g.j.inputStream.GSONBenchmark.medium                thrpt   8         5    1   113724.713    56064.618    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.medium          thrpt   8         5    1   128157.543   134502.152    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.medium       thrpt   8         5    1   126100.847    90562.800    ops/s
+string
+i.g.j.string.BoonBenchmark.medium                     thrpt   8         5    1   325846.617    92375.586    ops/s
+i.g.j.string.BoonCharacterSequenceBenchMark.medium    thrpt   8         5    1   466013.417    62494.732    ops/s
+i.g.j.string.GSONBenchmark.medium                     thrpt   8         5    1   268420.253    72867.882    ops/s
+i.g.j.string.JacksonASTBenchmark.medium               thrpt   8         5    1   239763.487   119743.263    ops/s
+i.g.j.string.JacksonObjectBenchmark.medium            thrpt   8         5    1   239958.903    55348.635    ops/s
+i.g.j.string.JsonSmartBenchmark.medium                thrpt   8         5    1   312084.100    28782.277    ops/s
+```
+
+Optmization 2 2MB 
+
+```
+Benchmark                                                   Mode Thr     Count  Sec         Mean   Mean error    Units
+bytes
+i.g.j.bytes.BoonBenchmark.citmCatalog                      thrpt   8         5    1      492.520       86.823    ops/s
+i.g.j.bytes.GSONBenchmark.citmCatalog                      thrpt   8         5    1      395.413       64.481    ops/s
+i.g.j.bytes.JacksonASTBenchmark.citmCatalog                thrpt   8         5    1      373.497      204.279    ops/s
+i.g.j.bytes.JacksonObjectBenchmark.citmCatalog             thrpt   8         5    1      364.330      115.620    ops/s
+i.g.j.bytes.JsonSmartBenchmark.citmCatalog                 thrpt   8         5    1      300.953      144.286    ops/s
+stream
+i.g.j.inputStream.BoonBenchmark.citmCatalog                thrpt   8         5    1      398.873       85.204    ops/s
+i.g.j.inputStream.GSONBenchmark.citmCatalog                thrpt   8         5    1      331.230       60.375    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.citmCatalog          thrpt   8         5    1      271.857      210.069    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.citmCatalog       thrpt   8         5    1      291.733      145.984    ops/s
+String
+i.g.j.string.BoonBenchmark.citmCatalog                     thrpt   8         5    1      546.653       73.946    ops/s
+i.g.j.string.BoonCharacterSequenceBenchMark.citmCatalog    thrpt   8         5    1      551.000       83.382    ops/s
+i.g.j.string.GSONBenchmark.citmCatalog                     thrpt   8         5    1      384.077       66.253    ops/s
+i.g.j.string.JacksonASTBenchmark.citmCatalog               thrpt   8         5    1      256.113      109.586    ops/s
+i.g.j.string.JacksonObjectBenchmark.citmCatalog            thrpt   8         5    1      250.663      124.434    ops/s
+i.g.j.string.JsonSmartBenchmark.citmCatalog                thrpt   8         5    1      328.350       44.345    ops/s
+```
 
 12/15/13
+
+
 
 Optimization 1 2 MB file (From String)
 ```
