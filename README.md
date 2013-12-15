@@ -12,6 +12,67 @@ Build with `mvn clean package`
 Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
 
 
+12/15/13
+
+Optimization 1 2 MB file (From String)
+```
+Benchmark                                              Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.citmCatalog                     thrpt   8         5    1      634.490      161.698    ops/s
+i.g.j.s.BoonCharacterSequenceBenchMark.citmCatalog    thrpt   8         5    1      554.517       36.224    ops/s
+i.g.j.s.GSONBenchmark.citmCatalog                     thrpt   8         5    1      398.407       33.769    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog               thrpt   8         5    1      311.417        9.404    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog            thrpt   8         5    1      310.427       28.941    ops/s
+i.g.j.s.JsonSmartBenchmark.citmCatalog                thrpt   8         5    1      364.003       11.225    ops/s
+```
+
+Optimization 1 2 MB file (from bytes)
+```
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.citmCatalog             thrpt   8         5    1      577.847       33.689    ops/s
+i.g.j.b.GSONBenchmark.citmCatalog             thrpt   8         5    1      452.947       30.377    ops/s
+i.g.j.b.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      389.663      110.508    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      365.137       71.960    ops/s
+i.g.j.b.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      272.030      107.993    ops/s
+```
+
+Optimization 1 2 MB file (from input stream)
+```
+Benchmark                                                Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonBenchmark.citmCatalog             thrpt   8         5    1      538.933        7.130    ops/s
+i.g.j.inputStream.GSONBenchmark.citmCatalog             thrpt   8         5    1      407.733       42.164    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      379.237       34.670    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      349.427       49.306    ops/s
+```
+
+
+Optimization 1 webxml file (from input stream)
+```
+Benchmark                                           Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonBenchmark.webxml             thrpt   8         5    1   153473.453     2432.691    ops/s
+i.g.j.inputStream.GSONBenchmark.webxml             thrpt   8         5    1    99381.280     2997.789    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.webxml       thrpt   8         5    1   120798.840     1797.505    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.webxml    thrpt   8         5    1   101469.583    26395.522    ops/s
+```
+
+Optimization 1 webxml file (from string and bytes)
+
+```
+Benchmark                                              Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.bytes.BoonBenchmark.webxml                      thrpt   8         5    1   243897.070     2004.897    ops/s
+i.g.j.bytes.GSONBenchmark.webxml                      thrpt   8         5    1   145293.453     2244.048    ops/s
+i.g.j.bytes.JacksonASTBenchmark.webxml                thrpt   8         5    1   195156.710     8402.572    ops/s
+i.g.j.bytes.JacksonObjectBenchmark.webxml             thrpt   8         5    1   166488.157    21522.238    ops/s
+i.g.j.bytes.JsonSmartBenchmark.webxml                 thrpt   8         5    1   153111.840     9095.388    ops/s
+
+i.g.j.string.BoonBenchmark.webxml                     thrpt   8         5    1   249912.307    19361.926    ops/s
+i.g.j.string.BoonCharacterSequenceBenchMark.webxml    thrpt   8         5    1   266623.943    10615.374    ops/s
+i.g.j.string.GSONBenchmark.webxml                     thrpt   8         5    1   132536.827    15160.406    ops/s
+i.g.j.string.JacksonASTBenchmark.webxml               thrpt   8         5    1   148642.550     7133.436    ops/s
+i.g.j.string.JacksonObjectBenchmark.webxml            thrpt   8         5    1   148273.823     6390.983    ops/s
+i.g.j.string.JsonSmartBenchmark.webxml                thrpt   8         5    1   173956.203     3314.959    ops/s
+```
+
+
 12/12/13
 
 I reversed the logic in an if statement so all of the tests from last time were in fact using Index Overlay.
