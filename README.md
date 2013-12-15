@@ -40,6 +40,19 @@ i.g.j.b.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      389.
 i.g.j.b.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      311.343       19.541    ops/s
 ```
 
+String with String interning of keys:
+
+```
+Benchmark                                              Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.citmCatalog                     thrpt   8         5    1      709.717       84.650    ops/s
+i.g.j.s.BoonCharacterSequenceBenchMark.citmCatalog    thrpt   8         5    1      703.260       15.344    ops/s
+i.g.j.s.GSONBenchmark.citmCatalog                     thrpt   8         5    1      453.080      136.313    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog               thrpt   8         5    1      326.667       35.794    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog            thrpt   8         5    1      334.610       11.119    ops/s
+i.g.j.s.JsonSmartBenchmark.citmCatalog                thrpt   8         5    1      364.177       14.671    ops/s
+```
+
+Before String interning
 
 ```
 $ java -jar target/microbenchmarks.jar "(.*string.*medium)" -wi 3 -i 5 -f 1 -t 8
@@ -50,6 +63,29 @@ i.g.j.s.GSONBenchmark.medium                     thrpt   8         5    1   2863
 i.g.j.s.JacksonASTBenchmark.medium               thrpt   8         5    1   284281.653    24357.465    ops/s
 i.g.j.s.JacksonObjectBenchmark.medium            thrpt   8         5    1   267424.893    14734.771    ops/s
 i.g.j.s.JsonSmartBenchmark.medium                thrpt   8         5    1   285039.503    56863.776    ops/s
+```
+
+After String interning keys
+
+```
+Benchmark                                         Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.medium                     thrpt   8         5    1   582727.517    47410.884    ops/s
+i.g.j.s.BoonCharacterSequenceBenchMark.medium    thrpt   8         5    1   384956.587     7407.528    ops/s
+i.g.j.s.GSONBenchmark.medium                     thrpt   8         5    1   263178.420   175318.031    ops/s
+i.g.j.s.JacksonASTBenchmark.medium               thrpt   8         5    1   274951.733    14374.632    ops/s
+i.g.j.s.JacksonObjectBenchmark.medium            thrpt   8         5    1   264349.577    15292.047    ops/s
+i.g.j.s.JsonSmartBenchmark.medium                thrpt   8         5    1   312113.530    15802.124    ops/s
+```
+
+From byte array
+
+```
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.medium             thrpt   8         5    1   409905.687     4367.342    ops/s
+i.g.j.b.GSONBenchmark.medium             thrpt   8         5    1   274496.707    30539.116    ops/s
+i.g.j.b.JacksonASTBenchmark.medium       thrpt   8         5    1   341520.393   117253.177    ops/s
+i.g.j.b.JacksonObjectBenchmark.medium    thrpt   8         5    1   308701.053    88054.232    ops/s
+i.g.j.b.JsonSmartBenchmark.medium        thrpt   8         5    1   268166.717    59921.730    ops/s
 ```
 
 12/15/13
