@@ -11,6 +11,47 @@ Build with `mvn clean package`
 
 Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
 
+
+12/15/13
+
+3 warm up optimization 2 2mb file
+
+I get different results when I run benchmarks one by on instead of a bunch at a time:
+
+```
+$ java -jar target/microbenchmarks.jar "(.*string.*Catalog)" -wi 3 -i 5 -f 1 -t 8
+
+Benchmark                                              Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.citmCatalog                     thrpt   8         5    1      719.670       25.210    ops/s
+i.g.j.s.BoonCharacterSequenceBenchMark.citmCatalog    thrpt   8         5    1      663.183      129.054    ops/s
+i.g.j.s.GSONBenchmark.citmCatalog                     thrpt   8         5    1      403.197      158.215    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog               thrpt   8         5    1      307.490      137.072    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog            thrpt   8         5    1      326.967       21.696    ops/s
+i.g.j.s.JsonSmartBenchmark.citmCatalog                thrpt   8         5    1      357.717       42.388    ops/s
+```
+
+```
+$ java -jar target/microbenchmarks.jar "(.*bytes.*Catalog)" -wi 3 -i 5 -f 1 -t 8
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.citmCatalog             thrpt   8         5    1      549.787       40.092    ops/s
+i.g.j.b.GSONBenchmark.citmCatalog             thrpt   8         5    1      437.003       27.186    ops/s
+i.g.j.b.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      321.117      187.151    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      389.207       33.725    ops/s
+i.g.j.b.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      311.343       19.541    ops/s
+```
+
+
+```
+$ java -jar target/microbenchmarks.jar "(.*string.*medium)" -wi 3 -i 5 -f 1 -t 8
+Benchmark                                         Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.medium                     thrpt   8         5    1   589537.520    41049.209    ops/s
+i.g.j.s.BoonCharacterSequenceBenchMark.medium    thrpt   8         5    1   443545.780     6201.818    ops/s
+i.g.j.s.GSONBenchmark.medium                     thrpt   8         5    1   286341.347   161200.888    ops/s
+i.g.j.s.JacksonASTBenchmark.medium               thrpt   8         5    1   284281.653    24357.465    ops/s
+i.g.j.s.JacksonObjectBenchmark.medium            thrpt   8         5    1   267424.893    14734.771    ops/s
+i.g.j.s.JsonSmartBenchmark.medium                thrpt   8         5    1   285039.503    56863.776    ops/s
+```
+
 12/15/13
 
 3 warm-ups
