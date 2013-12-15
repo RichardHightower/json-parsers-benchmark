@@ -73,6 +73,26 @@ i.g.j.string.JsonSmartBenchmark.webxml                thrpt   8         5    1  
 ```
 
 
+Optimization 1 medium
+
+```
+bytes[]
+Benchmark                                              Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.bytes.BoonBenchmark.medium                      thrpt   8         5    1   394104.150    71284.602    ops/s
+i.g.j.bytes.GSONBenchmark.medium                      thrpt   8         5    1   270688.050    77677.140    ops/s
+i.g.j.bytes.JacksonASTBenchmark.medium                thrpt   8         5    1   380602.207    54750.541    ops/s
+i.g.j.bytes.JacksonObjectBenchmark.medium             thrpt   8         5    1   343228.970    50054.425    ops/s
+i.g.j.bytes.JsonSmartBenchmark.medium                 thrpt   8         5    1   282828.397    31699.294    ops/s
+
+string
+i.g.j.string.BoonBenchmark.medium                     thrpt   8         5    1   410202.460    47389.489    ops/s
+i.g.j.string.BoonCharacterSequenceBenchMark.medium    thrpt   8         5    1   361550.043    25223.089    ops/s
+i.g.j.string.GSONBenchmark.medium                     thrpt   8         5    1   288093.323    77267.217    ops/s
+i.g.j.string.JacksonASTBenchmark.medium               thrpt   8         5    1   267662.703    35289.327    ops/s
+i.g.j.string.JacksonObjectBenchmark.medium            thrpt   8         5    1   251775.013    55411.458    ops/s
+i.g.j.string.JsonSmartBenchmark.medium                thrpt   8         5    1   314237.510    34189.281    ops/s
+```
+
 12/12/13
 
 I reversed the logic in an if statement so all of the tests from last time were in fact using Index Overlay.
