@@ -11,6 +11,32 @@ Build with `mvn clean package`
 
 Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
 
+12/15/13
+
+Optimization 3
+
+String 2 MB file
+```
+  java -jar target/microbenchmarks.jar "(.*string.*Catalog)" -wi 3 -i 5 -f 1 -t 8
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.citmCatalog             thrpt   8         5    1      727.780       22.415    ops/s
+i.g.j.s.GSONBenchmark.citmCatalog             thrpt   8         5    1      471.193      111.817    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      285.553      123.686    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      319.627        9.633    ops/s
+i.g.j.s.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      357.750       29.280    ops/s
+```
+
+Medium String
+
+```
+$  java -jar target/microbenchmarks.jar "(.*string.*medium)" -wi 3 -i 5 -f 1 -t 8
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.medium             thrpt   8         5    1   598872.053    19601.473    ops/s
+i.g.j.s.GSONBenchmark.medium             thrpt   8         5    1   339508.123     5777.020    ops/s
+i.g.j.s.JacksonASTBenchmark.medium       thrpt   8         5    1   284663.263    89611.523    ops/s
+i.g.j.s.JacksonObjectBenchmark.medium    thrpt   8         5    1   280216.273    21818.694    ops/s
+i.g.j.s.JsonSmartBenchmark.medium        thrpt   8         5    1   327120.277     6906.100    ops/s
+```
 
 12/15/13
 
