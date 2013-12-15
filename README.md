@@ -11,6 +11,31 @@ Build with `mvn clean package`
 
 Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
 
+
+12/15/13
+After refactor (common base class)
+
+```
+ java -jar target/microbenchmarks.jar ".*string.*Catalog" -wi 2 -i 5 -f 1 -t 8
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.citmCatalog             thrpt   8         5    1      742.533       33.295    ops/s
+i.g.j.s.GSONBenchmark.citmCatalog             thrpt   8         5    1      447.977      111.037    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      308.393      110.855    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      311.140       14.325    ops/s
+i.g.j.s.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      361.970       20.862    ops/s
+```
+Now there is a common base class (between lax and char[], and it still seems very fast actually faster which makes no sense. :)
+
+```
+$  java -jar target/microbenchmarks.jar ".*string.*medium" -wi 2 -i 5 -f 1 -t 8
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.medium             thrpt   8         5    1   605475.707    15700.968    ops/s
+i.g.j.s.GSONBenchmark.medium             thrpt   8         5    1   346093.903     4655.647    ops/s
+i.g.j.s.JacksonASTBenchmark.medium       thrpt   8         5    1   315064.423    22563.603    ops/s
+i.g.j.s.JacksonObjectBenchmark.medium    thrpt   8         5    1   259549.923    40741.134    ops/s
+i.g.j.s.JsonSmartBenchmark.medium        thrpt   8         5    1   318939.113    16846.350    ops/s
+```
+
 12/15/13
 
 Optimization 3
