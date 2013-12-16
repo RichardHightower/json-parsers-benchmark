@@ -13,6 +13,37 @@ Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
 
 
 12/15/13
+
+```
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+char []/String
+i.g.j.b.BoonBenchMarkBasic.citmCatalog        thrpt   8         5    1      731.617       26.171    ops/s
+i.g.j.b.BoonBenchMarkOverlay.citmCatalog      thrpt   8         5    1      686.680       49.770    ops/s
+i.g.j.b.BoonBenchMarkLax.citmCatalog          thrpt   8         5    1      583.757      118.887    ops/s
+i.g.j.b.BoonStringDirect.citmCatalog          thrpt   8         5    1      312.567       23.729    ops/s
+byte[]
+i.g.j.b.BoonAsciiBytes.citmCatalog            thrpt   8         5    1      649.237       28.284    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.citmCatalog    thrpt   8         5    1      526.220       24.329    ops/s
+i.g.j.b.BoonCharDoingBytes.citmCatalog        thrpt   8         5    1      489.770       15.138    ops/s
+```
+
+
+
+```
+java -jar target/microbenchmarks.jar ".*buffer.*medium.*" -wi 3 -i 5 -f 1 -t 8
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+char[]/String
+i.g.j.b.BoonBenchMarkBasic.medium        thrpt   8         5    1   628322.313     6665.680    ops/s
+i.g.j.b.BoonBenchMarkOverlay.medium      thrpt   8         5    1   624611.943   265091.375    ops/s
+i.g.j.b.BoonBenchMarkLax.medium          thrpt   8         5    1   539984.480    12284.623    ops/s
+i.g.j.b.BoonStringDirect.medium          thrpt   8         5    1   442453.377     2048.532    ops/s
+byte[]
+i.g.j.b.BoonAsciiBytes.medium            thrpt   8         5    1   401936.097     1739.060    ops/s
+i.g.j.b.BoonCharDoingBytes.medium        thrpt   8         5    1   384948.650    82378.107    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.medium    thrpt   8         5    1   320339.980    13740.223    ops/s
+```
+
+12/15/13
 After refactor (common base class)
 
 ```
