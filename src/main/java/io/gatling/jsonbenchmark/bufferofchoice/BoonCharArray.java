@@ -1,31 +1,30 @@
-
-
 package io.gatling.jsonbenchmark.bufferofchoice;
 
-import static io.gatling.jsonbenchmark.bytes.Buffers.*;
-
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import org.boon.json.JsonParser;
-import org.boon.json.JsonParserFactory;
-import org.boon.json.implementation.JsonIndexOverlayParser;
+import org.boon.json.implementation.JsonParserCharArray;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.logic.BlackHole;
 
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import static io.gatling.jsonbenchmark.bytes.Buffers.*;
+
+
 @State
-public class BoonBenchMarkOverlay {
+public class BoonCharArray {
 
-    private final JsonParser parser = new JsonIndexOverlayParser (  );
+    private final JsonParser parser = new JsonParserCharArray ();
 
-    private Object parse(char[] chars) throws Exception {
-        return parser.parse ( Map.class, chars );
+    private Object parse(char[] bytes) throws Exception {
+        return parser.parse ( Map.class, bytes );
     }
 
     @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
+    @OutputTimeUnit( TimeUnit.SECONDS)
     public void actionLabel(BlackHole bh) throws Exception {
         bh.consume(parse(CHR_ACTION_LABEL_BYTES));
     }
