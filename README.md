@@ -11,6 +11,39 @@ Build with `mvn clean package`
 
 Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
 
+12/15/13
+
+```
+Benchmark                                        Mode Thr     Count  Sec         Mean   Mean error    Units
+char[]/String
+i.g.j.b.BoonBenchMarkOverlay.citmCatalog        thrpt   8         5    1      802.893       43.255    ops/s
+i.g.j.b.BoonCharArray.citmCatalog               thrpt   8         5    1      691.513       16.613    ops/s
+i.g.j.b.BoonBenchMarkLax.citmCatalog            thrpt   8         5    1      678.370       23.839    ops/s
+i.g.j.b.BoonCharArrayDoingString.citmCatalog    thrpt   8         5    1      631.620       20.259    ops/s
+i.g.j.b.BoonStringDirect.citmCatalog            thrpt   8         5    1      337.493       10.749    ops/s
+
+byte[]
+i.g.j.b.BoonAsciiBytes.citmCatalog              thrpt   8         5    1      656.130       19.709    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.citmCatalog      thrpt   8         5    1      537.373      129.094    ops/s
+i.g.j.b.BoonCharDoingBytes.citmCatalog          thrpt   8         5    1      494.733       82.232    ops/s
+```
+
+```
+Benchmark                                   Mode Thr     Count  Sec         Mean   Mean error    Units
+char[]/String
+i.g.j.b.BoonBenchMarkOverlay.medium        thrpt   8         5    1   711,039.187    51517.069    ops/s
+i.g.j.b.BoonBenchMarkLax.medium            thrpt   8         5    1   570,147.337     6394.392    ops/s
+i.g.j.b.BoonCharArrayDoingString.medium    thrpt   8         5    1   547,487.437     5221.812    ops/s
+i.g.j.b.BoonCharArray.medium               thrpt   8         5    1   542,346.703     8568.434    ops/s
+i.g.j.b.BoonStringDirect.medium            thrpt   8         5    1   443,719.363    18967.825    ops/s
+byte[]
+i.g.j.b.BoonAsciiBytes.medium              thrpt   8         5    1   413,414.393     2048.924    ops/s
+i.g.j.b.BoonCharDoingBytes.medium          thrpt   8         5    1   393,745.647     9531.639    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.medium      thrpt   8         5    1   333,575.097    54997.485    ops/s
+```
+
+
+
 
 12/15/13
 
