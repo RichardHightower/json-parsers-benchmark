@@ -7,6 +7,87 @@ Boon now has input stream, reader, byte[], char[], CharSequence and String suppo
 
 ## How to
 
+
+12/25/13
+
+
+```
+1.7 MB JSON String
+
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.citmCatalog             thrpt   8         5    1      873.970       94.240    ops/s
+i.g.j.s.GSONBenchmark.citmCatalog             thrpt   8         5    1      410.783      217.476    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      294.690       47.593    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      305.787       29.107    ops/s
+i.g.j.s.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      311.063       29.646    ops/s
+
+2K JSON String
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.medium             thrpt   8         5    1   816416.973    13231.453    ops/s
+i.g.j.s.GSONBenchmark.medium             thrpt   8         5    1   341148.250    18117.075    ops/s
+i.g.j.s.JacksonASTBenchmark.medium       thrpt   8         5    1   263167.610   147495.795    ops/s
+i.g.j.s.JacksonObjectBenchmark.medium    thrpt   8         5    1   282024.617     6922.138    ops/s
+i.g.j.s.JsonSmartBenchmark.medium        thrpt   8         5    1   296944.993     7852.929    ops/s
+
+```
+
+```
+1.7 MB JSON byte[]
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.citmCatalog             thrpt   8         5    1      628.710       91.286    ops/s
+i.g.j.b.GSONBenchmark.citmCatalog             thrpt   8         5    1      439.203      120.003    ops/s
+i.g.j.b.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      381.350       97.841    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      402.537        3.634    ops/s
+i.g.j.b.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      341.940       18.847    ops/s
+
+2K JSON byte[]
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.medium             thrpt   8         5    1   648162.887    18697.319    ops/s
+i.g.j.b.GSONBenchmark.medium             thrpt   8         5    1   260145.827     5934.588    ops/s
+i.g.j.b.JacksonASTBenchmark.medium       thrpt   8         5    1   289863.140    48969.875    ops/s
+i.g.j.b.JacksonObjectBenchmark.medium    thrpt   8         5    1   289010.543    11205.881    ops/s
+i.g.j.b.JsonSmartBenchmark.medium        thrpt   8         5    1   262873.957     3901.193    ops/s
+```
+
+```
+1.7 MB JSON Inputstream
+Benchmark                                                Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonBenchmark.citmCatalog             thrpt   8         5    1      626.907       31.450    ops/s
+i.g.j.inputStream.GSONBenchmark.citmCatalog             thrpt   8         5    1      426.120       13.946    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      376.820      115.502    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      360.850       89.648    ops/s
+
+
+2K file JSON Inputstream
+Benchmark                                           Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonBenchmark.medium             thrpt   8         5    1   218730.830     5262.596    ops/s
+i.g.j.inputStream.GSONBenchmark.medium             thrpt   8         5    1   151255.407     4486.414    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.medium       thrpt   8         5    1   156512.527   107512.401    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.medium    thrpt   8         5    1   160793.407     4056.790    ops/s
+
+```
+
+```
+1.7 MB JSON Reader
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.citmCatalog             thrpt   8         5    1      615.313       63.716    ops/s
+i.g.j.r.GSONBenchmark.citmCatalog             thrpt   8         5    1      411.847       18.978    ops/s
+i.g.j.r.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      264.727      118.541    ops/s
+i.g.j.r.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      246.783       93.409    ops/s
+i.g.j.r.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      151.097        3.502    ops/s
+
+2k JSON Reader
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.medium             thrpt   8         5    1   185075.093     6528.567    ops/s
+i.g.j.r.GSONBenchmark.medium             thrpt   8         5    1   134025.760     3385.134    ops/s
+i.g.j.r.JacksonASTBenchmark.medium       thrpt   8         5    1   107676.323    60674.421    ops/s
+i.g.j.r.JacksonObjectBenchmark.medium    thrpt   8         5    1   116903.500     3206.994    ops/s
+i.g.j.r.JsonSmartBenchmark.medium        thrpt   8         5    1    77898.710     2434.773    ops/s
+```
+
+Other JSON.org examples:
+
+
 Build with `mvn clean package`
 
 Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
