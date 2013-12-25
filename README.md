@@ -146,6 +146,59 @@ i.g.j.s.JsonSmartBenchmark.widget        thrpt   8         5    1   728506.560  
 2x faster than most. :) Good job GSON!
 
 
+Various parser modes that ship with Boon JSON parsers
+```
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonAsciiBytes.actionLabel            thrpt   8         5    1   302902.677    21981.467    ops/s
+i.g.j.b.BoonAsciiBytes.citmCatalog            thrpt   8         5    1      628.150       26.607    ops/s
+i.g.j.b.BoonAsciiBytes.medium                 thrpt   8         5    1   320658.760    38751.800    ops/s
+i.g.j.b.BoonAsciiBytes.menu                   thrpt   8         5    1  2081501.213   113660.611    ops/s
+i.g.j.b.BoonAsciiBytes.sgml                   thrpt   8         5    1   998463.200    31916.216    ops/s
+i.g.j.b.BoonAsciiBytes.small                  thrpt   8         5    1 11095898.987   534428.831    ops/s
+i.g.j.b.BoonAsciiBytes.webxml                 thrpt   8         5    1   148348.463     5512.808    ops/s
+i.g.j.b.BoonAsciiBytes.widget                 thrpt   8         5    1   879580.747    14598.011    ops/s
+i.g.j.b.BoonBenchMarkLax.actionLabel          thrpt   8         5    1   806689.270    28745.917    ops/s
+i.g.j.b.BoonBenchMarkLax.citmCatalog          thrpt   8         5    1      633.087       77.455    ops/s
+i.g.j.b.BoonBenchMarkLax.medium               thrpt   8         5    1   569042.093    61404.916    ops/s
+i.g.j.b.BoonBenchMarkLax.menu                 thrpt   8         5    1  2600248.763   105320.234    ops/s
+i.g.j.b.BoonBenchMarkLax.sgml                 thrpt   8         5    1  1476412.973   284184.058    ops/s
+i.g.j.b.BoonBenchMarkLax.small                thrpt   8         5    1 13336195.790  1442531.930    ops/s
+i.g.j.b.BoonBenchMarkLax.webxml               thrpt   8         5    1   270060.157     6539.573    ops/s
+i.g.j.b.BoonBenchMarkLax.widget               thrpt   8         5    1  1262768.937    51676.215    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.actionLabel    thrpt   8         5    1   185209.077   670100.163    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.citmCatalog    thrpt   8         5    1      379.917       30.037    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.medium         thrpt   8         5    1   217107.220     5247.417    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.menu           thrpt   8         5    1  1319969.417    79745.189    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.sgml           thrpt   8         5    1   688184.650    34033.100    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.small          thrpt   8         5    1  7486431.520  1228519.698    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.webxml         thrpt   8         5    1   104078.393    15332.908    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.widget         thrpt   8         5    1   526663.853   214399.644    ops/s
+i.g.j.b.BoonCharArray.actionLabel             thrpt   8         5    1   407056.423   149970.346    ops/s
+i.g.j.b.BoonCharArray.citmCatalog             thrpt   8         5    1      391.130       55.374    ops/s
+i.g.j.b.BoonCharArray.medium                  thrpt   8         5    1   320601.040    83669.815    ops/s
+i.g.j.b.BoonCharArray.menu                    thrpt   8         5    1  1686792.320   112046.346    ops/s
+i.g.j.b.BoonCharArray.sgml                    thrpt   8         5    1  1052574.220    44541.919    ops/s
+i.g.j.b.BoonCharArray.small                   thrpt   8         5    1  8071292.173   663678.327    ops/s
+i.g.j.b.BoonCharArray.webxml                  thrpt   8         5    1   181207.910    32126.919    ops/s
+i.g.j.b.BoonCharArray.widget                  thrpt   8         5    1   878541.030   137067.187    ops/s
+i.g.j.b.BoonFastParser.actionLabel            thrpt   8         5    1   601141.330    77361.337    ops/s
+i.g.j.b.BoonFastParser.citmCatalog            thrpt   8         5    1      429.987      198.559    ops/s
+i.g.j.b.BoonFastParser.medium                 thrpt   8         5    1   462712.293   118751.410    ops/s
+i.g.j.b.BoonFastParser.menu                   thrpt   8         5    1  1981728.817   239514.140    ops/s
+i.g.j.b.BoonFastParser.sgml                   thrpt   8         5    1  1117030.450   209863.168    ops/s
+i.g.j.b.BoonFastParser.small                  thrpt   8         5    1 10197156.600   169372.770    ops/s
+i.g.j.b.BoonFastParser.webxml                 thrpt   8         5    1   230100.983    62048.894    ops/s
+i.g.j.b.BoonFastParser.widget                 thrpt   8         5    1  1242538.033   169654.975    ops/s
+i.g.j.b.BoonStringDirect.actionLabel          thrpt   8         5    1   461358.763    45184.611    ops/s
+i.g.j.b.BoonStringDirect.citmCatalog          thrpt   8         5    1      332.883       25.544    ops/s
+i.g.j.b.BoonStringDirect.medium               thrpt   8         5    1   323354.063    18819.168    ops/s
+i.g.j.b.BoonStringDirect.menu                 thrpt   8         5    1  1668149.967    52797.831    ops/s
+i.g.j.b.BoonStringDirect.sgml                 thrpt   8         5    1   933777.700    77093.442    ops/s
+i.g.j.b.BoonStringDirect.small                thrpt   8         5    1  7111685.283   205942.968    ops/s
+i.g.j.b.BoonStringDirect.webxml               thrpt   8         5    1   154376.677    50416.916    ops/s
+i.g.j.b.BoonStringDirect.widget               thrpt   8         5    1   575450.757    45103.058    ops/s
+```
+
 Build with `mvn clean package`
 
 Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
