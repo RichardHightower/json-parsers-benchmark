@@ -27,7 +27,6 @@ package io.gatling.jsonbenchmark.bytes;
 
 import static io.gatling.jsonbenchmark.bytes.Buffers.*;
 
-import java.io.ByteArrayInputStream;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
