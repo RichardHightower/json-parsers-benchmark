@@ -88,6 +88,64 @@ i.g.j.r.JsonSmartBenchmark.medium        thrpt   8         5    1    77898.710  
 Other JSON.org examples:
 
 
+```
+webxml json.org example
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.webxml             thrpt   8         5    1   421016.033    13428.790    ops/s
+i.g.j.s.GSONBenchmark.webxml             thrpt   8         5    1   143801.263     7870.384    ops/s
+i.g.j.s.JacksonASTBenchmark.webxml       thrpt   8         5    1   125981.563    36753.717    ops/s
+i.g.j.s.JacksonObjectBenchmark.webxml    thrpt   8         5    1   130069.577    25055.300    ops/s
+i.g.j.s.JsonSmartBenchmark.webxml        thrpt   8         5    1   132422.153    10254.167    ops/s
+```
+Boon 3X faster
+
+```
+sgml json.org example
+Benchmark                               Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.sgml             thrpt   8         5    1  1846015.410   101291.991    ops/s
+i.g.j.s.GSONBenchmark.sgml             thrpt   8         5    1   988186.433    35337.393    ops/s
+i.g.j.s.JacksonASTBenchmark.sgml       thrpt   8         5    1   680502.597   289591.197    ops/s
+i.g.j.s.JacksonObjectBenchmark.sgml    thrpt   8         5    1   709969.980    29621.959    ops/s
+i.g.j.s.JsonSmartBenchmark.sgml        thrpt   8         5    1   796387.753    22697.397    ops/s
+```
+
+Boon 2x faster
+
+```
+actionLabel json.org example
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.actionLabel             thrpt   8         5    1  1109285.703    78440.576    ops/s
+i.g.j.s.GSONBenchmark.actionLabel             thrpt   8         5    1   429742.283    10097.416    ops/s
+i.g.j.s.JacksonASTBenchmark.actionLabel       thrpt   8         5    1   421132.630    10514.598    ops/s
+i.g.j.s.JacksonObjectBenchmark.actionLabel    thrpt   8         5    1   403535.453    16382.734    ops/s
+i.g.j.s.JsonSmartBenchmark.actionLabel        thrpt   8         5    1   453847.673    25607.331    ops/s
+```
+
+Boon over 2x faster
+
+```
+menu json.org example
+Benchmark                               Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.menu             thrpt   8         5    1  2582429.350   700873.986    ops/s
+i.g.j.s.GSONBenchmark.menu             thrpt   8         5    1  1240234.083    22312.822    ops/s
+i.g.j.s.JacksonASTBenchmark.menu       thrpt   8         5    1  1242132.793    19273.775    ops/s
+i.g.j.s.JacksonObjectBenchmark.menu    thrpt   8         5    1  1141071.207    36489.605    ops/s
+i.g.j.s.JsonSmartBenchmark.menu        thrpt   8         5    1  1463778.480    57490.408    ops/s
+```
+
+Boon 2x faster. 
+
+```
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.widget             thrpt   8         5    1  1485476.970    79222.003    ops/s
+i.g.j.s.GSONBenchmark.widget             thrpt   8         5    1   810153.490    20079.953    ops/s
+i.g.j.s.JacksonASTBenchmark.widget       thrpt   8         5    1   724349.650   284735.196    ops/s
+i.g.j.s.JacksonObjectBenchmark.widget    thrpt   8         5    1   705271.907    42304.730    ops/s
+i.g.j.s.JsonSmartBenchmark.widget        thrpt   8         5    1   728506.560    29680.028    ops/s
+```
+2x faster than most. :) Good job GSON!
+
+
 Build with `mvn clean package`
 
 Run with `java -jar target/microbenchmarks.jar ".*" -wi 1 -i 5 -f 1 -t 8`
