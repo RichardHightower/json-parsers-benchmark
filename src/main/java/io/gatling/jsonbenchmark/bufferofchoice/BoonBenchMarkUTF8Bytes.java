@@ -1,6 +1,7 @@
 package io.gatling.jsonbenchmark.bufferofchoice;
 
 import org.boon.json.JsonParser;
+import org.boon.json.JsonParserFactory;
 import org.boon.json.implementation.JsonUTF8Parser;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
@@ -16,7 +17,7 @@ import static io.gatling.jsonbenchmark.bytes.Buffers.*;
 public class BoonBenchMarkUTF8Bytes {
 
 
-    private final JsonParser parser = new JsonUTF8Parser ();
+    private final JsonParser parser = new JsonParserFactory ().createUTF8DirectByteParser ();
 
     private Object parse( byte[] bytes ) throws Exception {
         return parser.parse ( Map.class, bytes );

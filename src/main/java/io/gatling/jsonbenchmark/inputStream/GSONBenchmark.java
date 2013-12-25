@@ -70,12 +70,6 @@ public class GSONBenchmark {
 
     @GenerateMicroBenchmark
     @OutputTimeUnit(TimeUnit.SECONDS)
-    public void small(BlackHole bh) throws Exception {
-        bh.consume(parse(STR_SMALL_BYTES));
-    }
-
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
     public void webxml(BlackHole bh) throws Exception {
         bh.consume(parse(STR_WEBXML_BYTES));
     }

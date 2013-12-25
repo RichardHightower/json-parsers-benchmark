@@ -53,10 +53,6 @@ public class JsonSmartBenchmark {
         bh.consume(parse(STR_SGML_BYTES));
     }
 
-    public void small(BlackHole bh) throws Exception {
-        bh.consume(parse(STR_SMALL_BYTES));
-    }
-
     public void webxml(BlackHole bh) throws Exception {
         bh.consume(parse(STR_WEBXML_BYTES));
     }

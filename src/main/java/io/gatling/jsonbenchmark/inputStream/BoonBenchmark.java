@@ -1,7 +1,6 @@
 
 package io.gatling.jsonbenchmark.inputStream;
 
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -61,12 +60,6 @@ public class BoonBenchmark {
     @OutputTimeUnit(TimeUnit.SECONDS)
     public void sgml(BlackHole bh) throws Exception {
         bh.consume(parse(STR_SGML_BYTES));
-    }
-
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
-    public void small(BlackHole bh) throws Exception {
-        bh.consume(parse(STR_SMALL_BYTES));
     }
 
     @GenerateMicroBenchmark
