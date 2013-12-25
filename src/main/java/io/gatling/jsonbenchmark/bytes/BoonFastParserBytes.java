@@ -1,7 +1,7 @@
 package io.gatling.jsonbenchmark.bytes;
 
 import org.boon.json.JsonParser;
-import org.boon.json.implementation.JsonIndexOverlayParser;
+import org.boon.json.implementation.JsonFastParser;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.State;
@@ -15,9 +15,9 @@ import static io.gatling.jsonbenchmark.bytes.Buffers.WIDGET_BYTES;
 
 
 @State
-public class BoonOverlayBytes {
+public class BoonFastParserBytes {
 
-    private final JsonParser parser = new JsonIndexOverlayParser (  );
+    private final JsonParser parser = new JsonFastParser(  );
 
     private Object parse(byte[] bytes) throws Exception {
         return parser.parse ( Map.class,  bytes );
