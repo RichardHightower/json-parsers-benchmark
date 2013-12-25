@@ -41,7 +41,7 @@ import org.openjdk.jmh.logic.BlackHole;
 @State
 public class BoonBenchmark {
 
-    private final JsonParser parser = new JsonParserFactory ().create ();
+    private final JsonParser parser = new JsonParserFactory ().createLazyFinalParser ();
 
     private Object parse(byte[] bytes) throws Exception {
         return parser.parse ( Map.class,  bytes );
