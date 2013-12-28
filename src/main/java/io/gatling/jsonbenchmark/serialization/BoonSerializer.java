@@ -1,5 +1,7 @@
 package io.gatling.jsonbenchmark.serialization;
 
+import org.boon.json.JsonParser;
+import org.boon.json.JsonParserFactory;
 import org.boon.json.JsonSerializer;
 import org.boon.json.JsonSerializerFactory;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
@@ -13,9 +15,10 @@ import java.util.concurrent.TimeUnit;
 @State
 public class BoonSerializer {
 
-    JsonSerializer serializer = new JsonSerializerFactory( )
-            .setUseAnnotations ( false ).includeEmpty ()
-            .setHandleSimpleBackReference ( false ).create();
+    private final JsonSerializer serializer = new JsonSerializerFactory().create ();
+
+    private final JsonParser parser = new JsonParserFactory ().create ();
+
 
 
     private Object serialize(AllTypes alltype) throws Exception {
@@ -23,12 +26,21 @@ public class BoonSerializer {
         return serializer.serialize ( alltype );
     }
 
+    private Object roundTrip(AllTypes alltype) throws Exception {
+        return parser.parse ( AllTypes.class, serializer.serialize ( alltype ).readForRecycle () );
+    }
 
 
     @GenerateMicroBenchmark
     @OutputTimeUnit(TimeUnit.SECONDS)
     public void serializeSmall(BlackHole bh) throws Exception {
         bh.consume(serialize(TestObjects.OBJECT));
+    }
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void roundTriper(BlackHole bh) throws Exception {
+        bh.consume(roundTrip ( TestObjects.OBJECT ));
     }
 
 }

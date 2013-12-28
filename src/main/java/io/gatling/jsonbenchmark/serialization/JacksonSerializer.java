@@ -29,10 +29,25 @@ public class JacksonSerializer {
 
 
 
+    private Object roundTrip(AllTypes alltype) throws Exception {
+        StringWriter stringWriter = new StringWriter (  );
+        serializer.writeValue ( stringWriter, alltype );
+        return serializer.readValue (stringWriter.toString (),  AllTypes.class);
+    }
+
+
+
     @GenerateMicroBenchmark
     @OutputTimeUnit ( TimeUnit.SECONDS)
     public void serializeSmall(BlackHole bh) throws Exception {
         bh.consume(serialize(TestObjects.OBJECT));
     }
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void roundTriper(BlackHole bh) throws Exception {
+        bh.consume(roundTrip ( TestObjects.OBJECT ));
+    }
+
 
 }
