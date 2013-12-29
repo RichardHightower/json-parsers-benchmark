@@ -4,6 +4,8 @@ import org.boon.json.JsonParser;
 import org.boon.json.JsonParserFactory;
 import org.boon.json.JsonSerializer;
 import org.boon.json.JsonSerializerFactory;
+import org.boon.json.implementation.JsonSerializerFastNoNullsNoEmptyNoOutputTypeNoAnnotations;
+import org.boon.json.implementation.JsonSerializerImpl;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.State;
@@ -15,8 +17,8 @@ import java.util.concurrent.TimeUnit;
 @State
 public class BoonSerializer {
 
-    private final JsonSerializer serializer = new JsonSerializerFactory().create ();
 
+    private final JsonSerializer serializer = new JsonSerializerFactory ( ).create ();
     private final JsonParser parser = new JsonParserFactory ().create ();
 
 
