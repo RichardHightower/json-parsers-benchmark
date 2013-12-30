@@ -4,8 +4,7 @@ import org.boon.json.JsonParser;
 import org.boon.json.JsonParserFactory;
 import org.boon.json.JsonSerializer;
 import org.boon.json.JsonSerializerFactory;
-import org.boon.json.implementation.JsonSerializerFastNoNullsNoEmptyNoOutputTypeNoAnnotations;
-import org.boon.json.implementation.JsonSerializerImpl;
+
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.State;
