@@ -1,10 +1,12 @@
 package io.gatling.jsonbenchmark.string;
 
 import org.boon.json.JsonParser;
+import org.boon.json.implementation.JsonParserCharArray;
 import org.boon.json.implementation.JsonParserConcurrent;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.logic.BlackHole;
 
 import java.util.Map;
@@ -14,9 +16,10 @@ import static io.gatling.jsonbenchmark.bytes.Buffers.*;
 import static io.gatling.jsonbenchmark.bytes.Buffers.STR_WIDGET_BYTES;
 
 
-public class BoonConcurrentBenchmark {
+@State
+public class BoonClassicBenchmark {
 
-    private static final JsonParser parser = new JsonParserConcurrent (  );
+    private final JsonParser parser = new JsonParserCharArray (  );
 
     private Object parse(String str) throws Exception {
         return parser.parse ( Map.class, str );
