@@ -240,6 +240,38 @@ public class AllTypes {
         return result;
     }
 
+    public String getIgnoreMe3 () {
+        return ignoreMe3;
+    }
+
+    public void setIgnoreMe3 ( String ignoreMe3 ) {
+        this.ignoreMe3 = ignoreMe3;
+    }
+
+    public String getIgnoreMe2 () {
+        return ignoreMe2;
+    }
+
+    public void setIgnoreMe2 ( String ignoreMe2 ) {
+        this.ignoreMe2 = ignoreMe2;
+    }
+
+    public String getIngnoreMe () {
+        return ingnoreMe;
+    }
+
+    public void setIngnoreMe ( String ingnoreMe ) {
+        this.ingnoreMe = ingnoreMe;
+    }
+
+    public long getSomeDate () {
+        return someDate;
+    }
+
+    public void setSomeDate ( long someDate ) {
+        this.someDate = someDate;
+    }
+
     @Override
     public String toString () {
         return "AllTypes{" +
