@@ -5,7 +5,339 @@ Boon is the all around fastest JSON parser out of GSON, Jackson and JsonSmart (s
 Boon now has input stream, reader, byte[], char[], CharSequence and String support.
 
 
-## How to
+
+Run on 17" 2011 Mac Book Pro with SSD and 16 GB or RAM.
+
+
+1/5/2014
+
+## String
+
+Testing against a 1.7 MB string.
+
+java -jar target/microbenchmarks.jar ".*string.*Catalog" -wi 3 -i 5 -f 1 -t 8
+
+```
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.StatelessBoonBenchMark.citmCatalog    thrpt   8         5    1      979.087      234.875    ops/s
+i.g.j.s.BoonBenchmark.citmCatalog             thrpt   8         5    1      975.467      155.524    ops/s
+i.g.j.s.BoonClassicBenchmark.citmCatalog      thrpt   8         5    1      724.397       76.153    ops/s
+
+
+i.g.j.s.JsonSmartBenchmark.citmCatalog        thrpt   8         5    1      423.947       45.707    ops/s
+i.g.j.s.GSONBenchmark.citmCatalog             thrpt   8         5    1      373.203       38.523    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      269.490       30.313    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      263.187       95.644    ops/s
+```
+
+Boon is 3x+ some of the competitors.
+
+Jackson did so poorly that I ran it again by itself.
+
+```
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.JacksonASTBenchmark.citmCatalog       thrpt   8         5    1      314.703       96.497    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      381.953       11.466    ops/s
+```
+
+
+Then to be fair to boon, I ran the two top performing Boon parser configurations as well
+
+```
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.citmCatalog             thrpt   8         5    1     1249.423      215.237    ops/s
+i.g.j.s.StatelessBoonBenchMark.citmCatalog    thrpt   8         5    1     1074.957      255.704    ops/s
+```
+
+Then the run off test:
+
+Fastest Jackson against Fastest Boon
+```
+Benchmark                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.citmCatalog    thrpt   8         5    1     1306.067       75.496    ops/s
+```
+
+```
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      369.557       16.925    ops/s
+```
+
+Boon maintains its 4x status over Jackson for this test.  citmCatalog is a 1.7 MB file.
+
+
+Boon is 4x faster when you run them by themselves.
+
+
+
+Testing against a 2K JSON file
+
+java -jar target/microbenchmarks.jar ".*string.*medium" -wi 3 -i 5 -f 3 -t 8
+
+```
+
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.StatelessBoonBenchMark.medium    thrpt   8        15    1   828614.167   113309.263    ops/s
+i.g.j.s.BoonBenchmark.medium             thrpt   8        15    1   655723.022   113194.181    ops/s
+i.g.j.s.BoonClassicBenchmark.medium      thrpt   8        15    1   544726.818    31969.515    ops/s
+
+
+i.g.j.s.JsonSmartBenchmark.medium        thrpt   8        15    1   261257.857    15178.567    ops/s
+i.g.j.s.JacksonASTBenchmark.medium       thrpt   8        15    1   244845.260     4459.778    ops/s
+i.g.j.s.GSONBenchmark.medium             thrpt   8        15    1   242176.437     5552.595    ops/s
+i.g.j.s.JacksonObjectBenchmark.medium    thrpt   8        15    1   239011.644     9544.070    ops/s
+```
+
+Boon is nearly 4x faster than Jackson in this configuration.
+
+Now lets run the fastest boon against the fastest Jackson by themselves.
+
+
+java -jar target/microbenchmarks.jar ".*string.*JacksonASTBenchmark.*medium" -wi 3 -i 5 -f 1 -t 8
+
+```
+Benchmark                              Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.JacksonASTBenchmark.medium    thrpt   8         5    1   285827.937    30910.474    ops/s
+```
+
+Now the fastest Boon
+
+java -jar target/microbenchmarks.jar ".*string.*BoonBenchmark.*medium" -wi 3 -i 5 -f 1 -t 8
+
+
+```
+Benchmark                        Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.medium    thrpt   8         5    1  1053372.327    16233.011    ops/s
+```
+
+The conclusion from 12/15/2013 to 1/4/2014 Boon is 100% faster than Boon, and where it was 50% to 100% faster than Jackson.
+Boon is now 200%, 300% and sometimes up to 400% faster than Jackson.
+
+Boon wins by large margins when it comes to String parsing.
+
+## byte[] parsing
+
+How does Boon do against the competitors when it is a byte[] instead of a String?
+
+
+```
+Benchmark                                  Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.medium              thrpt   8         5    1   618123.037    29518.544    ops/s
+i.g.j.b.JacksonObjectBenchmark.medium     thrpt   8         5    1   379202.950    22999.872    ops/s
+i.g.j.b.JacksonASTBenchmark.medium        thrpt   8         5    1   293054.527    23981.011    ops/s
+i.g.j.b.GSONBenchmark.medium              thrpt   8         5    1   205735.037   207194.930    ops/s
+i.g.j.b.JsonSmartBenchmark.medium         thrpt   8         5    1   250384.043    25851.296    ops/s
+```
+
+Jackson does much better on this test than GSON and JsonSmart, but not better than Boon.
+
+Now lets run them by themselves.
+
+```
+Benchmark                        Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.medium    thrpt   8         5    1   827191.353    19862.004    ops/s
+```
+
+
+
+```
+Benchmark                                 Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.JacksonObjectBenchmark.medium    thrpt   8         5    1   354519.703    28758.081    ops/s
+```
+
+
+Boon is over 2x faster at parsing byte arrays then Jackson is.
+(Boon has about 5 different ways to parse a byte[] and all are faster than Jackson.)
+
+
+Jackson on all files from json.org.
+
+java -jar target/microbenchmarks.jar ".*bytes.*JacksonObjectBenchmark.*" -wi 3 -i 5 -f 1 -t 8
+
+```
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.JacksonObjectBenchmark.actionLabel    thrpt   8         5    1   320460.340    72131.986    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      268.130       55.186    ops/s
+i.g.j.b.JacksonObjectBenchmark.medium         thrpt   8         5    1   197295.940    22306.259    ops/s
+i.g.j.b.JacksonObjectBenchmark.menu           thrpt   8         5    1   976004.950   268554.107    ops/s
+i.g.j.b.JacksonObjectBenchmark.sgml           thrpt   8         5    1   572307.433   163097.782    ops/s
+i.g.j.b.JacksonObjectBenchmark.small          thrpt   8         5    1  2275296.777   304454.266    ops/s
+i.g.j.b.JacksonObjectBenchmark.webxml         thrpt   8         5    1   111176.677    19523.744    ops/s
+i.g.j.b.JacksonObjectBenchmark.widget         thrpt   8         5    1   343268.823   119559.082    ops/s
+```
+
+Boon all files on JSON.org
+
+ java -jar target/microbenchmarks.jar ".*bytes.*BoonBenchmark.*" -wi 3 -i 5 -f 1 -t 8
+
+```
+Benchmark                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.actionLabel    thrpt   8         5    1   618993.350    48683.336    ops/s
+i.g.j.b.BoonBenchmark.citmCatalog    thrpt   8         5    1      492.307       80.017    ops/s
+i.g.j.b.BoonBenchmark.medium         thrpt   8         5    1   458555.533    10036.229    ops/s
+i.g.j.b.BoonBenchmark.menu           thrpt   8         5    1  1959464.230   505004.028    ops/s
+i.g.j.b.BoonBenchmark.sgml           thrpt   8         5    1  1300516.190    59998.099    ops/s
+i.g.j.b.BoonBenchmark.small          thrpt   8         5    1 10017411.120   171608.588    ops/s
+i.g.j.b.BoonBenchmark.webxml         thrpt   8         5    1   253177.177   141918.931    ops/s
+i.g.j.b.BoonBenchmark.widget         thrpt   8         5    1  1045186.440    95933.625    ops/s
+```
+
+```
+i.g.j.b.BoonBenchmark.actionLabel             thrpt   8         5    1   618993.350    48683.336    ops/s
+i.g.j.b.JacksonObjectBenchmark.actionLabel    thrpt   8         5    1   320460.340    72131.986    ops/s
+```
+
+Boon nearly 2x faster
+
+
+
+1.7 MB
+```
+i.g.j.b.BoonBenchmark.citmCatalog             thrpt   8         5    1      492.307       80.017    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      268.130       55.186    ops/s
+```
+
+Boon nearly 2x faster
+
+```
+i.g.j.b.JacksonObjectBenchmark.small          thrpt   8         5    1  2275296.777   304454.266    ops/s
+i.g.j.b.BoonBenchmark.small                   thrpt   8         5    1 10017411.120   171608.588    ops/s
+```
+
+Boon nearly 5x faster!
+
+```
+i.g.j.b.JacksonObjectBenchmark.widget         thrpt   8         5    1   343268.823   119559.082    ops/s
+i.g.j.b.BoonBenchmark.widget                  thrpt   8         5    1  1045186.440    95933.625    ops/s
+```
+
+Boon almost 3x faster!
+
+
+
+```
+i.g.j.b.BoonBenchmark.medium                  thrpt   8         5    1   458555.533    10036.229    ops/s
+i.g.j.b.JacksonObjectBenchmark.medium         thrpt   8         5    1   197295.940    22306.259    ops/s
+```
+
+Boon over 2x faster!
+
+
+```
+i.g.j.b.JacksonObjectBenchmark.menu           thrpt   8         5    1   976004.950   268554.107    ops/s
+i.g.j.b.BoonBenchmark.menu                    thrpt   8         5    1  1959464.230   505004.028    ops/s
+```
+
+Boon over 2x faster!
+
+Winner overall for byte[]. Boon KILLS IT! Sweep!
+
+
+## InputStream
+
+```
+Benchmark                                                Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonBenchmark.actionLabel             thrpt   8         5    1   168598.707    10702.291    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.actionLabel    thrpt   8         5    1   165700.530     7939.486    ops/s
+Boon barely wins
+
+i.g.j.inputStream.BoonBenchmark.citmCatalog             thrpt   8         5    1      555.373       50.952    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      285.610       66.244    ops/s
+Boon wins by 2x
+
+i.g.j.inputStream.BoonBenchmark.medium                  thrpt   8         5    1   159105.320    19057.916    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.medium         thrpt   8         5    1   122754.690   130516.150    ops/s
+Boon wins
+
+i.g.j.inputStream.JacksonObjectBenchmark.menu           thrpt   8         5    1   252556.270   179084.546    ops/s
+i.g.j.inputStream.BoonBenchmark.menu                    thrpt   8         5    1   184977.057     5153.660    ops/s
+Jackson wins
+
+
+i.g.j.inputStream.JacksonObjectBenchmark.sgml           thrpt   8         5    1   193714.667     3526.321    ops/s
+i.g.j.inputStream.BoonBenchmark.sgml                    thrpt   8         5    1   180970.150     3499.859    ops/s
+Jackson barely wins
+
+i.g.j.inputStream.BoonBenchmark.webxml                  thrpt   8         5    1   132207.987   110279.994    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.webxml         thrpt   8         5    1    87252.977    16961.356    ops/s
+Boon wins by a really good margin!
+
+i.g.j.inputStream.BoonBenchmark.widget                  thrpt   8         5    1   178216.637    21779.520    ops/s
+i.g.j.inputStream.JacksonObjectBenchmark.widget         thrpt   8         5    1   171787.453    28138.131    ops/s
+Boon wins
+```
+
+Boon wins nearly all, but Jackson wins a few here. GSON also does well at inputStream.
+Winner overall for inputStream. Boon!
+
+
+## Reader
+
+```
+Benchmark                             Mode Thr     Count  Sec         Mean   Mean error    Units
+```
+
+```
+Benchmark                                      Mode Thr     Count  Sec         Mean   Mean error    Units
+
+i.g.j.r.BoonBenchmark.actionLabel             thrpt   8         5    1   186001.097    18425.520    ops/s
+i.g.j.r.JacksonObjectBenchmark.actionLabel    thrpt   8         5    1   163270.073     3730.813    ops/s
+Boon wins!
+
+
+i.g.j.r.BoonBenchmark.citmCatalog             thrpt   8         5    1      530.150      108.657    ops/s
+i.g.j.r.JacksonObjectBenchmark.citmCatalog    thrpt   8         5    1      226.990       81.640    ops/s
+Boon wins by a large margin!     Close to 2x
+
+i.g.j.r.BoonBenchmark.medium                  thrpt   8         5    1   136242.553     4719.231    ops/s
+i.g.j.r.JacksonObjectBenchmark.medium         thrpt   8         5    1   105882.313     3083.148    ops/s
+Boon wins by 30%!
+
+
+i.g.j.r.BoonBenchmark.menu                    thrpt   8         5    1   145418.360    19145.101    ops/s
+i.g.j.r.JacksonObjectBenchmark.menu           thrpt   8         5    1   134975.063     7718.413    ops/s
+Boon wins by a tad!
+
+i.g.j.r.BoonBenchmark.sgml                    thrpt   8         5    1   128216.103   141559.091    ops/s
+i.g.j.r.JacksonObjectBenchmark.sgml           thrpt   8         5    1   140934.190   123224.172    ops/s
+Jackson wins!
+
+i.g.j.r.JacksonObjectBenchmark.small          thrpt   8         5    1   145166.813     3960.731    ops/s
+i.g.j.r.BoonBenchmark.small                   thrpt   8         5    1   145121.580    19487.609    ops/s
+Almost a tie, but Jackson wins.
+
+
+i.g.j.r.BoonBenchmark.webxml                  thrpt   8         5    1   116019.730    10943.316    ops/s
+i.g.j.r.JacksonObjectBenchmark.webxml         thrpt   8         5    1    71660.963    43656.284    ops/s
+Boon wins by a large margin about 35%.
+
+i.g.j.r.BoonBenchmark.widget                  thrpt   8         5    1   143853.053    11396.247    ops/s
+i.g.j.r.JacksonObjectBenchmark.widget         thrpt   8         5    1   119811.283    14264.563    ops/s
+Boon wins by a large margin about 30%
+```
+
+In two instances Jackson barely beats boon. In one instance Jackson wins by 15%.
+Boon wins by 200%, 35%, 30% and 30%. Then there are a few smaller wins for Boon.
+
+Winner overall for reader. Boon!
+
+
+## Object Serialization
+
+Jackson
+
+```
+Benchmark                                    Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonSerializer.roundTriper          thrpt   8         5    1   214115.270    64366.819    ops/s
+i.g.j.s.JacksonSerializer.roundTriper       thrpt   8         5    1    96239.373    91586.021    ops/s
+Boon over 2x faster!
+
+
+i.g.j.s.BoonSerializer.serializeSmall       thrpt   8         5    1   692168.577    70292.894    ops/s
+i.g.j.s.JacksonSerializer.serializeSmall    thrpt   8         5    1   436992.523    68051.334    ops/s
+Boon is substantially faster!
+```
+
+Boon wins the object serialization battle.
 
 
 12/25/13

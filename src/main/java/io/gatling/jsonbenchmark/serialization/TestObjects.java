@@ -1,6 +1,7 @@
 package io.gatling.jsonbenchmark.serialization;
 
 import org.boon.Lists;
+import org.boon.core.reflection.BeanUtils;
 import org.boon.core.reflection.Reflection;
 
 import java.math.BigDecimal;
@@ -30,10 +31,10 @@ public class TestObjects {
         OBJECT.setMyShort ( (short)1 );
         OBJECT.setMyByte ( (byte)1 );
 
-        AllTypes foo2 = Reflection.copy ( OBJECT );
+        AllTypes foo2 = BeanUtils.copy( OBJECT );
         OBJECT.setAllType ( foo2 );
         foo2.setString ( "Hi Dad" );
-        OBJECT.setAllTypes ( Lists.list ( Reflection.copy ( foo2 ), Reflection.copy ( foo2 ) ) );
+        OBJECT.setAllTypes ( Lists.list ( BeanUtils.copy ( foo2 ), BeanUtils.copy ( foo2 ) ) );
     }
 
 }
