@@ -9,7 +9,7 @@ Boon now has input stream, reader, byte[], char[], CharSequence and String suppo
 Run on 17" 2011 Mac Book Pro with SSD and 16 GB or RAM.
 
 
-1/5/2014
+# 1/5/2014
 
 ## String
 
@@ -340,7 +340,7 @@ Boon is substantially faster!
 Boon wins the object serialization battle.
 
 
-12/25/13
+# 12/25/13
 
 
 ```
