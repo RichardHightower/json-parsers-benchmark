@@ -28,7 +28,7 @@ public class BoonPropertySerializer {
     }
 
     private Object roundTrip(AllTypes alltype) throws Exception {
-        return parser.parse ( AllTypes.class, serializer.serialize ( alltype ).readForRecycle () );
+        return parser.parse( AllTypes.class, serializer.serialize ( alltype ).readForRecycle() );
     }
 
 

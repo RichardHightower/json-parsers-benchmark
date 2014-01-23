@@ -47,9 +47,9 @@
 			<version>2.0-RC3</version>
 		</dependency>
 		<dependency>
-			<groupId>org.boon</groupId>
+			<groupId>io.fastjson</groupId>
 			<artifactId>boon</artifactId>
-			<version>0.5-SNAPSHOT</version>
+			<version>0.8-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
