@@ -64,6 +64,24 @@ i.g.j.b.JacksonObjectBenchmark.medium     thrpt   8         5    1   460046.937 
 i.g.j.b.JsonSmartBenchmark.medium         thrpt   8         5    1   400746.800    17624.143    ops/s
 ```
 
+Looks like Boon might have got a little bit slower with serialization. Still for the most part faster than Jackson, but...
+much closer.
+
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonByteArraySerializer.roundTriper          thrpt   8         5    1   221134.687    13071.900    ops/s
+i.g.j.s.BoonSerializer.roundTriper                   thrpt   8         5    1   251598.177    22822.093    ops/s
+i.g.j.s.JacksonByteArraySerializer.roundTriper       thrpt   8         5    1   204657.633     5149.931    ops/s
+i.g.j.s.JacksonSerializer.roundTriper                thrpt   8         5    1   191556.343     3836.536    ops/s
+i.g.j.s.BoonPropertySerializer.roundTriper           thrpt   8         5    1   181766.147   246260.139    ops/s
+
+i.g.j.s.BoonSerializer.serializeSmall                thrpt   8         5    1   871179.980    28593.206    ops/s
+i.g.j.s.BoonPropertySerializer.serializeSmall        thrpt   8         5    1   699768.417    25011.091    ops/s
+i.g.j.s.BoonByteArraySerializer.serializeSmall       thrpt   8         5    1   696129.613    15494.034    ops/s
+i.g.j.s.JacksonSerializer.serializeSmall             thrpt   8         5    1   553711.537    14712.647    ops/s
+i.g.j.s.JacksonByteArraySerializer.serializeSmall    thrpt   8         5    1   578856.257    48391.634    ops/s
+```
+
 # 1/5/2014
 
 ## String
