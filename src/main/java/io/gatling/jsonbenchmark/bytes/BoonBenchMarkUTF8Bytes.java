@@ -1,6 +1,7 @@
 package io.gatling.jsonbenchmark.bytes;
 
 import org.boon.json.JsonParser;
+import org.boon.json.JsonParserAndMapper;
 import org.boon.json.JsonParserFactory;
 import org.boon.json.implementation.JsonUTF8Parser;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
@@ -19,7 +20,7 @@ import static io.gatling.jsonbenchmark.bytes.Buffers.WIDGET_BYTES;
  */
 @State
 public class BoonBenchMarkUTF8Bytes {
-    private final JsonParser parser = new JsonUTF8Parser();
+    private final JsonParserAndMapper parser = new JsonParserFactory().createUTF8DirectByteParser();
 
     private Object parse(byte[] bytes) throws Exception {
         return parser.parse ( Map.class,  bytes );

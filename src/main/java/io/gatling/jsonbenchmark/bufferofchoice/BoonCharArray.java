@@ -20,7 +20,7 @@ public class BoonCharArray {
     private final JsonParser parser = new JsonParserCharArray ();
 
     private Object parse(char[] bytes) throws Exception {
-        return parser.parse ( Map.class, bytes );
+        return parser.parse (  bytes );
     }
 
     @GenerateMicroBenchmark

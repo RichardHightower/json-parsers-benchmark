@@ -21,7 +21,7 @@ public class BoonReaderCSParserFirstPassBenchMark {
     private final JsonParser parser = new JsonParserUsingCharacterSource (  );
 
     private Object parse(String str) throws Exception {
-        return parser.parse ( Map.class, new StringReader ( str ) );
+        return parser.parse (  new StringReader ( str ) );
     }
 
 

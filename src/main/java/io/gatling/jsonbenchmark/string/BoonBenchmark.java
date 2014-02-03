@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.boon.json.JsonParser;
+import org.boon.json.JsonParserAndMapper;
 import org.boon.json.JsonParserFactory;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
@@ -20,7 +21,7 @@ public class BoonBenchmark {
     private final JsonParser parser = new JsonParserFactory ().create ();
 
     private Object parse(String str) throws Exception {
-        return parser.parse ( Map.class, str );
+        return parser.parse ( str );
     }
 
     @GenerateMicroBenchmark

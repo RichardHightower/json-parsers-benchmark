@@ -21,7 +21,7 @@ public class BoonAsciiBytes {
         private final JsonParser parser = new JsonAsciiParser ();
 
         private Object parse( byte[] bytes ) throws Exception {
-            return parser.parse ( Map.class, bytes );
+            return parser.parse (  bytes );
         }
 
         @GenerateMicroBenchmark

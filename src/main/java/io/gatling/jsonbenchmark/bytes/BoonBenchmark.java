@@ -43,7 +43,7 @@ public class BoonBenchmark {
     private final JsonParser parser = new JsonParserFactory ().create ();
 
     private Object parse(byte[] bytes) throws Exception {
-        return parser.parse ( Map.class,  bytes );
+        return parser.parse (  bytes );
     }
 
     @GenerateMicroBenchmark

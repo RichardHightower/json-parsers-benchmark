@@ -1,6 +1,7 @@
 package io.gatling.jsonbenchmark.file;
 
 import org.boon.json.JsonParser;
+import org.boon.json.JsonParserAndMapper;
 import org.boon.json.JsonParserFactory;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
@@ -22,7 +23,7 @@ public class BoonBenchMark {
     public static final String FILE_WIDGET = ( "data/widget.json" );
 
 
-    private final JsonParser parser = new JsonParserFactory ().create ();
+    private final JsonParserAndMapper parser = new JsonParserFactory ().create ();
 
     private Object parse(String fileName) throws Exception {
         return parser.parseFile ( Map.class, fileName);

@@ -1,28 +1,25 @@
 package io.gatling.jsonbenchmark.string;
 
-import org.boon.json.JsonParser;
-import org.boon.json.JsonParserFactory;
+import org.boon.json.JsonSlurper;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.logic.BlackHole;
 
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static io.gatling.jsonbenchmark.bytes.Buffers.*;
 import static io.gatling.jsonbenchmark.bytes.Buffers.STR_WIDGET_BYTES;
 
-
-public class StatelessBoonBenchMark {
+public class NewJsonGroovySlurper {
 
     private Object parse(String str) throws Exception {
-        JsonParser parser = new JsonParserFactory ().create ();
 
-        return parser.parse ( str );
+        JsonSlurper slurper = new JsonSlurper ();
+        return slurper.parseText ( str );
     }
 
     @GenerateMicroBenchmark
-    @OutputTimeUnit ( TimeUnit.SECONDS)
+    @OutputTimeUnit( TimeUnit.SECONDS)
     public void actionLabel(BlackHole bh) throws Exception {
         bh.consume(parse(STR_ACTION_LABEL_BYTES));
     }

@@ -20,7 +20,7 @@ public class BoonFastParser {
     private final JsonParser parser = new JsonParserFactory ().createLazyFinalParser ();
 
     private Object parse(char[] chars) throws Exception {
-        return parser.parse ( Map.class, chars );
+        return parser.parse (  chars );
     }
 
     @GenerateMicroBenchmark

@@ -1,10 +1,7 @@
 package io.gatling.jsonbenchmark.serialization;
 
 
-import org.boon.json.JsonParser;
-import org.boon.json.JsonParserFactory;
-import org.boon.json.JsonSerializer;
-import org.boon.json.JsonSerializerFactory;
+import org.boon.json.*;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.State;
@@ -17,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class BoonByteArraySerializer {
 
     private final JsonSerializer serializer = new JsonSerializerFactory().useFieldsOnly().create ();
-    private final JsonParser parser = new JsonParserFactory().create();
+    private final JsonParserAndMapper parser = new JsonParserFactory().create();
 
 
 

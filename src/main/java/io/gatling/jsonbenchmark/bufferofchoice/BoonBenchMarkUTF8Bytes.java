@@ -20,7 +20,7 @@ public class BoonBenchMarkUTF8Bytes {
     private final JsonParser parser = new JsonParserFactory ().createUTF8DirectByteParser ();
 
     private Object parse( byte[] bytes ) throws Exception {
-        return parser.parse ( Map.class, bytes );
+        return parser.parse (  bytes );
     }
 
     @GenerateMicroBenchmark

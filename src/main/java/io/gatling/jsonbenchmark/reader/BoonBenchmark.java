@@ -30,7 +30,7 @@ public class BoonBenchmark {
     private final JsonParser parser = new JsonParserFactory ().create ();
 
     private Object parse(String str) throws Exception {
-        return parser.parse ( Map.class, Files.newBufferedReader ( IO.path (str), StandardCharsets.UTF_8) );
+        return parser.parse (  Files.newBufferedReader ( IO.path (str), StandardCharsets.UTF_8) );
     }
 
     @GenerateMicroBenchmark

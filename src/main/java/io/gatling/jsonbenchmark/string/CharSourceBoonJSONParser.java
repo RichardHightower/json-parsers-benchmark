@@ -20,7 +20,7 @@ public class CharSourceBoonJSONParser {
     private final JsonParser parser = new JsonParserUsingCharacterSource (  );
 
     private Object parse(String str) throws Exception {
-        return parser.parse ( Map.class, str );
+        return parser.parse (  str );
     }
 
 

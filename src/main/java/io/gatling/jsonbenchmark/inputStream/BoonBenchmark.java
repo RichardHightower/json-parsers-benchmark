@@ -29,7 +29,7 @@ public class BoonBenchmark {
     private final JsonParser parser = new JsonParserFactory ().create ();
 
     private Object parse(String str) throws Exception {
-        return parser.parse ( Map.class, Files.newInputStream ( IO.path (str) ) );
+        return parser.parse (  Files.newInputStream ( IO.path (str) ) );
     }
 
     @GenerateMicroBenchmark

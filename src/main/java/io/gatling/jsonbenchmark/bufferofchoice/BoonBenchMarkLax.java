@@ -23,7 +23,7 @@ public class BoonBenchMarkLax {
                 .lax().create ();
 
         private Object parse(char[] chars) throws Exception {
-            return parser.parse ( Map.class, chars );
+            return parser.parse (  chars );
         }
 
         @GenerateMicroBenchmark

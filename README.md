@@ -9,6 +9,61 @@ Boon now has input stream, reader, byte[], char[], CharSequence and String suppo
 Run on 17" 2011 Mac Book Pro with SSD and 16 GB or RAM.
 
 
+# 2/3/2014
+## String
+
+
+2MB file
+```
+
+Benchmark                                                    Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.StatelessBoonBenchMark.citmCatalog                  thrpt   8         5    1     1518.773      240.278    ops/s
+i.g.j.s.NewJsonGroovySlurper.citmCatalog                    thrpt   8         5    1     1458.510       58.089    ops/s
+i.g.j.s.BoonBenchmark.citmCatalog                           thrpt   8         5    1     1314.130      443.492    ops/s
+i.g.j.s.BoonClassicBenchmark.citmCatalog                    thrpt   8         5    1     1249.847      119.699    ops/s
+i.g.j.s.CharSourceBoonJSONParser.citmCatalog                thrpt   8         5    1      921.980       73.899    ops/s
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.citmCatalog    thrpt   8         5    1      769.380      207.787    ops/s
+i.g.j.s.GSONBenchmark.citmCatalog                           thrpt   8         5    1      576.317       46.672    ops/s
+i.g.j.s.JsonSmartBenchmark.citmCatalog                      thrpt   8         5    1      532.997       19.033    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog                     thrpt   8         5    1      459.303       37.215    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog                  thrpt   8         5    1      457.350       45.061    ops/s
+i.g.j.s.OldJsonGroovySlurper.citmCatalog                    thrpt   8         5    1       79.693        6.681    ops/s
+```
+
+
+2K file
+```
+Benchmark                                               Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.medium                           thrpt   8         5    1  1147523.500    60012.330    ops/s
+i.g.j.s.NewJsonGroovySlurper.medium                    thrpt   8         5    1  1149966.573    33237.450    ops/s
+i.g.j.s.StatelessBoonBenchMark.medium                  thrpt   8         5    1  1076266.087    34006.322    ops/s
+i.g.j.s.BoonClassicBenchmark.medium                    thrpt   8         5    1   883147.547    33810.752    ops/s
+i.g.j.s.CharSourceBoonJSONParser.medium                thrpt   8         5    1   672769.757    19792.864    ops/s
+i.g.j.s.JsonSmartBenchmark.medium                      thrpt   8         5    1   427723.087    32072.617    ops/s
+i.g.j.s.JacksonObjectBenchmark.medium                  thrpt   8         5    1   404063.020    25935.480    ops/s
+i.g.j.s.GSONBenchmark.medium                           thrpt   8         5    1   397165.327    15129.340    ops/s
+i.g.j.s.JacksonASTBenchmark.medium                     thrpt   8         5    1   384413.057    16011.828    ops/s
+//You would never use  BoonReaderCSParserFirstPassBenchMark for a 2K file.
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.medium    thrpt   8         5    1   379843.303    13534.991    ops/s
+i.g.j.s.OldJsonGroovySlurper.medium                    thrpt   8         5    1    37413.023    13029.075    ops/s
+```
+
+2K byte array
+
+```
+
+Benchmark                                  Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonAsciiBenchMark.medium         thrpt   8         5    1   721048.170    23699.815    ops/s
+i.g.j.b.BoonBenchMarkAsStream.medium      thrpt   8         5    1   757496.847    49248.716    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.medium     thrpt   8         5    1   585466.373    31190.785    ops/s
+i.g.j.b.BoonBenchmark.medium              thrpt   8         5    1   947796.113     6106.079    ops/s
+i.g.j.b.BoonFastBenchMarkDirect.medium    thrpt   8         5    1   679108.503    90480.244    ops/s
+i.g.j.b.GSONBenchmark.medium              thrpt   8         5    1   318269.970     9614.877    ops/s
+i.g.j.b.JacksonASTBenchmark.medium        thrpt   8         5    1   456198.843    32543.992    ops/s
+i.g.j.b.JacksonObjectBenchmark.medium     thrpt   8         5    1   460046.937   112323.372    ops/s
+i.g.j.b.JsonSmartBenchmark.medium         thrpt   8         5    1   400746.800    17624.143    ops/s
+```
+
 # 1/5/2014
 
 ## String

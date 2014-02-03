@@ -2,7 +2,6 @@ package io.gatling.jsonbenchmark.string;
 
 import org.boon.json.JsonParser;
 import org.boon.json.implementation.JsonParserCharArray;
-import org.boon.json.implementation.JsonParserConcurrent;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
@@ -22,7 +21,7 @@ public class BoonClassicBenchmark {
     private final JsonParser parser = new JsonParserCharArray (  );
 
     private Object parse(String str) throws Exception {
-        return parser.parse ( Map.class, str );
+        return parser.parse ( str );
     }
 
 
