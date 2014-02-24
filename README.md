@@ -59,6 +59,7 @@ $ java -jar target/microbenchmarks.jar ".*bytes.*medium" -wi 5 -i 5 -f 1 -t 8
 
 
 ##2MB JSON file from bytes
+
 ```
 Benchmark                                       Mode Thr     Count  Sec         Mean   Mean error    Units
 i.g.j.b.BoonBenchMarkAsStream.citmCatalog      thrpt   8         5    1     1131.903      194.055    ops/s
@@ -80,6 +81,7 @@ The one with the two asteriks use to be the fastest. Hmmm.....
 Ok... I found the issue see #51 and I fixed it.
 
 2MB file after performance patch
+
 ```
 Benchmark                                       Mode Thr     Count  Sec         Mean   Mean error    Units
 i.g.j.b.BoonAsciiBenchMark.citmCatalog         thrpt   8         5    1      959.430       57.944    ops/s
