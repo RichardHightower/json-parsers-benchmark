@@ -1,3 +1,104 @@
+#JSON Benchmarks
+
+
+##2MB JSON file from String:
+```
+Benchmark                                                    Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.StatelessBoonBenchMark.citmCatalog                  thrpt   8         5    1     1496.703       58.822    ops/s
+i.g.j.s.BoonBenchmark.citmCatalog                           thrpt   8         5    1     1438.450      302.845    ops/s
+i.g.j.s.BoonClassicBenchmark.citmCatalog                    thrpt   8         5    1     1273.437      148.069    ops/s
+i.g.j.s.CharSourceBoonJSONParser.citmCatalog                thrpt   8         5    1     1043.413      203.384    ops/s
+
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.citmCatalog    thrpt   8         5    1      778.533       36.213    ops/s
+i.g.j.s.GSONBenchmark.citmCatalog                           thrpt   8         5    1      639.620       75.655    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog                     thrpt   8         5    1      465.200       85.452    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog                  thrpt   8         5    1      455.123       53.080    ops/s
+i.g.j.s.JsonSmartBenchmark.citmCatalog                      thrpt   8         5    1      517.723       26.317    ops/s
+$ java -jar target/microbenchmarks.jar ".*string.*atalog" -wi 3 -i 5 -f 1 -t 8
+```
+
+Boon is around 3x faster for 2MB file.
+
+##2K JSON file from String
+
+```
+
+Benchmark                                               Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.medium                           thrpt   8         5    1  1220564.657    91167.902    ops/s
+i.g.j.s.StatelessBoonBenchMark.medium                  thrpt   8         5    1  1016000.010    10918.038    ops/s
+i.g.j.s.BoonClassicBenchmark.medium                    thrpt   8         5    1   904458.237    44201.718    ops/s
+i.g.j.s.CharSourceBoonJSONParser.medium                thrpt   8         5    1   701154.873     9723.202    ops/s
+
+i.g.j.s.JsonSmartBenchmark.medium                      thrpt   8         5    1   448081.200    26060.614    ops/s
+i.g.j.s.GSONBenchmark.medium                           thrpt   8         5    1   430581.893    75965.367    ops/s
+i.g.j.s.JacksonASTBenchmark.medium                     thrpt   8         5    1   367562.267    14159.499    ops/s
+i.g.j.s.JacksonObjectBenchmark.medium                  thrpt   8         5    1   396486.480    39789.697    ops/s
+$ java -jar target/microbenchmarks.jar ".*string.*medium" -wi 5 -i 5 -f 1 -t 8
+```
+
+Boon is about 3x faster for 2K file.
+
+
+##2K JSON file from bytes
+
+```
+Benchmark                                  Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.medium              thrpt   8         5    1   851929.140    37815.900    ops/s
+i.g.j.b.BoonBenchMarkAsStream.medium      thrpt   8         5    1   694253.713   131234.914    ops/s
+i.g.j.b.BoonAsciiBenchMark.medium         thrpt   8         5    1   668176.110    29982.173    ops/s
+i.g.j.b.BoonFastBenchMarkDirect.medium    thrpt   8         5    1   638332.270   101629.533    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.medium     thrpt   8         5    1   580905.073   125223.194    ops/s
+
+i.g.j.b.JacksonASTBenchmark.medium        thrpt   8         5    1   444613.757    19461.226    ops/s
+i.g.j.b.JacksonObjectBenchmark.medium     thrpt   8         5    1   442094.300    32044.794    ops/s
+i.g.j.b.JsonSmartBenchmark.medium         thrpt   8         5    1   397381.770    10140.091    ops/s
+i.g.j.b.GSONBenchmark.medium              thrpt   8         5    1   322127.823    14225.191    ops/s
+
+$ java -jar target/microbenchmarks.jar ".*bytes.*medium" -wi 5 -i 5 -f 1 -t 8
+
+
+
+##2MB JSON file from bytes
+```
+Benchmark                                       Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchMarkAsStream.citmCatalog      thrpt   8         5    1     1131.903      194.055    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.citmCatalog     thrpt   8         5    1      991.600       18.708    ops/s
+i.g.j.b.BoonAsciiBenchMark.citmCatalog         thrpt   8         5    1      975.000       28.901    ops/s
+i.g.j.b.BoonFastBenchMarkDirect.citmCatalog    thrpt   8         5    1      751.393       35.816    ops/s
+i.g.j.b.BoonBenchmark.citmCatalog              thrpt   8         5    1      597.533      120.593    ops/s**
+
+i.g.j.b.GSONBenchmark.citmCatalog              thrpt   8         5    1      573.237       19.834    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog     thrpt   8         5    1      558.673       14.546    ops/s
+i.g.j.b.JacksonASTBenchmark.citmCatalog        thrpt   8         5    1      539.967       15.565    ops/s
+i.g.j.b.JsonSmartBenchmark.citmCatalog         thrpt   8         5    1      497.630      239.093    ops/s
+$ java -jar target/microbenchmarks.jar ".*bytes.*atalog" -wi 5 -i 5 -f 1 -t 8
+```
+
+The one with the two asteriks use to be the fastest. Hmmm.....
+
+
+Ok... I found the issue see #51 and I fixed it.
+
+2MB file after performance patch
+```
+Benchmark                                       Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonAsciiBenchMark.citmCatalog         thrpt   8         5    1      959.430       57.944    ops/s
+i.g.j.b.BoonBenchMarkAsStream.citmCatalog      thrpt   8         5    1     1075.337       96.654    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.citmCatalog     thrpt   8         5    1      975.443       16.338    ops/s
+i.g.j.b.BoonBenchmark.citmCatalog              thrpt   8         5    1      992.327       74.077    ops/s
+i.g.j.b.BoonFastBenchMarkDirect.citmCatalog    thrpt   8         5    1      689.727      392.529    ops/s
+i.g.j.b.GSONBenchmark.citmCatalog              thrpt   8         5    1      558.950       38.724    ops/s
+i.g.j.b.JacksonASTBenchmark.citmCatalog        thrpt   8         5    1      538.153       18.508    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog     thrpt   8         5    1      552.517       27.177    ops/s
+i.g.j.b.JsonSmartBenchmark.citmCatalog         thrpt   8         5    1      511.000      130.428    ops/s
+$ java -jar target/microbenchmarks.jar ".*bytes.*atalog" -wi 5 -i 5 -f 1 -t 8
+```
+
+
+
+Older results
+
+
 # Json to Map microbenchmark for the JVM
 
 
@@ -7,6 +108,7 @@ Boon now has input stream, reader, byte[], char[], CharSequence and String suppo
 
 
 Run on 17" 2011 Mac Book Pro with SSD and 16 GB or RAM.
+
 
 
 # 2/3/2014
