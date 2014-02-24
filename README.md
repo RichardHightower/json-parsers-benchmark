@@ -55,6 +55,7 @@ i.g.j.b.JsonSmartBenchmark.medium         thrpt   8         5    1   397381.770 
 i.g.j.b.GSONBenchmark.medium              thrpt   8         5    1   322127.823    14225.191    ops/s
 
 $ java -jar target/microbenchmarks.jar ".*bytes.*medium" -wi 5 -i 5 -f 1 -t 8
+```
 
 
 
@@ -75,7 +76,7 @@ i.g.j.b.JsonSmartBenchmark.citmCatalog         thrpt   8         5    1      497
 $ java -jar target/microbenchmarks.jar ".*bytes.*atalog" -wi 5 -i 5 -f 1 -t 8
 ```
 
-The one with the two asteriks use to be the fastest. Hmmm.....
+The one with the two asterisks use to be the fastest. Hmmm.....
 
 
 Ok... I found the issue see #51 and I fixed it.
