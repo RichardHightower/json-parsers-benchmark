@@ -1,31 +1,49 @@
-package io.gatling.jsonbenchmark.string;
 
+package io.gatling.jsonbenchmark.reader;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.boon.IO;
 import org.boon.json.JsonParser;
-import org.boon.json.implementation.JsonParserCharArray;
+import org.boon.json.JsonParserFactory;
 import org.boon.json.implementation.JsonParserUsingCharacterSource;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.logic.BlackHole;
 
-import java.io.StringReader;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import static io.gatling.jsonbenchmark.bytes.Buffers.*;
-import static io.gatling.jsonbenchmark.bytes.Buffers.STR_WIDGET_BYTES;
-
 @State
-public class BoonReaderCSParserFirstPassBenchMark {
+public class BoonCharSourceReaderBenchMark {
 
-    private final JsonParser parser = new JsonParserUsingCharacterSource (  );
+    public static final String STR_ACTION_LABEL_BYTES = ( "data/actionLabel.json" );
+    public static final String STR_CITM_CATALOG_BYTES = ( "data/citm_catalog.json" );
+    public static final String STR_MEDIUM_BYTES = ( "data/medium.json" );
+    public static final String STR_MENU_BYTES = ( "data/menu.json" );
+    public static final String STR_SGML_BYTES = ( "data/sgml.json" );
+    public static final String  STR_SMALL_BYTES = ( "data/small.json" );
+    public static final String STR_WEBXML_BYTES = ( "data/webxml.json" );
+    public static final String STR_WIDGET_BYTES = ( "data/widget.json" );
+
+
+    private final JsonParser parser = new JsonParserUsingCharacterSource(  );
+
 
     private Object parse(String str) throws Exception {
-        return parser.parse (  new StringReader ( str ) );
+
+        try (Reader reader = new FileReader( new File(str) ) ) {
+
+            return parser.parse (  reader );
+        }
     }
 
     @GenerateMicroBenchmark
-    @OutputTimeUnit( TimeUnit.SECONDS)
+    @OutputTimeUnit(TimeUnit.SECONDS)
     public void actionLabel(BlackHole bh) throws Exception {
         bh.consume(parse(STR_ACTION_LABEL_BYTES));
     }
@@ -71,5 +89,4 @@ public class BoonReaderCSParserFirstPassBenchMark {
     public void widget(BlackHole bh) throws Exception {
         bh.consume(parse(STR_WIDGET_BYTES));
     }
-
 }

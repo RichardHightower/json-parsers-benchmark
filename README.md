@@ -1,6 +1,374 @@
 #JSON Benchmarks
 
 
+##March 2014 update
+
+
+The parser that can handle really larges files is now much faster.
+For small files it is comparable to Boon classic (which is fast indeed).
+
+###276 bytes input stream
+
+```
+
+Benchmark                                   Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonBenchmark.menu       thrpt   8         5    1   256649.380     6550.296    ops/s
+i.g.j.inputStream.BoonReaderSource.menu    thrpt   8         5    1   223919.550     3030.058    ops/s
+```
+
+For large files it is damn fast.
+
+###2MB input stream
+
+```
+
+Benchmark                                          Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonBenchmark.citmCatalog       thrpt   8         5    1      953.687      190.281    ops/s
+i.g.j.inputStream.BoonReaderSource.citmCatalog    thrpt   8         5    1      713.147       34.888    ops/s
+```
+
+It is also a lot faster for strings
+
+###2MB input string
+```
+
+Benchmark                                                                Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.citmCatalog                                       thrpt   8         5    1     1456.480      177.028    ops/s
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.citmCatalog                thrpt   8         5    1      921.993      128.215    ops/s
+```
+
+### 256 byte string
+```
+
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.menu                           thrpt   8         5    1  4550369.497   560465.199    ops/s
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.menu    thrpt   8         5    1  2432789.880   302442.060    ops/s
+```
+
+### 800 byte string
+
+```
+
+(BoonReaderCSParserFirstPassBenchMark)
+
+Benchmark                                                    Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.actionLabel                           thrpt   8         5    1  1503312.910   227303.012    ops/s
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.actionLabel    thrpt   8         5    1   897972.607   155177.062    ops/s
+
+```
+It is not at the top but it is not at the bottom either.
+
+```
+
+(BoonReaderCSParserFirstPassBenchMark)
+Benchmark                                                    Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.actionLabel                           thrpt   8         5    1  1496282.267    79267.558    ops/s
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.actionLabel    thrpt   8         5    1   897721.013    58424.655    ops/s
+i.g.j.s.JsonSmartBenchmark.actionLabel                      thrpt   8         5    1   773776.260    38862.778    ops/s
+i.g.j.s.GSONBenchmark.actionLabel                           thrpt   8         5    1   599318.977    34089.550    ops/s
+i.g.j.s.JacksonASTBenchmark.actionLabel                     thrpt   8         5    1   589280.720    39160.178    ops/s
+
+```
+
+### 2MB bytes byte[]
+```
+
+Benchmark                                                  Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.citmCatalog                         thrpt   8         5    1     1085.420      133.901    ops/s
+i.g.j.b.BoonCharacterSourceParserBenchMark.citmCatalog    thrpt   8         5    1      752.217       48.163    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog                thrpt   8         5    1      647.427       70.649    ops/s
+i.g.j.b.GSONBenchmark.citmCatalog                         thrpt   8         5    1      640.593       59.128    ops/s
+i.g.j.b.JacksonASTBenchmark.citmCatalog                   thrpt   8         5    1      565.193      226.690    ops/s
+
+
+```
+
+## Buffered Reader 2MB
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.citmCatalog                    thrpt   8         5    1     1067.157      124.617    ops/s
+i.g.j.r.BoonCharSourceReaderBenchMark.citmCatalog    thrpt   8         5    1      582.307      122.120    ops/s
+i.g.j.r.GSONBenchmark.citmCatalog                    thrpt   8         5    1      500.767       60.384    ops/s
+i.g.j.r.JacksonASTBenchmark.citmCatalog              thrpt   8         5    1      389.203       36.171    ops/s
+i.g.j.r.JacksonObjectBenchmark.citmCatalog           thrpt   8         5    1      385.283       67.707    ops/s
+i.g.j.r.JsonSmartBenchmark.citmCatalog               thrpt   8         5    1      191.683      138.717    ops/s
+
+```
+
+## Non buffered Reader 2MB
+
+```
+
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.citmCatalog                    thrpt   8         5    1      879.640      198.567    ops/s
+i.g.j.r.BoonCharSourceReaderBenchMark.citmCatalog    thrpt   8         5    1      643.257       36.767    ops/s
+i.g.j.r.GSONBenchmark.citmCatalog                    thrpt   8         5    1      503.663      110.863    ops/s
+i.g.j.r.JacksonASTBenchmark.citmCatalog              thrpt   8         5    1      417.050       32.580    ops/s
+i.g.j.r.JacksonObjectBenchmark.citmCatalog           thrpt   8         5    1      383.597       36.769    ops/s
+i.g.j.r.JsonSmartBenchmark.citmCatalog               thrpt   8         5    1       77.800       26.192    ops/s
+
+```
+
+## Non buffered Reader 800 bytes
+
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.actionLabel                    thrpt   8         5    1   184544.780     8153.912    ops/s
+i.g.j.r.JacksonASTBenchmark.actionLabel              thrpt   8         5    1   179456.143    24912.289    ops/s
+i.g.j.r.JacksonObjectBenchmark.actionLabel           thrpt   8         5    1   172349.727     5966.758    ops/s
+i.g.j.r.BoonCharSourceReaderBenchMark.actionLabel    thrpt   8         5    1   169064.080    11333.986    ops/s
+i.g.j.r.GSONBenchmark.actionLabel                    thrpt   8         5    1   164898.350    18003.979    ops/s
+i.g.j.r.JsonSmartBenchmark.actionLabel               thrpt   8         5    1   105055.627    30553.077    ops/s
+
+```
+## Buffered Reader 800 bytes
+
+```
+Benchmark
+
+
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.actionLabel                    thrpt   8         5    1   198635.293    89384.886    ops/s
+i.g.j.r.BoonCharSourceReaderBenchMark.actionLabel    thrpt   8         5    1   177748.553    27754.670    ops/s
+i.g.j.r.GSONBenchmark.actionLabel                    thrpt   8         5    1   168456.050    15754.074    ops/s
+i.g.j.r.JacksonASTBenchmark.actionLabel              thrpt   8         5    1   170970.967    18319.187    ops/s
+i.g.j.r.JacksonObjectBenchmark.actionLabel           thrpt   8         5    1   172429.387    24411.136    ops/s
+i.g.j.r.JsonSmartBenchmark.actionLabel               thrpt   8         5    1   103587.477    33390.533    ops/s
+
+```
+
+## Buffered Reader 800 bytes (2nd run)
+
+```
+
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.r.BoonBenchmark.actionLabel                    thrpt   8         5    1   213578.713     4497.457    ops/s
+i.g.j.r.BoonCharSourceReaderBenchMark.actionLabel    thrpt   8         5    1   179533.297    36883.339    ops/s
+i.g.j.r.GSONBenchmark.actionLabel                    thrpt   8         5    1   174883.333    17062.777    ops/s
+i.g.j.r.JacksonASTBenchmark.actionLabel              thrpt   8         5    1   184599.767     8719.266    ops/s
+i.g.j.r.JacksonObjectBenchmark.actionLabel           thrpt   8         5    1   186487.073    22581.524    ops/s
+i.g.j.r.JsonSmartBenchmark.actionLabel               thrpt   8         5    1   164896.207    59493.104    ops/s
+```
+
+## 2MB String ALL parsers
+
+```
+
+
+Benchmark                                                    Mode Thr     Count  Sec         Mean   Mean error    Units
+
+i.g.j.s.NewJsonGroovySlurper.citmCatalog **                 thrpt   8         5    1     1504.330      155.992    ops/s
+i.g.j.s.StatelessBoonBenchMark.citmCatalog                  thrpt   8         5    1     1416.013      100.156    ops/s
+i.g.j.s.BoonBenchmark.citmCatalog                           thrpt   8         5    1     1362.100      156.822    ops/s
+i.g.j.s.BoonClassicBenchmark.citmCatalog                    thrpt   8         5    1     1254.997      112.515    ops/s
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.citmCatalog    thrpt   8         5    1      967.743       88.001    ops/s
+i.g.j.s.CharSourceBoonJSONParser.citmCatalog                thrpt   8         5    1      949.200       78.495    ops/s
+i.g.j.s.GSONBenchmark.citmCatalog                           thrpt   8         5    1      708.437       74.831    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog                     thrpt   8         5    1      467.507       39.596    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog                  thrpt   8         5    1      473.730      102.298    ops/s
+i.g.j.s.JsonSmartBenchmark.citmCatalog                      thrpt   8         5    1      543.603       65.059    ops/s
+i.g.j.s.OldJsonGroovySlurper.citmCatalog                    thrpt   8         5    1       69.607       43.986    ops/s
+
+```
+
+** NewJsonGroovySlurper is a prototype Boon based parser that should make its way into the next release of Groovy.
+It will be called Groovy but it is a fork of the Boon parser.
+
+So it says NewJsonGroovySlurper says Groovy but it is also in Boon.
+
+## 800 byte string all
+
+```
+
+Benchmark                                                    Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonBenchmark.actionLabel                           thrpt   8         5    1  1427703.447   138385.114    ops/s
+i.g.j.s.StatelessBoonBenchMark.actionLabel                  thrpt   8         5    1  1223168.547    30686.280    ops/s
+i.g.j.s.BoonClassicBenchmark.actionLabel                    thrpt   8         5    1  1163722.207   288443.926    ops/s
+i.g.j.s.NewJsonGroovySlurper.actionLabel    (Boon)          thrpt   8         5    1  1161451.527    22002.522    ops/s
+i.g.j.s.CharSourceBoonJSONParser.actionLabel                thrpt   8         5    1  1110716.303    14478.552    ops/s
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.actionLabel    thrpt   8         5    1   902452.090   130748.565    ops/s
+i.g.j.s.JacksonASTBenchmark.actionLabel                     thrpt   8         5    1   615152.690   186273.490    ops/s
+i.g.j.s.GSONBenchmark.actionLabel                           thrpt   8         5    1   574508.490    31835.102    ops/s
+i.g.j.s.JacksonObjectBenchmark.actionLabel                  thrpt   8         5    1   561648.133    93105.751    ops/s
+i.g.j.s.JsonSmartBenchmark.actionLabel                      thrpt   8         5    1   780467.590    58234.044    ops/s
+i.g.j.s.OldJsonGroovySlurper.actionLabel                    thrpt   8         5    1    62825.667    21454.441    ops/s
+
+```
+
+You would never use the parser BoonReaderCSParserFirstPassBenchMark for small strings.
+It is only for large files, but if you did.. it would still be faster than Jackson and GSON.
+
+### 2MB byte byte[] all parsers
+```
+Benchmark                                                  Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonAsciiBenchMark.citmCatalog                    thrpt   8         5    1     1134.813      102.582    ops/s
+i.g.j.b.BoonBenchmark.citmCatalog                         thrpt   8         5    1     1108.603      233.469    ops/s
+i.g.j.b.BoonBenchMarkAsStream.citmCatalog                 thrpt   8         5    1     1076.097       44.240    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.citmCatalog                thrpt   8         5    1      959.423      108.027    ops/s
+i.g.j.b.BoonCharacterSourceParserBenchMark.citmCatalog    thrpt   8         5    1      656.713      197.626    ops/s
+i.g.j.b.BoonFastBenchMarkDirect.citmCatalog               thrpt   8         5    1      656.023      539.222    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog                thrpt   8         5    1      560.100      241.997    ops/s
+i.g.j.b.JacksonASTBenchmark.citmCatalog                   thrpt   8         5    1      545.643       15.744    ops/s
+i.g.j.b.GSONBenchmark.citmCatalog                         thrpt   8         5    1      543.300       83.793    ops/s
+i.g.j.b.JsonSmartBenchmark.citmCatalog                    thrpt   8         5    1      418.873      184.851    ops/s
+
+```
+$ java -jar target/microbenchmarks.jar ".*byte.*atalog" -wi 2 -i 5 -f 1 -t 8
+
+
+### 800 bytes byte[] all parsers
+```
+Benchmark                                                  Mode Thr     Count  Sec         Mean   Mean error    Units
+
+i.g.j.b.BoonBenchmark.actionLabel                         thrpt   8         5    1  1243576.623    84455.355    ops/s
+i.g.j.b.BoonFastBenchMarkDirect.actionLabel               thrpt   8         5    1  1118580.703    62562.492    ops/s
+i.g.j.b.BoonBenchMarkAsStream.actionLabel                 thrpt   8         5    1   867375.233    11689.417    ops/s
+i.g.j.b.BoonCharacterSourceParserBenchMark.actionLabel    thrpt   8         5    1   838610.773    53415.111    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.actionLabel                thrpt   8         5    1   721579.127    23616.489    ops/s
+i.g.j.b.BoonAsciiBenchMark.actionLabel                    thrpt   8         5    1   641985.283     7384.481    ops/s
+i.g.j.b.JacksonASTBenchmark.actionLabel                   thrpt   8         5    1   688255.347    79440.938    ops/s
+i.g.j.b.JacksonObjectBenchmark.actionLabel                thrpt   8         5    1   682183.123   266051.749    ops/s
+i.g.j.b.JsonSmartBenchmark.actionLabel                    thrpt   8         5    1   626275.820    70016.662    ops/s
+i.g.j.b.GSONBenchmark.actionLabel                         thrpt   8         5    1   482454.640    22909.362    ops/s
+
+```
+
+Some byte array tuning...
+
+### 800 byte array
+
+```
+Benchmark                                                  Mode Thr     Count  Sec         Mean   Mean error    Units
+
+i.g.j.b.BoonBenchmark.actionLabel                         thrpt   8         5    1  1247018.067    51544.440    ops/s
+i.g.j.b.BoonFastBenchMarkDirect.actionLabel               thrpt   8         5    1  1169257.843   115045.714    ops/s
+i.g.j.b.BoonCharacterSourceParserBenchMark.actionLabel    thrpt   8         5    1   889379.330    46980.986    ops/s
+i.g.j.b.BoonBenchMarkAsStream.actionLabel                 thrpt   8         5    1   872948.200     7438.475    ops/s
+i.g.j.b.BoonAsciiBenchMark.actionLabel                    thrpt   8         5    1   837961.497    77198.303    ops/s
+i.g.j.b.JacksonASTBenchmark.actionLabel                   thrpt   8         5    1   706900.240    46424.934    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.actionLabel                thrpt   8         5    1   669018.053    34408.121    ops/s
+i.g.j.b.JacksonObjectBenchmark.actionLabel                thrpt   8         5    1   657792.737    47840.650    ops/s
+i.g.j.b.JsonSmartBenchmark.actionLabel                    thrpt   8         5    1   629733.590    38082.553    ops/s
+i.g.j.b.GSONBenchmark.actionLabel                         thrpt   8         5    1   471024.863    41957.471    ops/s
+
+```
+
+
+After some more byte array tuning....
+
+
+The tweak should impact BoonBenchMarkAsStream and it does by about 20% in the positive.
+
+
+```
+
+
+Benchmark                                                  Mode Thr     Count  Sec         Mean   Mean error    Units
+
+i.g.j.b.BoonBenchMarkAsStream.citmCatalog                 thrpt   8         5    1     1021.703      219.101    ops/s
+i.g.j.b.BoonBenchmark.citmCatalog                         thrpt   8         5    1     1101.107      166.302    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.citmCatalog                thrpt   8         5    1      980.770      145.293    ops/s
+i.g.j.b.BoonAsciiBenchMark.citmCatalog                    thrpt   8         5    1      997.497      105.465    ops/s
+i.g.j.b.BoonFastBenchMarkDirect.citmCatalog               thrpt   8         5    1      747.467       57.409    ops/s
+i.g.j.b.BoonCharacterSourceParserBenchMark.citmCatalog    thrpt   8         5    1      621.543      106.924    ops/s
+i.g.j.b.JacksonASTBenchmark.citmCatalog                   thrpt   8         5    1      612.957       32.138    ops/s
+i.g.j.b.GSONBenchmark.citmCatalog                         thrpt   8         5    1      563.470       58.762    ops/s
+i.g.j.b.JacksonObjectBenchmark.citmCatalog                thrpt   8         5    1      569.233       47.784    ops/s
+i.g.j.b.JsonSmartBenchmark.citmCatalog                    thrpt   8         5    1      472.750       47.047    ops/s
+
+
+Benchmark                                                  Mode Thr     Count  Sec         Mean   Mean error    Units
+
+i.g.j.b.BoonBenchMarkAsStream.citmCatalog                 thrpt   8         5    1     1255.030       94.606    ops/s
+i.g.j.b.BoonBenchmark.citmCatalog                         thrpt   8         5    1     1094.410      108.695    ops/s
+i.g.j.b.BoonAsciiBenchMark.citmCatalog                    thrpt   8         5    1     1008.690       58.947    ops/s
+i.g.j.b.BoonBenchMarkUTF8Bytes.citmCatalog                thrpt   8         5    1     1017.087       75.928    ops/s
+i.g.j.b.BoonCharacterSourceParserBenchMark.citmCatalog    thrpt   8         5    1      669.060      127.652    ops/s
+i.g.j.b.BoonFastBenchMarkDirect.citmCatalog               thrpt   8         5    1      775.100      101.656    ops/s
+
+
+Benchmark                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchMarkAsStream.citmCatalog    thrpt   8         5    1     1238.670      139.044    ops/s
+
+
+Benchmark                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.citmCatalog    thrpt   8         5    1     1219.703       83.477    ops/s
+
+
+Benchmark                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchMarkAsStream.citmCatalog    thrpt   8         5    1     1252.973      134.321    ops/s
+
+Benchmark                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.citmCatalog    thrpt   8         5    1     1178.927      221.207    ops/s
+
+
+
+```
+
+So now... BoonBenchMarkAsStream is the fastest. I might have to make that the new default.
+
+
+```
+
+Benchmark                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchmark.actionLabel    thrpt   8         5    1  1296387.810    17311.946    ops/s
+
+
+
+Benchmark                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonBenchMarkAsStream.actionLabel    thrpt   8         5    1   873264.407     7451.251    ops/s
+
+```
+
+What I have now works best for small files.
+
+--------
+
+##2MB JSON file from String March before tuning
+```
+
+Benchmark                                                    Mode Thr     Count  Sec         Mean   Mean error    Units
+NEW
+i.g.j.s.BoonBenchmark.citmCatalog                           thrpt   8         5    1     1435.697       58.185    ops/s
+OLD
+i.g.j.s.BoonBenchmark.citmCatalog                           thrpt   8         5    1     1438.450      302.845    ops/s
+
+NEW
+i.g.j.s.BoonClassicBenchmark.citmCatalog                    thrpt   8         5    1     1251.010      117.101    ops/s
+OLD
+i.g.j.s.BoonClassicBenchmark.citmCatalog                    thrpt   8         5    1     1273.437      148.069    ops/s
+
+NEW (Handles really, really large files)
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.citmCatalog    thrpt   8         5    1      694.467       17.731    ops/s
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.citmCatalog    thrpt   8         5    1      704.260      122.111    ops/s RUN 2
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.citmCatalog    thrpt   8         5    1      735.260      122.111    ops/s RUN 3
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.citmCatalog    thrpt   8         5    1      742.793       80.689    ops/s RUN 4 (made it stateless)
+Adjusted default buffer size
+
+OLD
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.citmCatalog    thrpt   8         5    1      778.533       36.213    ops/s
+
+NEW
+i.g.j.s.CharSourceBoonJSONParser.citmCatalog                thrpt   8         5    1     1061.490      243.869    ops/s
+OLD
+i.g.j.s.CharSourceBoonJSONParser.citmCatalog                thrpt   8         5    1     1043.413      203.384    ops/s
+
+
+NEW
+i.g.j.s.StatelessBoonBenchMark.citmCatalog                  thrpt   8         5    1     1436.600      241.035    ops/s
+OLD
+i.g.j.s.StatelessBoonBenchMark.citmCatalog                  thrpt   8         5    1     1496.703       58.822    ops/s
+
+
+i.g.j.s.GSONBenchmark.citmCatalog                           thrpt   8         5    1      619.207       74.609    ops/s
+i.g.j.s.JacksonASTBenchmark.citmCatalog                     thrpt   8         5    1      430.633      122.312    ops/s
+i.g.j.s.JacksonObjectBenchmark.citmCatalog                  thrpt   8         5    1      434.180       84.485    ops/s
+i.g.j.s.JsonSmartBenchmark.citmCatalog                      thrpt   8         5    1      539.703       20.848    ops/s
+i.g.j.s.NewJsonGroovySlurper.citmCatalog                    thrpt   8         5    1     1430.413      102.525    ops/s
+i.g.j.s.OldJsonGroovySlurper.citmCatalog                    thrpt   8         5    1       73.440       13.690    ops/s
+```
+
+
 ##2MB JSON file from String:
 ```
 Benchmark                                                    Mode Thr     Count  Sec         Mean   Mean error    Units
@@ -8,7 +376,7 @@ i.g.j.s.StatelessBoonBenchMark.citmCatalog                  thrpt   8         5 
 i.g.j.s.BoonBenchmark.citmCatalog                           thrpt   8         5    1     1438.450      302.845    ops/s
 i.g.j.s.BoonClassicBenchmark.citmCatalog                    thrpt   8         5    1     1273.437      148.069    ops/s
 i.g.j.s.CharSourceBoonJSONParser.citmCatalog                thrpt   8         5    1     1043.413      203.384    ops/s
-
+i.g.j.s.BoonClassicBenchmark.citmCatalog                    thrpt   8         5    1     1273.437      148.069    ops/s
 i.g.j.s.BoonReaderCSParserFirstPassBenchMark.citmCatalog    thrpt   8         5    1      778.533       36.213    ops/s
 i.g.j.s.GSONBenchmark.citmCatalog                           thrpt   8         5    1      639.620       75.655    ops/s
 i.g.j.s.JacksonASTBenchmark.citmCatalog                     thrpt   8         5    1      465.200       85.452    ops/s
