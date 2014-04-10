@@ -6,51 +6,73 @@ Using JMH which is what open JDK uses.
 
 OSX MacBook Pro, JDK 1.7, 16GB RAM and 512GB SSD drive.
 
-#Quick FAQ
+
+# Summary
+
+Boon is much faster than Jackson with Reader, reading files, byte[] (2x to 4x faster),
+and char[] and String.
+
+Boon is 3x to 5x faster than Jackson at parsing String and char[].
+
+Boon has the hardest time with InputStream, and even there it is mostly faster than Jackson.
+
+Boon and Jackson are close at handling InputStream if the JSON stream is small.
+Once the JSON stream gets over 1K, Boon is the clear winner.
+
+Boon is also faster at encoding JSON strings and Java instances to/from JSON than Jackson.
+
+
+
+# Quick FAQ
 
 ##Why don't you test GSON and JSON smart?
 
 Jackson is faster than GSON and JSON smart.
-We have tests for all three.
+We have tests for all four.
+I only included the tests for Jackson because Jackson is faster than the other two.
+Anyone can download the benchmark and run all of the tests.
 
 ##Why don't you test Jackson AST?
 
 I do.
 I see no real difference between readTree and readValue.
 I left out AST because it is redundant.
+The tests are still there and easy to run.
+I find AST +/- 10% of non AST.
 
 
 ##Who wrote the benchmarks?
 
-Originally they were written by Stephane Landelle.
+Originally they were written by Stephane Landelle. He still has a copy.
 Later they were added to by Andrey Bloschetsov for Groovy serialization.
-I've been using this repo as a dumping ground to bench mark all sorts of Boon stuff.
-I need to create another repo at some point.
+I added new tests as well.
 
 
 ##Relationship to Groovy JSON parser for 2.3?
 
-Andrey Bloschetsov and I with the help of the Groovy lead developers
+Andrey Bloschetsov and I, with the help of the Groovy lead developers,
 took the Boon classes and forked them into Groovy 2.3.
 
 We did this mainly for parsing, but we also improved the JSON serialization speed.
 
 Boon and Groovy parsing are unsurprisingly very comparable.
 
-Groovy JSON parsing is a bit faster in a few use cases, and Boon parser is a bit faster in a few uses cases,
+Groovy JSON parsing is a bit faster in a few use cases,
+and Boon parser is a bit faster in a few uses cases,
 but mostly they are neck in neck.
 
-Boon JSON serialization is still quite a bit faster than Groovy.
-This will change in Groovy 2.4 or 2.5.
+Boon JSON de-serialization (from JSON into instances of Classes) is still quite a bit
+faster than Groovy. This will change in Groovy 2.4 or 2.5.
+
 The new Groovy JSON parser based on Boon is 20x faster than the Groovy 2.2 parser.
 
 #JSON
 
 Most JSON is taken from json.org sample files.
 The idea was to be fair.
+These are sample files for JSON.
 
-
-#InputStream
+#InputStream Parsing
 
 I ran this with JMH as follows:
 
@@ -171,9 +193,6 @@ It seems Jackson needed more warm-ups so I added them.
 I don't think non-warmed up code proves anything.
 Both Jackson and Boon were warmed up after three warm-ups.
 
-Boon is much faster than Jackson with Reader, byte[] (2x to 4x), and char[] and Strings.
-
-Boon is 3x to 5x faster than Jackson at parsing Strings and char[].
 
 
 ```
@@ -200,11 +219,6 @@ Boon File.
 
 ```
 
-# Overall
-
-Boon has the hardest time with InputStream.
-Boon and Jackson are close at handling input stream if the JSON stream is small.
-Once the JSON stream gets over 1K, Boon is the clear winner.
 
 
 
