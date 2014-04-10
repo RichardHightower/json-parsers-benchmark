@@ -4,7 +4,6 @@ package io.gatling.jsonbenchmark.inputStream;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Map;
@@ -18,7 +17,7 @@ import org.openjdk.jmh.logic.BlackHole;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JacksonASTBenchmark {
+public class MainJacksonObjectBenchmark {
 
     private static final ObjectMapper JACKSON_MAPPER = new ObjectMapper();
 
@@ -26,7 +25,7 @@ public class JacksonASTBenchmark {
     private Object parse(InputStream inputStream) throws Exception {
 
         try {
-            return JACKSON_MAPPER.readTree(inputStream);
+            return JACKSON_MAPPER.readValue(inputStream, Map.class);
         } finally {
             inputStream.close();
         }

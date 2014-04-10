@@ -1,37 +1,32 @@
 
-
 package io.gatling.jsonbenchmark.inputStream;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.gatling.jsonbenchmark.bytes.Buffers;
+import org.boon.Exceptions;
 import org.boon.IO;
+import org.boon.json.JsonParser;
+import org.boon.json.JsonParserFactory;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.logic.BlackHole;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+@State
+public class MainBoonBenchmark {
 
-public class JacksonASTBenchmark {
 
-    private static final ObjectMapper JACKSON_MAPPER = new ObjectMapper();
 
+    private final JsonParser parser = new JsonParserFactory().create();
 
     private Object parse(InputStream inputStream) throws Exception {
-
-        try {
-            return JACKSON_MAPPER.readTree(inputStream);
-        } finally {
-            inputStream.close();
-        }
+        return parser.parse (inputStream);
     }
-
 
     @GenerateMicroBenchmark
     @OutputTimeUnit(TimeUnit.SECONDS)
@@ -80,5 +75,7 @@ public class JacksonASTBenchmark {
         bh.consume(parse(new ByteArrayInputStream(Buffers.WIDGET_BYTES)));
 
     }
+
+
 
 }
