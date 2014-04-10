@@ -13,7 +13,8 @@ Java Boon - Benchmarks
 
 #JSON Benchmarks
 
-Using JMH which is what open JDK uses.
+We used JMH which is what OpenJDK uses.
+We used the json files from json.org for parsing.
 
 #Environment
 
@@ -22,33 +23,33 @@ OSX MacBook Pro, JDK 1.7, 16GB RAM and 512GB SSD drive.
 
 # Summary
 
-Boon is much faster than Jackson with Reader, reading files, byte[] (2x to 4x faster),
-and char[] and String.
+Boon JSON parser is much faster than Jackson with **Reader**,
+**reading files**, **byte[]**, and **char[]** and **String**.
 
-Boon is 3x to 5x faster than Jackson at parsing String and char[].
+Boon is 3x to 5x faster than Jackson at parsing JSON from **String** and **char[]**.
 
-Boon has the hardest time with InputStream, and even there it is mostly faster than Jackson.
+Boon has the hardest time with **InputStream**, and even there it is mostly faster than Jackson.
 
-Boon and Jackson are close at handling InputStream if the JSON stream is small.
+Boon and Jackson are close at handling **InputStream** if the JSON stream is small.
 Once the JSON stream gets over 1K, Boon is the clear winner.
 
-Boon is also faster at encoding JSON strings and Java instances to/from JSON than Jackson.
+Boon is also faster at encoding **JSON strings**,
+ and serializing/de-serializing Java instances to/from JSON than Jackson.
 
 
 
 # Quick FAQ
 
-##Why don't you test GSON and JSON smart?
+##Why don't you test GSON and JSONSmart?
 
-Jackson is faster than GSON and JSON smart.
+Jackson is faster than GSON and JSONSmart.
 We have tests for all four.
 I only included the tests for Jackson because Jackson is faster than the other two.
 Anyone can download the benchmark and run all of the tests.
 
 ##Why don't you test Jackson AST?
 
-I do.
-I see no real difference between readTree and readValue.
+I do. I see no real difference between **readTree** and **readValue**.
 I left out AST because it is redundant.
 The tests are still there and easy to run.
 I find AST +/- 10% of non AST.
@@ -56,7 +57,7 @@ I find AST +/- 10% of non AST.
 
 ##Who wrote the benchmarks?
 
-Originally they were written by Stephane Landelle. He still has a copy.
+They first version was written by Stephane Landelle of Gatling fame.
 Later they were added to by Andrey Bloschetsov for Groovy serialization.
 I added new tests as well.
 
@@ -81,13 +82,13 @@ The new Groovy JSON parser based on Boon is 20x faster than the Groovy 2.2 parse
 
 #JSON
 
-Most JSON is taken from json.org sample files.
+Most JSON samples are taken from json.org sample files.
 The idea was to be fair.
-These are sample files for JSON.
+
 
 #InputStream Parsing
 
-I ran this with JMH as follows:
+Run JMH as follows:
 
 ```
  java -jar target/microbenchmarks.jar ... -wi 2 -i 3 -f 2 -t 16
@@ -97,6 +98,8 @@ I ran this with JMH as follows:
 Two warm-ups. Two forks. 16 threads. Three iterations.
 Jackson and Boon are completely warmed up after the first iteration.
 Running it longer does not help.
+
+(Later we add more warm-ups.)
 
 Boon.
 
@@ -156,7 +159,7 @@ i.g.j.inputStream.MainBoonBenchmark.menu                    thrpt  16         6 
 ```
 
 Jackson wins. (Can't win them all.)
-For this small of a payload you might need to tweak the default buffer sizes.
+For this small of a payload you might need to tweak the default buffer sizes for Boon.
 
 ## InputStream sgml.json 705 bytes
 
@@ -187,14 +190,14 @@ Boon wins by a large margin.
 
 
 #Caveat
-Boon is a parser optimized for REST and websocket services.
+Boon is a parser optimized for REST and websocket style services.
 It is optimized to work in a reactive style environment like Akka, Vert.x, etc.
 It would work well with MessageDrivenBeans (EJB or Spring).
 For some use cases it runs stateless faster than Jackson runs with shared buffers.
 Benchmark first.
 It would take some extra effort to get superior results in a Servlet environment (I can do it, but...).
 Jackson is mature and solid. Don't assume ripping out Boon for Jackson will buy you anything.
-Jackson has tooling that makes it work really well in a Java EE environment.
+Jackson has tooling that makes it work really well in a Java EE environment, and is more fool proof.
 
 
 
@@ -204,7 +207,7 @@ Jackson has tooling that makes it work really well in a Java EE environment.
 Both Boon and Jackson have the ability to read straight from the file system.
 It seems Jackson needed more warm-ups so I added them.
 I don't think non-warmed up code proves anything.
-Both Jackson and Boon were warmed up after three warm-ups.
+Both Jackson and Boon were all warmed-up after three warm-ups.
 
 
 
@@ -314,6 +317,14 @@ Boon wins.
 
 #Reader
 
+Boon and Jackson can use a reader to read a JSON stream.
+
+```
+ java -jar target/microbenchmarks.jar ".*reader.*"  -wi 3 -i 3 -f 2 -t 16
+```
+
+## Reader results (altogether)
+
 ```
 Benchmark                                          Mode Thr     Count  Sec         Mean   Mean error    Units
 i.g.j.r.MainBoonBenchmark.actionLabel             thrpt  16         6    1  1482160.136   127335.188    ops/s
@@ -355,6 +366,17 @@ Boon almost 3x faster.
 
 
 #Parse From byte[] array
+
+
+
+Boon and Jackson can parse direct from a byte[].
+
+```
+ java -jar target/microbenchmarks.jar ".*byte.*"  -wi 3 -i 3 -f 2 -t 16
+```
+
+
+## Results from parsing direct from a byte array
 
 ```
 Benchmark                                          Mode Thr     Count  Sec         Mean   Mean error    Units
@@ -404,6 +426,14 @@ Boon wins by 2x.
 
 
 # Parse From String array
+
+
+
+Boon and Jackson can use a reader to read a JSON stream.
+
+```
+ java -jar target/microbenchmarks.jar ".*string.*"  -wi 3 -i 3 -f 2 -t 16
+```
 
 
 ## String
@@ -461,6 +491,14 @@ Boon is 5x faster than Jackson
 
 #Object Serialization
 
+
+
+Boon and Jackson can use a reader to read a JSON stream.
+
+```
+ java -jar target/microbenchmarks.jar ".*serialization.*"  -wi 3 -i 3 -f 2 -t 16
+```
+
 Jackson and Boon can do Object serialization.
 Boon uses this in SlumberDB to provide a fast key/value JSON store for Java using LevelDB, RocksDB, and MySQL.
 
@@ -480,6 +518,13 @@ Boon 20% faster.
 
 
 #Weird Stuff serialization
+
+
+Boon and Jackson can use a reader to read a JSON stream.
+
+```
+ java -jar target/microbenchmarks.jar ".*serializerTests.*"  -wi 3 -i 3 -f 2 -t 16
+```
 
 
 ```
