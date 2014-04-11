@@ -23,18 +23,24 @@ OSX MacBook Pro, JDK 1.7, 16GB RAM and 512GB SSD drive.
 
 # Summary
 
-Boon JSON parser is much faster than Jackson with **Reader**,
+
+Jackson is consistently faster than GSON and JSONSmart.
+
+Boon JSON parser is faster than Jackson with **Reader**,
 **reading files**, **byte[]**, and **char[]** and **String**.
 
-Boon is 3x to 5x faster than Jackson at parsing JSON from **String** and **char[]**.
+Boon is 3x to 5x faster than Jackson at parsing JSON from **String** and **char[]**,
+and 2x to 4x faster at parsing **byte[]**.
 
-Boon has the hardest time with **InputStream**, and even there it is mostly faster than Jackson.
+Boon and Jackson speeds are much closer with **InputStream** based parsing.
+Boon is usually faster at **InputStream**, but the margins are much smaller.
 
 Boon and Jackson are close at handling **InputStream** if the JSON stream is small.
-Once the JSON stream gets over 1K, Boon is the clear winner.
+Once the JSON stream gets over 1KB to 2KB, Boon wins consistently.
 
-Boon is also faster at encoding **JSON strings**,
- and serializing/de-serializing Java instances to/from JSON than Jackson.
+Boon is faster at encoding **JSON strings**,
+and serializing/de-serializing Java instances to/from JSON than Jackson.
+
 
 
 
@@ -190,16 +196,23 @@ Boon wins by a large margin.
 
 
 #Caveat
-Boon is a parser optimized for REST and websocket style services.
-It is optimized to work in a reactive style environment like Akka, Vert.x, etc.
-It would work well with MessageDrivenBeans (EJB or Spring).
+Boon JSON parser is a parser optimized for REST and websocket style services.
+
+Boon JSON parser is optimized to work in a reactive style environment like Akka, Vert.x, etc.
+Boon JSON parser would work well with MessageDrivenBeans (EJB or Spring).
+
 For some use cases it runs stateless faster than Jackson runs with shared buffers.
+
+Jackson can handle very large JSON files and very large JSON streams.
+This support was added to Boon JSON as part of the fork/port to Groovy JSON.
+With larger files the speeds are much more equivalent, and in fact Jackson might be 10% faster or so.
+
 Benchmark first.
-It would take some extra effort to get superior results in a Servlet environment (I can do it, but...).
+
+It would take some extra effort to get superior results in a Servlet environment (it can be done).
+
 Jackson is mature and solid. Don't assume ripping out Boon for Jackson will buy you anything.
 Jackson has tooling that makes it work really well in a Java EE environment, and is more fool proof.
-
-
 
 
 #File system read
@@ -502,6 +515,9 @@ Boon and Jackson can use a reader to read a JSON stream.
 Jackson and Boon can do Object serialization.
 Boon uses this in SlumberDB to provide a fast key/value JSON store for Java using LevelDB, RocksDB, and MySQL.
 
+Check out SlumberDB. https://github.com/RichardHightower/slumberdb
+:)
+
 ```
 Benchmark                                        Mode Thr     Count  Sec         Mean   Mean error    Units
 i.g.j.s.MainBoonSerializer.roundTriper          thrpt  16         6    1   327384.050     7562.980    ops/s
@@ -546,6 +562,7 @@ Boon 2x faster.
 
 ```
 
+Beyond this is just boiler plate Boon advertising. :)
 
 
 Thoughts
