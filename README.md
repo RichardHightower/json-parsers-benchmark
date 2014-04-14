@@ -1,7 +1,10 @@
-
 [Boon Home](https://github.com/RichardHightower/boon/wiki) | [Boon Source](https://github.com/RichardHightower/boon/wiki) | [If you are new to boon, you might want to start here](https://github.com/RichardHightower/boon/wiki). 
 Simple opinionated Java for the novice to expert level Java Programmer.
 **Low Ceremony. High Productivity. A real boon to Java to developers!**
+
+![Groovy Boon JSON Parser versus Jackson](http://4.bp.blogspot.com/-aSz6ChF1T2s/U0mjW32Ft0I/AAAAAAAAGBQ/I2mKrprbhhU/s1600/BoonGroovyVsJackson.png)
+
+
 
 
 Java Boon - Benchmarks
