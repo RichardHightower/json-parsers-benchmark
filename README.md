@@ -2,8 +2,6 @@
 Simple opinionated Java for the novice to expert level Java Programmer.
 **Low Ceremony. High Productivity. A real boon to Java to developers!**
 
-![Groovy Boon JSON Parser versus Jackson](http://4.bp.blogspot.com/-aSz6ChF1T2s/U0mjW32Ft0I/AAAAAAAAGBQ/I2mKrprbhhU/s1600/BoonGroovyVsJackson.png)
-
 
 
 
@@ -15,6 +13,9 @@ Java Boon - Benchmarks
 
 "Rick / Andrey duo spent a fair amount of time optimizing our JSON support, making Groovy 2.3’s JSON support usually faster than all the JSON libraries available in the Java ecosystem." -- Guillaume Laforge
 - See more at: http://glaforge.appspot.com/article/a-beta-release-for-groovy-2-3#sthash.iooyuekz.dpuf
+
+
+![Groovy Boon JSON Parser versus Jackson](http://4.bp.blogspot.com/-aSz6ChF1T2s/U0mjW32Ft0I/AAAAAAAAGBQ/I2mKrprbhhU/s1600/BoonGroovyVsJackson.png)
 
 
 #JSON Benchmarks
