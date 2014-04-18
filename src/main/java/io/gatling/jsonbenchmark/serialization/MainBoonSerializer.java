@@ -41,4 +41,20 @@ public class MainBoonSerializer {
         bh.consume(roundTrip ( TestObjects.OBJECT ));
     }
 
+
+
+
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void serializeBig(BlackHole bh) throws Exception {
+        bh.consume(serialize(TestObjects.BIG_OBJECT));
+    }
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void roundTripBig(BlackHole bh) throws Exception {
+        bh.consume(roundTrip ( TestObjects.BIG_OBJECT ));
+    }
+
 }

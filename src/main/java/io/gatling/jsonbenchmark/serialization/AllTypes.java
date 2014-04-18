@@ -3,6 +3,7 @@ package io.gatling.jsonbenchmark.serialization;
 import org.boon.json.annotations.JsonIgnore;
 import org.boon.json.annotations.JsonIgnoreProperties;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @JsonIgnoreProperties ("ignoreMe2")
-public class AllTypes {
+public class AllTypes implements Serializable {
 
 
 

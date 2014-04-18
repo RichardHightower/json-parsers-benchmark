@@ -1,40 +1,56 @@
 package io.gatling.jsonbenchmark.serialization;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.logic.BlackHole;
 
-import java.io.StringWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.concurrent.TimeUnit;
 
-import static org.boon.Boon.puts;
-
 /**
- * Created by rick on 12/27/13.
+ * Created by Richard on 4/18/14.
  */
-public class MainJacksonSerializer {
+public class MainJavaSerialization {
 
-    private static final ObjectMapper serializer = new ObjectMapper();
 
     private Object serialize(AllTypes allTypes) throws Exception {
+
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ObjectOutputStream serializer = new ObjectOutputStream(outputStream);
+
         allTypes.setMyLong ( System.currentTimeMillis () );
 
-        return serializer.writeValueAsString( allTypes );
+        serializer.writeObject(allTypes);
+        return outputStream.toByteArray();
     }
 
 
 
     private Object roundTrip(AllTypes alltype) throws Exception {
-        String string = serializer.writeValueAsString( alltype );
-        return serializer.readValue (string,  AllTypes.class);
+
+
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ObjectOutputStream serializer = new ObjectOutputStream(outputStream);
+
+
+
+        serializer.writeObject(alltype);
+
+
+        final ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+
+        ObjectInputStream inputSerializer = new ObjectInputStream(inputStream);
+        return inputSerializer.readObject ();
     }
 
 
 
     @GenerateMicroBenchmark
-    @OutputTimeUnit ( TimeUnit.SECONDS)
+    @OutputTimeUnit( TimeUnit.SECONDS)
     public void serializeSmall(BlackHole bh) throws Exception {
         bh.consume(serialize(TestObjects.OBJECT));
     }
