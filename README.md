@@ -93,6 +93,85 @@ faster than Groovy. This will change in Groovy 2.4 or 2.5.
 
 The new Groovy JSON parser based on Boon is 20x faster than the Groovy 2.2 parser.
 
+#Are the benchmarks flawed and do they allow JIT dead code elimination?
+
+The benchmark uses JMH. JMH is what the OpenJDK uses for benchmarking.
+JMH endeavors to eliminate JIT dead code elimination.
+ 
+```java
+    @GenerateMicroBenchmark
+    @OutputTimeUnit( TimeUnit.SECONDS)
+    public void actionLabel(BlackHole bh) throws Exception {
+        bh.consume(parse(STR_ACTION_LABEL_BYTES));
+    }
+ 
+```
+ 
+Every method is passed through to a BlackHole.
+ 
+[BlackHole From JMH](http://hg.openjdk.java.net/code-tools/jmh/file/tip/jmh-core/src/main/java/org/openjdk/jmh/logic/BlackHole.java).
+ 
+ 
+```java
+...
+/**
+ * Black Hole.
+ * <p/>
+ * Black hole "consumes" the values, conceiving no information to JIT whether the
+ * value is actually used afterwards. This can save from the dead-code elimination
+ * of the computations resulting in the given values.
+ *
+ * @author aleksey.shipilev@oracle.com
+ */
+ 
+...
+ 
+    /**
+     * Consume object. This call provides a side effect preventing JIT to eliminate dependent computations.
+     *
+     * @param obj object to consume.
+     */
+    public final void consume(Object obj) {
+        int tlr = (this.tlr = (this.tlr * 1664525 + 1013904223));
+        if ((tlr & tlrMask) == 0) {
+            // SHOULD ALMOST NEVER HAPPEN IN MEASUREMENT
+            this.obj1 = obj;
+            this.tlrMask = (this.tlrMask << 1) + 1;
+        }
+    }
+```
+ 
+See [JSON BenchMark Using Boon and JMH](https://github.com/RichardHightower/json-parsers-benchmark/blob/master/src/main/java/io/gatling/jsonbenchmark/string/MainBoonBenchmark.java)
+ 
+```java
+public class MainBoonBenchmark {
+ 
+    private final JsonParser parser = new JsonParserFactory ().create ();
+ 
+    private Object parse(String str) throws Exception {
+        return parser.parse ( str );
+    }
+ 
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void actionLabel(BlackHole bh) throws Exception {
+        bh.consume(parse(STR_ACTION_LABEL_BYTES));
+    }
+ 
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void citmCatalog(BlackHole bh) throws Exception {
+        bh.consume(parse(STR_CITM_CATALOG_BYTES));
+    }
+ 
+...
+```
+ 
+I think it is very unlikely that the benchmarks I used are "flawed benchmark with tons of potential dead code elimination."
+ 
+Maybe earlier benchmarks, but not the JMH based ones. But then again. I am always learning something new so teach me. 
+
+
 #JSON
 
 Most JSON samples are taken from json.org sample files.
