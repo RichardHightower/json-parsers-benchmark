@@ -17,6 +17,11 @@ Java Boon - Benchmarks
 
 ![Groovy Boon JSON Parser versus Jackson](http://4.bp.blogspot.com/-aSz6ChF1T2s/U0mjW32Ft0I/AAAAAAAAGBQ/I2mKrprbhhU/s1600/BoonGroovyVsJackson.png)
 
+"Rick Hightower recently published a JSON JVM libraries benchmark where his project Boon was the clear winner."...
+"Results seem quite consistent and Boon is indeed faster than GSON, Jackson and the Groovy built-in JSON support." ...
+--[Julien Ponge](http://julien.ponge.org/about/). 
+(world reknown computer scientist, hipster killer, author of Golo, JVM expert, InvokeDynamic expert, and just a all-around knowledgeable guy.)
+
 
 #JSON Benchmarks
 
