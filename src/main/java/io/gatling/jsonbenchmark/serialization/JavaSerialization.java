@@ -1,40 +1,30 @@
 package io.gatling.jsonbenchmark.serialization;
 
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
-import org.boon.Exceptions;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.logic.BlackHole;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.concurrent.TimeUnit;
 
-
-@State
-public class MainKryoJavaSerialization {
-
-    /**
-     * Kryo valueObjectConverter/valueSerializer
-     */
-    private final Kryo kryo = new Kryo();
-
-
+/**
+ * Created by Richard on 4/18/14.
+ */
+public class JavaSerialization {
 
 
     private Object serialize(AllTypes allTypes) throws Exception {
 
-
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ObjectOutputStream serializer = new ObjectOutputStream(outputStream);
 
+        allTypes.setMyLong ( System.currentTimeMillis () );
 
-        Output streamOut = new Output(outputStream);
-        this.kryo.writeObject(streamOut, allTypes);
-        streamOut.close();
-
+        serializer.writeObject(allTypes);
         return outputStream.toByteArray();
     }
 
@@ -44,18 +34,17 @@ public class MainKryoJavaSerialization {
 
 
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ObjectOutputStream serializer = new ObjectOutputStream(outputStream);
 
 
-        Output streamOut = new Output(outputStream);
-        this.kryo.writeObject(streamOut, alltype);
-        streamOut.close();
+
+        serializer.writeObject(alltype);
 
 
         final ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
-        Input input = new Input(inputStream);
-
-        return kryo.readObject(input, AllTypes.class);
+        ObjectInputStream inputSerializer = new ObjectInputStream(inputStream);
+        return inputSerializer.readObject ();
     }
 
 

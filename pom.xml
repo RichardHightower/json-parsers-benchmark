@@ -32,7 +32,11 @@
             <version>2.23.0</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
+        </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -46,7 +50,7 @@
 		<dependency>
 			<groupId>io.fastjson</groupId>
 			<artifactId>boon</artifactId>
-			<version>0.15-SNAPSHOT</version>
+			<version>0.16-SNAPSHOT</version>
 		</dependency>
         <dependency>
             <groupId>org.codehaus.groovy</groupId>

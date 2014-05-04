@@ -1,5 +1,6 @@
 package io.gatling.jsonbenchmark.serialization;
 
+import data.media.MediaContent;
 import org.boon.Lists;
 import org.boon.core.reflection.BeanUtils;
 import org.boon.core.reflection.Reflection;
@@ -17,6 +18,8 @@ public class TestObjects {
 
     static final AllTypes OBJECT = new AllTypes ();
 
+
+    static final MediaContent MEDIA_CONTENT = MediaContent.mediaContent();
 
     static final AllTypes BIG_OBJECT = new AllTypes ();
 

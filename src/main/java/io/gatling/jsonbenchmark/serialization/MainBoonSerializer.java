@@ -1,5 +1,6 @@
 package io.gatling.jsonbenchmark.serialization;
 
+import data.media.MediaContent;
 import org.boon.json.*;
 
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
@@ -20,12 +21,21 @@ public class MainBoonSerializer {
 
 
     private Object serialize(AllTypes alltype) throws Exception {
-        alltype.setMyLong ( System.currentTimeMillis () );
         return serializer.serialize ( alltype );
     }
 
     private Object roundTrip(AllTypes alltype) throws Exception {
         return parser.parse ( AllTypes.class, serializer.serialize( alltype ).readForRecycle() );
+    }
+
+    private Object mediaContentRoundTrip(MediaContent mediaContent) throws Exception {
+        return parser.parse ( MediaContent.class, serializer.serialize( mediaContent ).readForRecycle() );
+    }
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void mediaContentRoundTrip(BlackHole bh) throws Exception {
+        bh.consume(mediaContentRoundTrip ( TestObjects.MEDIA_CONTENT ));
     }
 
 
@@ -56,5 +66,7 @@ public class MainBoonSerializer {
     public void roundTripBig(BlackHole bh) throws Exception {
         bh.consume(roundTrip ( TestObjects.BIG_OBJECT ));
     }
+
+
 
 }

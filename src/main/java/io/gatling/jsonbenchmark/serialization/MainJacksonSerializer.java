@@ -2,6 +2,7 @@ package io.gatling.jsonbenchmark.serialization;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import data.media.MediaContent;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.logic.BlackHole;
@@ -14,12 +15,11 @@ import static org.boon.Boon.puts;
 /**
  * Created by rick on 12/27/13.
  */
-public class JacksonSerializer {
+public class MainJacksonSerializer {
 
     private static final ObjectMapper serializer = new ObjectMapper();
 
     private Object serialize(AllTypes allTypes) throws Exception {
-        allTypes.setMyLong ( System.currentTimeMillis () );
 
         return serializer.writeValueAsString( allTypes );
     }
@@ -30,6 +30,19 @@ public class JacksonSerializer {
         String string = serializer.writeValueAsString( alltype );
         return serializer.readValue (string,  AllTypes.class);
     }
+
+    private Object mediaContentRoundTrip(MediaContent mediaContent) throws Exception {
+        String string = serializer.writeValueAsString( mediaContent );
+        return serializer.readValue (string,  MediaContent.class);
+
+    }
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void mediaContentRoundTrip(BlackHole bh) throws Exception {
+        bh.consume(mediaContentRoundTrip ( TestObjects.MEDIA_CONTENT ));
+    }
+
 
 
 

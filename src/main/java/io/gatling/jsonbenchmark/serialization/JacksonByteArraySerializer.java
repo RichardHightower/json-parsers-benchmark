@@ -13,7 +13,6 @@ public class JacksonByteArraySerializer {
     private static final ObjectMapper serializer = new ObjectMapper();
 
     private Object serialize(AllTypes allTypes) throws Exception {
-        allTypes.setMyLong ( System.currentTimeMillis () );
 
         return serializer.writeValueAsBytes( allTypes );
     }

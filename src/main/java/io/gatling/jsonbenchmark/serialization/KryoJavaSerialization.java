@@ -1,30 +1,40 @@
 package io.gatling.jsonbenchmark.serialization;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
+import org.boon.Exceptions;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.logic.BlackHole;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Richard on 4/18/14.
- */
-public class MainJavaSerialization {
+
+@State
+public class KryoJavaSerialization {
+
+    /**
+     * Kryo valueObjectConverter/valueSerializer
+     */
+    private final Kryo kryo = new Kryo();
+
+
 
 
     private Object serialize(AllTypes allTypes) throws Exception {
 
+
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ObjectOutputStream serializer = new ObjectOutputStream(outputStream);
 
-        allTypes.setMyLong ( System.currentTimeMillis () );
 
-        serializer.writeObject(allTypes);
+        Output streamOut = new Output(outputStream);
+        this.kryo.writeObject(streamOut, allTypes);
+        streamOut.close();
+
         return outputStream.toByteArray();
     }
 
@@ -34,17 +44,18 @@ public class MainJavaSerialization {
 
 
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ObjectOutputStream serializer = new ObjectOutputStream(outputStream);
 
 
-
-        serializer.writeObject(alltype);
+        Output streamOut = new Output(outputStream);
+        this.kryo.writeObject(streamOut, alltype);
+        streamOut.close();
 
 
         final ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
-        ObjectInputStream inputSerializer = new ObjectInputStream(inputStream);
-        return inputSerializer.readObject ();
+        Input input = new Input(inputStream);
+
+        return kryo.readObject(input, AllTypes.class);
     }
 
 
