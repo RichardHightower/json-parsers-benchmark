@@ -15,7 +15,8 @@ import java.util.concurrent.TimeUnit;
 public class MainBoonSerializer {
 
 
-    private final JsonSerializer serializer = new JsonSerializerFactory().useFieldsOnly().create();
+    private final JsonSerializer serializer = new JsonSerializerFactory()
+            .setSerializeAsSupport(false).setEncodeStrings(false).useFieldsOnly().create();
     private final JsonParserAndMapper parser = new JsonParserFactory().create();
 
 
