@@ -7,10 +7,8 @@ import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.logic.BlackHole;
 
-import java.io.StringWriter;
 import java.util.concurrent.TimeUnit;
 
-import static org.boon.Boon.puts;
 
 /**
  * Created by rick on 12/27/13.
@@ -35,6 +33,16 @@ public class MainJacksonSerializer {
         String string = serializer.writeValueAsString( mediaContent );
         return serializer.readValue (string,  MediaContent.class);
 
+    }
+
+    private Object mediaContentOutput(MediaContent mediaContent) throws Exception {
+        return serializer.writeValueAsString( mediaContent );
+    }
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void mediaContentOutput(BlackHole bh) throws Exception {
+        bh.consume(mediaContentOutput ( TestObjects.MEDIA_CONTENT ));
     }
 
     @GenerateMicroBenchmark

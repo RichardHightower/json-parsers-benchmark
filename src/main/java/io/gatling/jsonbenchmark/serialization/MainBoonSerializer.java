@@ -32,12 +32,23 @@ public class MainBoonSerializer {
         return parser.parse ( MediaContent.class, serializer.serialize( mediaContent ).readForRecycle() );
     }
 
+
+    private Object mediaContentOutput(MediaContent mediaContent) throws Exception {
+        return serializer.serialize( mediaContent );
+    }
+
     @GenerateMicroBenchmark
     @OutputTimeUnit(TimeUnit.SECONDS)
     public void mediaContentRoundTrip(BlackHole bh) throws Exception {
         bh.consume(mediaContentRoundTrip ( TestObjects.MEDIA_CONTENT ));
     }
 
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void mediaContentOutput(BlackHole bh) throws Exception {
+        bh.consume(mediaContentOutput ( TestObjects.MEDIA_CONTENT ));
+    }
 
     @GenerateMicroBenchmark
     @OutputTimeUnit(TimeUnit.SECONDS)
