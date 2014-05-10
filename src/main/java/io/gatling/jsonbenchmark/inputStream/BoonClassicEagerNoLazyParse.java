@@ -1,33 +1,30 @@
-
 package io.gatling.jsonbenchmark.inputStream;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
 import io.gatling.jsonbenchmark.bytes.Buffers;
-import org.boon.IO;
 import org.boon.json.JsonParser;
-import org.boon.json.JsonParserFactory;
-import org.boon.json.implementation.JsonParserUsingCharacterSource;
+import org.boon.json.implementation.JsonParserCharArray;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.logic.BlackHole;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
+
 @State
-public class BoonReaderSource {
+public class BoonClassicEagerNoLazyParse {
 
 
 
+    private final JsonParser parser = new JsonParserCharArray();
 
-    private final JsonParser parser = new JsonParserUsingCharacterSource(  );
 
     private Object parse(InputStream stream) throws Exception {
         return parser.parse (  stream  );
     }
+
+
 
     @GenerateMicroBenchmark
     @OutputTimeUnit(TimeUnit.SECONDS)
@@ -76,6 +73,8 @@ public class BoonReaderSource {
         bh.consume(parse(new ByteArrayInputStream(Buffers.WIDGET_BYTES)));
 
     }
+
+
 
 
 }
