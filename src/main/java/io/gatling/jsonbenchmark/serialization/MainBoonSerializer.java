@@ -1,6 +1,7 @@
 package io.gatling.jsonbenchmark.serialization;
 
 import data.media.MediaContent;
+import io.gatling.jsonbenchmark.serialization.model.StringPerformance;
 import org.boon.json.*;
 
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
@@ -16,7 +17,7 @@ public class MainBoonSerializer {
 
 
     private final JsonSerializer serializer = new JsonSerializerFactory()
-            .setSerializeAsSupport(false).setEncodeStrings(false).useFieldsOnly().create();
+            .setSerializeAsSupport(false).useFieldsOnly().create();
     private final JsonParserAndMapper parser = new JsonParserFactory().create();
 
 
@@ -29,14 +30,35 @@ public class MainBoonSerializer {
         return parser.parse ( AllTypes.class, serializer.serialize( alltype ).readForRecycle() );
     }
 
+
+
+    private Object roundTrip(Class<?> cls, Object object) throws Exception {
+        return parser.parse ( cls, serializer.serialize( object ).toString() );
+    }
+
     private Object mediaContentRoundTrip(MediaContent mediaContent) throws Exception {
         return parser.parse ( MediaContent.class, serializer.serialize( mediaContent ).readForRecycle() );
+    }
+
+
+    private Object parseOnly(String json) throws Exception {
+
+        return parser.parse( json );
+    }
+
+
+
+    private Object serializeOnly(Object object) throws Exception {
+
+        return serializer.serialize( object );
     }
 
 
     private Object mediaContentOutput(MediaContent mediaContent) throws Exception {
         return serializer.serialize( mediaContent );
     }
+
+
 
     @GenerateMicroBenchmark
     @OutputTimeUnit(TimeUnit.SECONDS)
@@ -80,5 +102,25 @@ public class MainBoonSerializer {
     }
 
 
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void stringPerf(BlackHole bh) throws Exception {
+        bh.consume(roundTrip (StringPerformance.class, TestObjects.STRING_PERF ));
+    }
+
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void stringPerfParser(BlackHole bh) throws Exception {
+        bh.consume(parseOnly (TestObjects.STRING_PERF_STRING ));
+    }
+
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void stringPerfSerializer(BlackHole bh) throws Exception {
+        bh.consume(serializeOnly (TestObjects.STRING_PERF));
+    }
 
 }

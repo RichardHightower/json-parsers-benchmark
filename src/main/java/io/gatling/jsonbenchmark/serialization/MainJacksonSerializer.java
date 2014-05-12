@@ -3,10 +3,12 @@ package io.gatling.jsonbenchmark.serialization;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import data.media.MediaContent;
+import io.gatling.jsonbenchmark.serialization.model.StringPerformance;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.logic.BlackHole;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
@@ -38,6 +40,26 @@ public class MainJacksonSerializer {
     private Object mediaContentOutput(MediaContent mediaContent) throws Exception {
         return serializer.writeValueAsString( mediaContent );
     }
+
+
+    private Object roundTrip(Class<?> cls, Object object) throws Exception {
+        String string = serializer.writeValueAsString( object );
+        return serializer.readValue (string,  cls);
+    }
+
+
+    private Object parseOnly(String json) throws Exception {
+
+        return serializer.readValue(json, StringPerformance.class);
+    }
+
+
+
+    private Object serializeOnly(Object object) throws Exception {
+
+        return serializer.writeValueAsString( object );
+    }
+
 
     @GenerateMicroBenchmark
     @OutputTimeUnit(TimeUnit.SECONDS)
@@ -80,4 +102,25 @@ public class MainJacksonSerializer {
     }
 
 
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void stringPerf(BlackHole bh) throws Exception {
+        bh.consume(roundTrip (StringPerformance.class, TestObjects.STRING_PERF ));
+    }
+
+
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void stringPerfParser(BlackHole bh) throws Exception {
+        bh.consume(parseOnly (TestObjects.STRING_PERF_STRING ));
+    }
+
+
+    @GenerateMicroBenchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void stringPerfSerializer(BlackHole bh) throws Exception {
+        bh.consume(serializeOnly (TestObjects.STRING_PERF));
+    }
 }

@@ -1,6 +1,7 @@
 package io.gatling.jsonbenchmark.serialization;
 
 import data.media.MediaContent;
+import io.gatling.jsonbenchmark.serialization.model.StringPerformance;
 import org.boon.Lists;
 import org.boon.core.reflection.BeanUtils;
 import org.boon.core.reflection.Reflection;
@@ -8,6 +9,8 @@ import org.boon.core.reflection.Reflection;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
+import static org.boon.Boon.toJson;
 
 /**
  * Created by rick on 12/27/13.
@@ -22,6 +25,12 @@ public class TestObjects {
     static final MediaContent MEDIA_CONTENT = MediaContent.mediaContent();
 
     static final AllTypes BIG_OBJECT = new AllTypes ();
+
+
+    static final StringPerformance STRING_PERF = new StringPerformance (1);
+
+
+    static final String STRING_PERF_STRING = toJson(new StringPerformance (1));
 
     static  {
 

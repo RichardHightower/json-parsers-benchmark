@@ -8,7 +8,6 @@ import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.logic.BlackHole;
 
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static io.gatling.jsonbenchmark.bytes.Buffers.*;
