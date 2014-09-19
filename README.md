@@ -788,6 +788,28 @@ o.b.PathExpression.getAllOfTheEmployeesFirstNameFromEmployeeListBoonBench    thr
 o.b.PathExpression.getAllOfTheEmployeesFirstNameFromEmployeeListJavaBench    thrpt  16         6    1     3275.442      243.963    ops/s
 ```
 
+After some tuning
+
+2x to 3x faster
+
+
+AFTER TUNING
+
+```
+Benchmark                                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+o.b.PathExpression.employeeExtractionBenchBoon                               thrpt  16         6    1     1329.158      234.466    ops/s
+o.b.PathExpression.getAllOfTheEmployeesFirstNameFromDepartmentBoonBench      thrpt  16         6    1      574.922       83.610    ops/s
+o.b.PathExpression.getAllOfTheEmployeesFirstNameFromEmployeeListBoonBench    thrpt  16         6    1     1198.694       49.860    ops/s
+
+
+Benchmark                                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+o.b.PathExpression.employeeExtractionBenchBoon                               thrpt  16         6    1 24598828.758  1418473.744    ops/s
+o.b.PathExpression.getAllOfTheEmployeesFirstNameFromDepartmentBoonBench      thrpt  16         6    1     1479.969      808.086    ops/s
+o.b.PathExpression.getAllOfTheEmployeesFirstNameFromEmployeeListBoonBench    thrpt  16         6    1     1704.136      131.672    ops/s
+```
+
+It got a lot faster
+
 
 
 #STRING PARSE
