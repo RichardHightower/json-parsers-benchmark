@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class SerializerBasics {
 
     static ObjectMapper mapper = new ObjectMapper();
-    JsonSimpleSerializerImpl json2 = new JsonSimpleSerializerImpl(false, 30);
+    //JsonSimpleSerializerImpl json2 = new JsonSimpleSerializerImpl(false, 30);
     JsonSimpleSerializerImpl json = new JsonSimpleSerializerImpl();
 
     static Map<String, String> hello = Collections.singletonMap("message", "Hello, world!");
@@ -31,9 +31,9 @@ public class SerializerBasics {
     }
 
 
-    public String serializerBasicBoon2() {
-        return json2.serialize(hello).toString();
-    }
+    //public String serializerBasicBoon2() {
+    //    return json2.serialize(hello).toString();
+    //}
 
     public String serializerBasicJackson() {
         try {
@@ -50,11 +50,11 @@ public class SerializerBasics {
         bh.consume(serializerBasicBoon());
     }
 
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
-    public void serializerBasicBoonBench2(BlackHole bh) throws Exception {
-        bh.consume(serializerBasicBoon2());
-    }
+//    @GenerateMicroBenchmark
+//    @OutputTimeUnit(TimeUnit.SECONDS)
+//    public void serializerBasicBoonBench2(BlackHole bh) throws Exception {
+//        bh.consume(serializerBasicBoon2());
+//    }
 
 
     @GenerateMicroBenchmark

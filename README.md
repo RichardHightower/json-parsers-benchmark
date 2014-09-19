@@ -633,8 +633,9 @@ Boon and Jackson can use a reader to read a JSON stream.
  java -jar target/microbenchmarks.jar ".*serializerTests.*"  -wi 3 -i 3 -f 2 -t 16
 ```
 
+asdf
 
-```
+
 Benchmark                                                            Mode Thr     Count  Sec         Mean   Mean error    Units
 i.g.j.serializerTests.Test.complexTestJackson                       thrpt  16         6    1    69923.967     2382.158    ops/s
 i.g.j.serializerTests.Test.complextTestBoon                         thrpt  16         6    1    65746.303     7178.469    ops/s
@@ -648,12 +649,207 @@ Boon almost 2x faster.
 
 i.g.j.serializerTests.Test.simpleTestBoon                           thrpt  16         6    1  5762613.228   119177.393    ops/s
 i.g.j.serializerTests.Test.simpleTestJackson                        thrpt  16         6    1  2611158.339   411964.607    ops/s
-
 Boon 2x faster.
 
+
+
+
+#UPDATE: 9/18/2014
+
+Just making sure Boon did not get slower.. It did not.
+It is maybe the same and at times a bit faster.
+
+
+PARSING SPEED...
+
+Version 0.19-SNAPSHOT ----------------- OLDER BOON
+
+$ java -jar target/microbenchmarks.jar '.*BoonReaderCSParserFirstPassBenchMark.*(webxml|citmCatalog)' -wi 2 -i 3 -f 2 -t 16
+
+```
+Benchmark                                                    Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.citmCatalog    thrpt  16         6    1      886.169      152.244    ops/s
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.webxml         thrpt  16         6    1   397253.328    43078.002    ops/s
+
+
+java -jar target/microbenchmarks.jar '.*MainBoon.*(webxml|citmCatalog)' -wi 2 -i 3 -f 2 -t 16
+
+Benchmark                                           Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.bytes.MainBoonBenchmark.citmCatalog          thrpt  16         6    1      966.986      260.050    ops/s
+i.g.j.bytes.MainBoonBenchmark.webxml               thrpt  16         6    1   514852.433    67045.232    ops/s
+
+i.g.j.inputStream.MainBoonBenchmark.citmCatalog    thrpt  16         6    1      993.533      149.868    ops/s
+i.g.j.inputStream.MainBoonBenchmark.webxml         thrpt  16         6    1   427802.081    31993.755    ops/s
+
+i.g.j.reader.MainBoonBenchmark.citmCatalog         thrpt  16         6    1     1120.983      316.947    ops/s
+i.g.j.reader.MainBoonBenchmark.webxml              thrpt  16         6    1   581964.550    43111.788    ops/s
+
+i.g.j.string.MainBoonBenchmark.citmCatalog         thrpt  16         6    1     1371.894       99.504    ops/s
+i.g.j.string.MainBoonBenchmark.webxml              thrpt  16         6    1   608970.528    32441.014    ops/s
 ```
 
+#0.28-SNAPSHOT (9/18/2014) ------------------ NEWEST BOON
+
+```
+Benchmark                                                    Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.citmCatalog    thrpt  16         6    1      913.272      122.831    ops/s
+i.g.j.s.BoonReaderCSParserFirstPassBenchMark.webxml         thrpt  16         6    1   395475.856   132173.148    ops/s
+
+
+Benchmark                                           Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.bytes.MainBoonBenchmark.citmCatalog          thrpt  16         6    1     1052.183      105.838    ops/s
+i.g.j.bytes.MainBoonBenchmark.webxml               thrpt  16         6    1   508305.553    21101.791    ops/s
+
+i.g.j.inputStream.MainBoonBenchmark.citmCatalog    thrpt  16         6    1      999.403      110.369    ops/s
+i.g.j.inputStream.MainBoonBenchmark.webxml         thrpt  16         6    1   471568.922    21167.728    ops/s
+
+i.g.j.reader.MainBoonBenchmark.citmCatalog         thrpt  16         6    1     1233.969       48.141    ops/s
+i.g.j.reader.MainBoonBenchmark.webxml              thrpt  16         6    1   603346.353    23895.176    ops/s
+
+i.g.j.string.MainBoonBenchmark.citmCatalog         thrpt  16         6    1     1368.592      177.910    ops/s
+i.g.j.string.MainBoonBenchmark.webxml              thrpt  16         6    1   627767.028    45359.160    ops/s
+
+(little bit faster across the board)
+```
+
+#CONVERTING JAVA TO JSON SPEED
+
+
+0.28-SNAPSHOT (9/18/2014) ------------------ NEWER (about the same)
+
+```
+Benchmark                                            Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonByteArraySerializer.roundTriper         thrpt  16         6    1   301125.664    16279.167    ops/s
+i.g.j.s.BoonByteArraySerializer.serializeSmall      thrpt  16         6    1  1100971.542   218997.455    ops/s
+
+i.g.j.s.BoonPropertySerializer.roundTriper          thrpt  16         6    1   293658.294     5200.757    ops/s
+i.g.j.s.BoonPropertySerializer.serializeSmall       thrpt  16         6    1   958293.650    57165.670    ops/s
+
+i.g.j.s.MainBoonSerializer.mediaContentOutput       thrpt  16         6    1   119708.458     2580.149    ops/s
+i.g.j.s.MainBoonSerializer.mediaContentRoundTrip    thrpt  16         6    1    38901.803     3533.781    ops/s
+i.g.j.s.MainBoonSerializer.roundTripBig             thrpt  16         6    1       98.781       10.479    ops/s
+i.g.j.s.MainBoonSerializer.roundTriper              thrpt  16         6    1   352125.122    55081.732    ops/s
+i.g.j.s.MainBoonSerializer.serializeBig             thrpt  16         6    1      517.897       23.607    ops/s
+i.g.j.s.MainBoonSerializer.serializeSmall           thrpt  16         6    1  1412045.983    79609.870    ops/s
+i.g.j.s.MainBoonSerializer.stringPerf               thrpt  16         6    1    14510.467      672.938    ops/s
+i.g.j.s.MainBoonSerializer.stringPerfParser         thrpt  16         6    1   117517.289      991.123    ops/s
+i.g.j.s.MainBoonSerializer.stringPerfSerializer     thrpt  16         6    1   611169.878    29852.253    ops/s
+```
+
+
+0.20 ------------------------------------ OLDER
+
+```
+Benchmark                                            Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.BoonByteArraySerializer.roundTriper         thrpt  16         6    1   303312.125     8366.738    ops/s
+i.g.j.s.BoonByteArraySerializer.serializeSmall      thrpt  16         6    1  1072402.350   214683.816    ops/s
+
+i.g.j.s.BoonPropertySerializer.roundTriper          thrpt  16         6    1   287764.658    18556.544    ops/s
+i.g.j.s.BoonPropertySerializer.serializeSmall       thrpt  16         6    1   965304.742    88033.151    ops/s
+
+i.g.j.s.MainBoonSerializer.mediaContentOutput       thrpt  16         6    1   121042.142     5508.119    ops/s
+i.g.j.s.MainBoonSerializer.mediaContentRoundTrip    thrpt  16         6    1    37964.789     2466.718    ops/s
+i.g.j.s.MainBoonSerializer.roundTripBig             thrpt  16         6    1       97.894       27.619    ops/s
+i.g.j.s.MainBoonSerializer.roundTriper              thrpt  16         6    1   360411.236    34229.031    ops/s
+i.g.j.s.MainBoonSerializer.serializeBig             thrpt  16         6    1      511.456       42.934    ops/s
+i.g.j.s.MainBoonSerializer.serializeSmall           thrpt  16         6    1  1400140.731    71048.708    ops/s
+i.g.j.s.MainBoonSerializer.stringPerf               thrpt  16         6    1    11709.675     1551.816    ops/s
+i.g.j.s.MainBoonSerializer.stringPerfParser         thrpt  16         6    1   119640.975     1315.983    ops/s
+i.g.j.s.MainBoonSerializer.stringPerfSerializer     thrpt  16         6    1   604632.472    19725.350    ops/s
+```
+
+#PATH EXPRESSIONS
+
+0.20 -------------
+
+```
+Benchmark                                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+o.b.PathExpression.employeeExtractionBenchBoon                               thrpt  16         6    1     1148.258       58.464    ops/s
+o.b.PathExpression.employeeExtractionBenchJava                               thrpt  16         6    1    11702.375     1656.396    ops/s
+
+o.b.PathExpression.getAllOfTheEmployeesFirstNameFromDepartmentBoonBench      thrpt  16         6    1      527.364       28.999    ops/s
+o.b.PathExpression.getAllOfTheEmployeesFirstNameFromDepartmentJavaBench      thrpt  16         6    1     3025.150      479.086    ops/s
+
+o.b.PathExpression.getAllOfTheEmployeesFirstNameFromEmployeeListBoonBench    thrpt  16         6    1      888.633       37.161    ops/s
+o.b.PathExpression.getAllOfTheEmployeesFirstNameFromEmployeeListJavaBench    thrpt  16         6    1     3151.853      586.367    ops/s
+```
+
+0.28-SNAPSHOT ------
+
+```
+Benchmark                                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+o.b.PathExpression.employeeExtractionBenchBoon                               thrpt  16         6    1     1264.147       31.301    ops/s
+o.b.PathExpression.employeeExtractionBenchJava                               thrpt  16         6    1    12320.178      258.015    ops/s
+
+o.b.PathExpression.getAllOfTheEmployeesFirstNameFromDepartmentBoonBench      thrpt  16         6    1      529.311      116.473    ops/s
+o.b.PathExpression.getAllOfTheEmployeesFirstNameFromDepartmentJavaBench      thrpt  16         6    1     3165.897      130.448    ops/s
+
+o.b.PathExpression.getAllOfTheEmployeesFirstNameFromEmployeeListBoonBench    thrpt  16         6    1      969.483      105.140    ops/s
+o.b.PathExpression.getAllOfTheEmployeesFirstNameFromEmployeeListJavaBench    thrpt  16         6    1     3275.442      243.963    ops/s
+```
+
+
+
+#STRING PARSE
+
+
+0.28-SNAPSHOT ------
+
+```
+Benchmark                           Mode Thr     Count  Sec         Mean   Mean error    Units
+o.b.SplitString.parse3Chars        thrpt  16         6    1   133962.358    26928.196    ops/s
+o.b.SplitString.parse3JDK          thrpt  16         6    1    37042.547    24162.006    ops/s
+o.b.SplitString.parse3Str          thrpt  16         6    1    87014.453     2321.217    ops/s
+o.b.SplitString.splitChars         thrpt  16         6    1   143868.083    13285.823    ops/s
+o.b.SplitString.splitString        thrpt  16         6    1    85332.200     2275.696    ops/s
+o.b.SplitString.splitStringJDK     thrpt  16         6    1    40883.647     1544.038    ops/s
+o.b.SplitString.splitStringJDK2    thrpt  16         6    1    43204.147     1457.417    ops/s
+```
+
+0.20
+
+```
+Benchmark                           Mode Thr     Count  Sec         Mean   Mean error    Units
+o.b.SplitString.parse3Chars        thrpt  16         6    1   140829.467     9363.003    ops/s
+o.b.SplitString.parse3JDK          thrpt  16         6    1    27451.844      914.603    ops/s
+o.b.SplitString.parse3Str          thrpt  16         6    1    96330.258    29788.616    ops/s
+o.b.SplitString.splitChars         thrpt  16         6    1   121058.758    38348.591    ops/s
+o.b.SplitString.splitString        thrpt  16         6    1    84526.222     2632.541    ops/s
+o.b.SplitString.splitStringJDK     thrpt  16         6    1    42322.378     1974.207    ops/s
+o.b.SplitString.splitStringJDK2    thrpt  16         6    1    40598.103     5008.183    ops/s
+```
+
+REFLECTION REDUCE
+
+0.20
+
+```
+Benchmark                                              Mode Thr     Count  Sec         Mean   Mean error    Units
+o.b.ReduceBy.sumBench                                 thrpt  16         6    1     3082.403      290.826    ops/s
+o.b.ReduceBy.sumIntListReduceByUsingInterfaceBench    thrpt  16         6    1     3157.133      192.853    ops/s
+o.b.ReduceBy.sumLoopBench                             thrpt  16         6    1     3204.353      191.603    ops/s
+o.b.ReduceBy.sumReduceByDirectReflectionBench         thrpt  16         6    1       28.547        0.469    ops/s
+o.b.ReduceBy.sumReduceByUsingInterfaceBench           thrpt  16         6    1     3525.206      489.606    ops/s
+o.b.ReduceBy.sumReduceByUsingInvokeDynamicBench       thrpt  16         6    1       79.400        3.884    ops/s
+```
+
+0.28-SNAPSHOT ------
+
+```
+Benchmark                                              Mode Thr     Count  Sec         Mean   Mean error    Units
+o.b.ReduceBy.sumBench                                 thrpt  16         6    1     3062.669       83.035    ops/s
+o.b.ReduceBy.sumIntListReduceByUsingInterfaceBench    thrpt  16         6    1     3306.428      516.050    ops/s
+o.b.ReduceBy.sumLoopBench                             thrpt  16         6    1     3270.739      467.119    ops/s
+o.b.ReduceBy.sumReduceByDirectReflectionBench         thrpt  16         6    1       28.267        1.075    ops/s
+o.b.ReduceBy.sumReduceByUsingInterfaceBench           thrpt  16         6    1     3545.425      860.351    ops/s
+o.b.ReduceBy.sumReduceByUsingInvokeDynamicBench       thrpt  16         6    1       78.475        3.781    ops/s
+```
+
+
+
+
 Beyond this is just boiler plate Boon advertising. :)
+
 
 
 Thoughts
