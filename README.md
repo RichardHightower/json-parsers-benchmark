@@ -8,19 +8,23 @@ Simple opinionated Java for the novice to expert level Java Programmer.
 Java Boon - Benchmarks
 ===
 
-#### Boon comes with a fast JSON parser. This parser was forked / merged into Groovy 2.3. The Boon and Groovy 2.3 JSON parsers are a lot faster than mainstream JSON parsers.####
+#### Boon comes with a fast JSON parser. This parser was forked / merged into Groovy 2.3. The Boon and Groovy 2.3 JSON 
+parsers are a lot faster than mainstream JSON parsers.####
 
 
-"Rick / Andrey duo spent a fair amount of time optimizing our JSON support, making Groovy 2.3’s JSON support usually faster than all the JSON libraries available in the Java ecosystem." -- Guillaume Laforge
+"Rick / Andrey duo spent a fair amount of time optimizing our JSON support, making Groovy 2.3’s JSON support usually 
+faster than all the JSON libraries available in the Java ecosystem." -- Guillaume Laforge
 - See more at: http://glaforge.appspot.com/article/a-beta-release-for-groovy-2-3#sthash.iooyuekz.dpuf
 
 
 ![Groovy Boon JSON Parser versus Jackson](http://4.bp.blogspot.com/-aSz6ChF1T2s/U0mjW32Ft0I/AAAAAAAAGBQ/I2mKrprbhhU/s1600/BoonGroovyVsJackson.png)
 
 
-#### "Rick Hightower recently published a JSON JVM libraries benchmark where his project Boon was the clear winner...Results seem quite consistent and Boon is indeed faster than GSON, Jackson"
+#### "Rick Hightower recently published a JSON JVM libraries benchmark where his project Boon was the clear winner...
+Results seem quite consistent and Boon is indeed faster than GSON, Jackson"
 --[Julien Ponge](http://julien.ponge.org/about/). 
-(world reknown computer scientist, hipster killer, author of Golo, JVM expert, InvokeDynamic expert, and just a all-around knowledgeable guy.)
+Julien is the world renown French computer scientist, hipster killer, author of Golo, JVM expert, InvokeDynamic expert, 
+and just a all-around knowledgeable guy.
 
 
 #JSON Benchmarks
@@ -65,6 +69,13 @@ We have tests for all four.
 I only included the tests for Jackson because Jackson is faster than the other two.
 Anyone can download the benchmark and run all of the tests.
 
+Jackson is faster at some things. Jackson currently is 30% or more faster at serializing 
+large primitive arrays. 
+
+GSON is probably faster at some things as well. 
+
+These tests have been independently verified. 
+
 ##Why don't you test Jackson AST?
 
 I do. I see no real difference between **readTree** and **readValue**.
@@ -98,7 +109,7 @@ faster than Groovy. This will change in Groovy 2.4 or 2.5.
 
 The new Groovy JSON parser based on Boon is 20x faster than the Groovy 2.2 parser.
 
-#Are the benchmarks flawed and do they allow JIT dead code elimination?
+## Are the benchmarks flawed and do they allow JIT dead code elimination?
 
 The benchmark uses JMH. JMH is what the OpenJDK uses for benchmarking.
 JMH endeavors to eliminate JIT dead code elimination.
@@ -113,6 +124,7 @@ JMH endeavors to eliminate JIT dead code elimination.
 ```
  
 Every method is passed through to a BlackHole.
+
  
 [BlackHole From JMH](http://hg.openjdk.java.net/code-tools/jmh/file/tip/jmh-core/src/main/java/org/openjdk/jmh/logic/BlackHole.java).
  
@@ -175,6 +187,33 @@ public class MainBoonBenchmark {
 I think it is very unlikely that the benchmarks I used are "flawed benchmark with tons of potential dead code elimination."
  
 Maybe earlier benchmarks, but not the JMH based ones. But then again. I am always learning something new so teach me. 
+
+
+## Are the tests purposely written to favor Boon?
+
+This is a common accusation and / or assumption. The tests were not purposely written to favor Boon.
+They might. 
+
+The tests may favor Boon and certainly Boon was optimized with these tests in mind.
+These tests results have been independently verified by three other reputable sources. 
+
+Almost all of the sample JSON for these tests come from http://json.org which would sort of negate
+the argument that the input was picked to favor Boon. Unless I somehow invented a time machine and 
+wrote the samples for json.org. 
+
+Again, these tests results have been independently verified by three other sources. 
+
+Boon was optimized to parse JSON for REST and WebSocket messaging. 
+This does not mean that Boon will be faster for every serialization tests that is invented between
+now and some future date. 
+
+It does not mean that Boon will be faster for your use case. 
+However, if you are sending JSON messages over REST and WebSocket, there is a good chance
+that Boon is the fastest way to do this on the JVM at this point int time. 
+
+This was one reason Boon was picked by Groovy (for JSON parsing) and Gatling (a performance testing tool).
+ 
+Nothing stops GSON or Jackson from writing a faster parser. Or for that matter someone else.
 
 
 #JSON
@@ -935,3 +974,1214 @@ Contact Info
 
 [blog](http://rick-hightower.blogspot.com/)|[twitter](https://twitter.com/RickHigh|[infoq]http://www.infoq.com/author/Rick-Hightower|[stackoverflow](http://stackoverflow.com/users/2876739/rickhigh)|[java lobby](http://java.dzone.com/users/rhightower)|Other | richard high tower AT g mail dot c-o-m (Rick Hightower)|[work](http://www.mammatustech.com/)|[cloud](http://cloud.mammatustech.com/)|[nosql](http://nosql.mammatustech.com/)
 
+
+
+== Update 2/15/2016
+  
+I am about to update the tests results with the latest Boon, Jackson and GSON parsers to see if there
+has been an movement in this space in the last year since I ran the tests. It looks like I ran 
+the tests last on 3/15/15. InputStream is the hardest set of tests for Boon. Thus I am using 
+this a representative of the rest. 
+
+Comparison of GSON, Jackson, and Boon.
+
+```
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>io.fastjson</groupId>
+			<artifactId>boon</artifactId>
+			<version>0.31</version>
+		</dependency>
+```
+
+I am doing this to just baseline before I up the versions to the latest. 
+
+```
+ java -jar target/microbenchmarks.jar ".*inputStream.*"  -wi 3 -i 3 -f 2 -t 16
+
+```
+
+
+## 1 Action Label
+#### Action Label example from json.org
+```javascript
+{"menu": {
+    "header": "SVG Viewer",
+    "items": [
+        {"id": "Open"},
+        {"id": "OpenNew", "label": "Open New"},
+        null,
+        {"id": "ZoomIn", "label": "Zoom In"},
+        {"id": "ZoomOut", "label": "Zoom Out"},
+        {"id": "OriginalView", "label": "Original View"},
+        null,
+        {"id": "Quality"},
+        {"id": "Pause"},
+        {"id": "Mute"},
+        null,
+        {"id": "Find", "label": "Find..."},
+        {"id": "FindAgain", "label": "Find Again"},
+        {"id": "Copy"},
+        {"id": "CopyAgain", "label": "Copy Again"},
+        {"id": "CopySVG", "label": "Copy SVG"},
+        {"id": "ViewSVG", "label": "View SVG"},
+        {"id": "ViewSource", "label": "View Source"},
+        {"id": "SaveAs", "label": "Save As"},
+        null,
+        {"id": "Help"},
+        {"id": "About", "label": "About Adobe CVG Viewer..."}
+    ]
+}}
+```
+
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+
+i.g.j.inputStream.MainBoonBenchmark.actionLabel              thrpt  16         6    1   842,272.486    32635.371    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.actionLabel    thrpt  16         6    1   723,307.061    29454.585    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.actionLabel            thrpt  16         6    1   693,429.422    14931.215    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.actionLabel     thrpt  16         6    1   672,956.061    68008.445    ops/s
+i.g.j.inputStream.GSONBenchmark.actionLabel                  thrpt  16         6    1   467,361.186    26799.797    ops/s
+
+```
+
+InputStream is Boon's ***worst*** type of input. Boon prefers Strings and char[] arrays or even Readers. 
+Yet the two most common ways to use Boon are quite a bit faster than Jackson and GSON. 
+GSON comes dead last. Boon is almost 2x as fast as GSON.
+
+Let's continue.
+
+## 2 Catalog.json
+
+
+```
+ ls -l ./data/citm_catalog.json 
+-rw-r--r--  1 rick  staff  1727204 Feb 15 10:58 ./data/citm_catalog.json
+```
+
+Catalog.json is very large file 1.7 million bytes (not your typical JSON REST message).
+
+#### Catalog.json test results
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.MainBoonBenchmark.citmCatalog              thrpt  16         6    1      916.947       80.432    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.citmCatalog    thrpt  16         6    1      823.975      132.482    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.citmCatalog            thrpt  16         6    1      589.181      166.807    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.citmCatalog     thrpt  16         6    1      652.972       71.581    ops/s
+i.g.j.inputStream.GSONBenchmark.citmCatalog                  thrpt  16         6    1      428.367       42.671    ops/s
+```
+
+The two most common ways to use Boon are faster than Jackson and GSON.
+GSON comes last. (Boon does not work on Android. GSON does. GSON has features that Boon does not have.)
+
+
+## 3 Medium.json
+
+#### Medium.json example derived from json.org example
+```javascript
+{
+    "web-app": {
+        "servlet": [
+            {
+                "servlet-name": "cofaxCDS",
+                "servlet-class": "org.cofax.cds.CDSServlet",
+                "init-param": {
+                    "configGlossary:installationAt": "Philadelphia, PA",
+                    "configGlossary:adminEmail": "ksm@pobox.com",
+                    "configGlossary:poweredBy": "Cofax",
+                    "configGlossary:poweredByIcon": "/images/cofax.gif",
+                    "configGlossary:staticPath": "/content/static",
+                    "templateProcessorClass": "org.cofax.WysiwygTemplate",
+                    "templateLoaderClass": "org.cofax.FilesTemplateLoader",
+                    "templatePath": "templates"
+                }
+            },
+            {
+                "servlet-name": "cofaxAdmin",
+                "servlet-class": "org.cofax.cds.AdminServlet"
+            },
+            {
+                "servlet-name": "cofaxTools",
+                "servlet-class": "org.cofax.cms.CofaxToolsServlet",
+                "init-param": {
+                    "templatePath": "toolstemplates/",
+                    "log": 1,
+                    "logLocation": "/usr/local/tomcat/logs/CofaxTools.log",
+                    "logMaxSize": "",
+                    "dataLog": 1,
+                    "dataLogLocation": "/usr/local/tomcat/logs/dataLog.log",
+                    "dataLogMaxSize": "",
+                    "removePageCache": "/content/admin/remove?cache=pages&id=",
+                    "removeTemplateCache": "/content/admin/remove?cache=templates&id=",
+                    "fileTransferFolder": "/usr/local/tomcat/webapps/content/fileTransferFolder",
+                    "lookInContext": 1,
+                    "adminGroupID": 4,
+                    "betaServer": true
+                }
+            }
+        ],
+        "servlet-mapping": {
+            "cofaxCDS": "/",
+            "cofaxEmail": "/cofaxutil/aemail/*",
+            "cofaxAdmin": "/admin/*",
+            "fileServlet": "/static/*",
+            "cofaxTools": "/tools/*"
+        },
+        "taglib": {
+            "taglib-uri": "cofax.tld",
+            "taglib-location": "/WEB-INF/tlds/cofax.tld"
+        }
+    }
+}
+```
+
+
+#### Medium.json test results
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.medium         thrpt  16         6    1   549962.692    36941.989    ops/s
+i.g.j.inputStream.GSONBenchmark.medium                       thrpt  16         6    1   295852.086    24960.280    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.medium                 thrpt  16         6    1   475866.719    38988.982    ops/s
+i.g.j.inputStream.MainBoonBenchmark.medium                   thrpt  16         6    1   682067.781    52270.553    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.medium          thrpt  16         6    1   475456.689    38501.866    ops/s
+```
+
+Boon wins.
+
+
+## 4 Menu.json
+
+#### Menu.json
+```
+{"menu": {
+    "id": "file",
+    "value": "File",
+    "popup": {
+        "menuitem": [
+            {"value": "New", "onclick": "CreateNewDoc()"},
+            {"value": "Open", "onclick": "OpenDoc()"},
+            {"value": "Close", "onclick": "CloseDoc()"}
+        ]
+    }
+}}
+
+```
+
+#### Menu.json results
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.JacksonASTBenchmark.menu                   thrpt  16         6    1  2132017.111   139445.156    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.menu            thrpt  16         6    1  2036669.325    87085.051    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.menu           thrpt  16         6    1  1347166.503    36819.154    ops/s
+i.g.j.inputStream.MainBoonBenchmark.menu                     thrpt  16         6    1  1380527.369    22350.116    ops/s
+i.g.j.inputStream.GSONBenchmark.menu                         thrpt  16         6    1   935867.572    24596.416    ops/s
+```
+
+Jackson wins by a large margin. GSON comes in last.
+
+
+
+## 4 Sgml.json results
+
+#### sgml.json example from json.org
+```javascript
+{
+    "glossary": {
+        "title": "example glossary",
+        "GlossDiv": {
+            "title": "S",
+            "GlossList": {
+                "GlossEntry": {
+                    "ID": "SGML",
+                    "SortAs": "SGML",
+                    "GlossTerm": "Standard Generalized Markup Language",
+                    "Acronym": "SGML",
+                    "Abbrev": "ISO 8879:1986",
+                    "GlossDef": {
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+                        "GlossSeeAlso": ["GML", "XML"]
+                    },
+                    "GlossSee": "markup"
+                }
+            }
+        }
+    }
+}
+```
+
+#### sgml results
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.MainJacksonObjectBenchmark.sgml            thrpt  16         6    1  1326772.733    49568.557    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.sgml                   thrpt  16         6    1  1288946.039    75802.893    ops/s
+i.g.j.inputStream.MainBoonBenchmark.sgml                     thrpt  16         6    1  1270249.339    54173.833    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.sgml           thrpt  16         6    1  1195814.106    28508.660    ops/s
+i.g.j.inputStream.GSONBenchmark.sgml                         thrpt  16         6    1   801282.614    29110.599    ops/s
+```
+
+Jackson wins. Boon comes in second. GSON last.
+
+## 5 Webxml.json
+
+#### webxml.json taken from json.org example
+```
+{"web-app": {
+    "servlet": [
+        {
+            "servlet-name": "cofaxCDS",
+            "servlet-class": "org.cofax.cds.CDSServlet",
+            "init-param": {
+                "configGlossary:installationAt": "Philadelphia, PA",
+                "configGlossary:adminEmail": "ksm@pobox.com",
+                "configGlossary:poweredBy": "Cofax",
+                "configGlossary:poweredByIcon": "/images/cofax.gif",
+                "configGlossary:staticPath": "/content/static",
+                "templateProcessorClass": "org.cofax.WysiwygTemplate",
+                "templateLoaderClass": "org.cofax.FilesTemplateLoader",
+                "templatePath": "templates",
+                "templateOverridePath": "",
+                "defaultListTemplate": "listTemplate.htm",
+                "defaultFileTemplate": "articleTemplate.htm",
+                "useJSP": false,
+                "jspListTemplate": "listTemplate.jsp",
+                "jspFileTemplate": "articleTemplate.jsp",
+                "cachePackageTagsTrack": 200,
+                "cachePackageTagsStore": 200,
+                "cachePackageTagsRefresh": 60,
+                "cacheTemplatesTrack": 100,
+                "cacheTemplatesStore": 50,
+                "cacheTemplatesRefresh": 15,
+                "cachePagesTrack": 200,
+                "cachePagesStore": 100,
+                "cachePagesRefresh": 10,
+                "cachePagesDirtyRead": 10,
+                "searchEngineListTemplate": "forSearchEnginesList.htm",
+                "searchEngineFileTemplate": "forSearchEngines.htm",
+                "searchEngineRobotsDb": "WEB-INF/robots.db",
+                "useDataStore": true,
+                "dataStoreClass": "org.cofax.SqlDataStore",
+                "redirectionClass": "org.cofax.SqlRedirection",
+                "dataStoreName": "cofax",
+                "dataStoreDriver": "com.microsoft.jdbc.sqlserver.SQLServerDriver",
+                "dataStoreUrl": "jdbc:microsoft:sqlserver://LOCALHOST:1433;DatabaseName=goon",
+                "dataStoreUser": "sa",
+                "dataStorePassword": "dataStoreTestQuery",
+                "dataStoreTestQuery": "SET NOCOUNT ON;select test='test';",
+                "dataStoreLogFile": "/usr/local/tomcat/logs/datastore.log",
+                "dataStoreInitConns": 10,
+                "dataStoreMaxConns": 100,
+                "dataStoreConnUsageLimit": 100,
+                "dataStoreLogLevel": "debug",
+                "maxUrlLength": 500}},
+        {
+            "servlet-name": "cofaxEmail",
+            "servlet-class": "org.cofax.cds.EmailServlet",
+            "init-param": {
+                "mailHost": "mail1",
+                "mailHostOverride": "mail2"}},
+        {
+            "servlet-name": "cofaxAdmin",
+            "servlet-class": "org.cofax.cds.AdminServlet"},
+
+        {
+            "servlet-name": "fileServlet",
+            "servlet-class": "org.cofax.cds.FileServlet"},
+        {
+            "servlet-name": "cofaxTools",
+            "servlet-class": "org.cofax.cms.CofaxToolsServlet",
+            "init-param": {
+                "templatePath": "toolstemplates/",
+                "log": 1,
+                "logLocation": "/usr/local/tomcat/logs/CofaxTools.log",
+                "logMaxSize": "",
+                "dataLog": 1,
+                "dataLogLocation": "/usr/local/tomcat/logs/dataLog.log",
+                "dataLogMaxSize": "",
+                "removePageCache": "/content/admin/remove?cache=pages&id=",
+                "removeTemplateCache": "/content/admin/remove?cache=templates&id=",
+                "fileTransferFolder": "/usr/local/tomcat/webapps/content/fileTransferFolder",
+                "lookInContext": 1,
+                "adminGroupID": 4,
+                "betaServer": true}}],
+    "servlet-mapping": {
+        "cofaxCDS": "/",
+        "cofaxEmail": "/cofaxutil/aemail/*",
+        "cofaxAdmin": "/admin/*",
+        "fileServlet": "/static/*",
+        "cofaxTools": "/tools/*"},
+
+    "taglib": {
+        "taglib-uri": "cofax.tld",
+        "taglib-location": "/WEB-INF/tlds/cofax.tld"}}}
+```
+
+####  Webxml.json results
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.MainBoonBenchmark.webxml                   thrpt  16         6    1   399344.789    31852.236    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.webxml         thrpt  16         6    1   302062.886    67363.148    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.webxml          thrpt  16         6    1   248671.050    11008.792    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.webxml                 thrpt  16         6    1   244296.611    14607.306    ops/s
+i.g.j.inputStream.GSONBenchmark.webxml                       thrpt  16         6    1   181470.906    13357.719    ops/s
+```
+
+Boon does really well on this one. Jackson comes in second. GSON last. 
+
+
+## 6 Widget results
+
+#### widget.json
+```
+{
+    "nums": [12, 12345678, 999.999, 123456789.99],
+    "nums2": [12, 12345678, 999.999, 123456789.99],
+    "nums3": [12, 12345678, 999.999, 123456789.99],
+    "widget": {
+    "debug": "on",
+    "window": {
+        "title": "Sample Konfabulator Widget",
+        "name": "main_window",
+        "width": 500,
+        "height": 500
+    },
+    "image": {
+        "src": "Images/Sun.png",
+        "name": "sun1",
+        "hOffset": 250,
+        "vOffset": 250,
+        "alignment": "center"
+    },
+    "text": {
+        "data": "Click Here",
+        "size": 36,
+        "style": "bold",
+        "name": "text1",
+        "hOffset": 250,
+        "vOffset": 100,
+        "alignment": "center",
+        "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
+    }
+}}
+```
+
+#### widget results
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.MainBoonBenchmark.widget                   thrpt  16         6    1  1010618.794    36468.037    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.widget         thrpt  16         6    1   960779.153    41151.984    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.widget                 thrpt  16         6    1   850219.664   200569.611    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.widget          thrpt  16         6    1   723535.892   172845.248    ops/s
+i.g.j.inputStream.GSONBenchmark.widget                       thrpt  16         6    1   538796.167    44211.603    ops/s
+```
+
+Boon wins. Jackson comes in second. Boon is 2x faster than GSON and this is inputstreams. Boon hates inputstreams.
+
+
+## Object serialization
+
+Recent claims to fame for Jackson is that it does really well at object serialization. 
+If you look at the objects in that test compared to the objects in your use case, I think you
+will find that this tests more closely mimics your use cases.
+
+
+```
+
+Benchmark                                                Mode Thr     Count  Sec         Mean   Mean error    Units
+
+i.g.j.s.MainBoonSerializer.roundTriper                  thrpt  16         6    1   328510.939    14217.845    ops/s
+i.g.j.s.BoonPropertySerializer.roundTriper              thrpt  16         6    1   282245.964    15387.027    ops/s
+i.g.j.s.JacksonByteArraySerializer.roundTriper          thrpt  16         6    1   240122.811    23774.726    ops/s
+i.g.j.s.MainJacksonSerializer.roundTriper               thrpt  16         6    1   220473.686    18722.839    ops/s
+i.g.j.s.JavaSerialization.roundTriper                   thrpt  16         6    1    50916.564    17777.360    ops/s
+
+## Boon beats Jackson. Boon and Jackson beat built-in Java Serialization. 
+
+i.g.j.s.MainBoonSerializer.serializeSmall               thrpt  16         6    1  1216248.794    46498.182    ops/s
+i.g.j.s.BoonPropertySerializer.serializeSmall           thrpt  16         6    1   945956.739    60602.106    ops/s
+i.g.j.s.MainJacksonSerializer.serializeSmall            thrpt  16         6    1   666121.661    29678.550    ops/s
+i.g.j.s.JacksonByteArraySerializer.serializeSmall       thrpt  16         6    1   645838.142    30845.635    ops/s
+i.g.j.s.JavaSerialization.serializeSmall                thrpt  16         6    1   381869.922    12082.881    ops/s
+
+## Boon beats Jackson. Boon and Jackson beat built-in Java Serialization. Boon is up to twice as fast as Jackson.
+
+
+i.g.j.s.MainBoonSerializer.serializeBig                 thrpt  16         6    1      499.483       24.778    ops/s
+i.g.j.s.JavaSerialization.serializeBig                  thrpt  16         6    1      171.025       14.088    ops/s
+i.g.j.s.MainJacksonSerializer.serializeBig              thrpt  16         6    1      178.042       20.493    ops/s
+
+## Boon beats Jackson by a large amount. Boon is 3x as fast as Jackson.
+
+i.g.j.s.JavaSerialization.roundTripBig                  thrpt  16         6    1       77.311       15.047    ops/s
+i.g.j.s.MainBoonSerializer.roundTripBig                 thrpt  16         6    1       88.272        7.634    ops/s
+i.g.j.s.MainJacksonSerializer.roundTripBig              thrpt  16         6    1       69.419        8.073    ops/s
+
+
+## Boon beats Jackson. Java built-in serialization wins.
+
+i.g.j.s.MainJacksonSerializer.mediaContentOutput        thrpt  16         6    1   124009.494    10267.780    ops/s
+i.g.j.s.MainBoonSerializer.mediaContentOutput           thrpt  16         6    1   115775.147    10908.197    ops/s
+
+## Jackson beats Boon. It happens. Not by much.
+
+i.g.j.s.MainJacksonSerializer.mediaContentRoundTrip     thrpt  16         6    1    38430.056     1971.078    ops/s
+i.g.j.s.MainBoonSerializer.mediaContentRoundTrip        thrpt  16         6    1    32240.800     2504.600    ops/s
+
+## Jackson beats boon agains. It happens. Not by much.
+
+i.g.j.s.MainBoonSerializer.stringPerfParser             thrpt  16         6    1   113554.114     7897.732    ops/s
+i.g.j.s.MainJacksonSerializer.stringPerfParser          thrpt  16         6    1    20759.494     9204.439    ops/s
+
+## Boon wins by a large amount. Boon is 5x faster.
+
+i.g.j.s.MainBoonSerializer.stringPerfSerializer         thrpt  16         6    1   554179.186    22021.402    ops/s
+i.g.j.s.MainJacksonSerializer.stringPerfSerializer      thrpt  16         6    1    67292.828    31446.157    ops/s
+
+## Boon wins by a large amount. Boon is way faster.
+
+```
+
+Boon wins six. Jackson wins two. IMO the most common use cases, Boon wins hands down. 
+However, there are areas where Jackson beats Boon.
+And I know of independent serialization benchmarks where Jackson does much better. (I think this is mostly due 
+to Boon not handling large primitive arrays as fast as Jackson).
+
+I know at one point Boon was faster than the MediaContent round trip, which goes to show you, things do not stay the same.
+When it comes to performance, Jackson and others can and do improve. 
+
+MediaContent looks like a rea use case from a project that I worked on, and Jackson is now faster than Boon at it. 
+IMO MediaContent is a very real use case, and Jackson did better at the round trip. 
+
+## Bottom line 
+
+Ok. Remember these are not the latest libs. These are the libs that I believed to be the latest circa March 2015
+when I last ran these tests.
+
+Jackson ***beats*** Boon 2 out of six tests. 
+I think when we started this effort at one point Boon won all 8 tests.
+This is sort of the point. Nothing stops Jackson or GSON developers from writing a faster parser or serializer.
+
+If we tested against Strings and not input stream. How does Jackson do then?
+
+#### SGML string results
+```
+Benchmark                                            Mode Thr       Count  Sec         Mean   Mean error    Units
+i.g.j.s.MainBoonBenchmark.sgml                       thrpt  16         6    1  3132765.703   488743.267    ops/s
+i.g.j.s.BoonClassicBenchmark.sgml                    thrpt  16         6    1  2240134.331   415512.869    ops/s
+i.g.j.s.JacksonASTBenchmark.sgml                     thrpt  16         6    1  1204352.319   165227.661    ops/s
+i.g.j.s.MainJacksonObjectBenchmark.sgml              thrpt  16         6    1  1119923.928    93494.831    ops/s
+```
+
+Since this is what Boon is optimized for, it does 3x better than Jackson.
+Like I said, InputStream is Boon's worst nightmare and it still beats Jackson in 4 out of six tests.
+
+
+#### SGML byte array  (which you might see in a ByteBuffer)
+```
+Benchmark                                           Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonFastBenchMarkDirect.sgml  (classic)    thrpt  16         6    1  2136028.347   404900.671    ops/s
+i.g.j.b.MainBoonBenchmark.sgml                     thrpt  16         6    1  2015809.689   135842.712    ops/s
+i.g.j.b.JacksonASTBenchmark.sgml                   thrpt  16         6    1  1525995.442   237860.309    ops/s
+i.g.j.b.MainJacksonObjectBenchmark.sgml            thrpt  16         6    1  1286543.425   175809.889    ops/s
+```
+
+Boon still wins by a 25% margin. In one category (input stream), Jackson was faster 1/3 of the time. 
+In every other category of media type, Boon was consistently faster.
+
+However, Jackson is a very large project with many add-on modules, and it has more features for serialization.
+Jackson is faster when you are serializing large arrays of primitives. 
+
+Ok now let's do some updates. 
+
+IMO even without moving the dial one year forward, I can see that Jackson has improved a lot since we started this. 
+Jackson did much better at the Java Object serialization that it used to. 
+
+## Updating the libs. 
+
+Before I start tyring to perf tune Boon. Let's see how Boon measures up to the 2016 releases of Jackson and GSON.
+
+
+== Update 2/15/2016 after updating libs
+  
+  I have updated the libs.
+
+Comparison of GSON, Jackson, and Boon.
+
+#### BEFORE
+```
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>io.fastjson</groupId>
+			<artifactId>boon</artifactId>
+			<version>0.31</version>
+		</dependency>
+```
+
+#### NOW
+```
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.7.1-1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.fastjson</groupId>
+			<artifactId>boon</artifactId>
+			<version>0.33</version>
+		</dependency>
+```
+
+I am doing this to just baseline before I up the versions to the latest. 
+
+
+## 1 Action Label
+#### Action Label example from json.org
+```javascript
+{"menu": {
+    "header": "SVG Viewer",
+    "items": [
+        {"id": "Open"},
+        {"id": "OpenNew", "label": "Open New"},
+        null,
+        {"id": "ZoomIn", "label": "Zoom In"},
+        {"id": "ZoomOut", "label": "Zoom Out"},
+        {"id": "OriginalView", "label": "Original View"},
+        null,
+        {"id": "Quality"},
+        {"id": "Pause"},
+        {"id": "Mute"},
+        null,
+        {"id": "Find", "label": "Find..."},
+        {"id": "FindAgain", "label": "Find Again"},
+        {"id": "Copy"},
+        {"id": "CopyAgain", "label": "Copy Again"},
+        {"id": "CopySVG", "label": "Copy SVG"},
+        {"id": "ViewSVG", "label": "View SVG"},
+        {"id": "ViewSource", "label": "View Source"},
+        {"id": "SaveAs", "label": "Save As"},
+        null,
+        {"id": "Help"},
+        {"id": "About", "label": "About Adobe CVG Viewer..."}
+    ]
+}}
+```
+
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+
+B3.1   inputStream.MainBoonBenchmark.actionLabel              thrpt  16         6    1   842,272.486    32635.371    ops/s
+B3.1   inputStream.BoonClassicEagerNoLazyParse.actionLabel    thrpt  16         6    1   723,307.061    29454.585    ops/s
+J2.2.3 inputStream.JacksonASTBenchmark.actionLabel            thrpt  16         6    1   693,429.422    14931.215    ops/s
+J2.2.3 inputStream.MainJacksonObjectBenchmark.actionLabel     thrpt  16         6    1   672,956.061    68008.445    ops/s
+G2.2.4 inputStream.GSONBenchmark.actionLabel                  thrpt  16         6    1   467,361.186    26799.797    ops/s
+
+```
+
+Let's compare this with the latest.
+
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.MainBoonBenchmark.actionLabel              thrpt  16         6    1   833329.247    54614.560    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.actionLabel            thrpt  16         6    1   754370.006    36106.286    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.actionLabel    thrpt  16         6    1   730702.653    44436.069    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.actionLabel     thrpt  16         6    1   702888.817    33472.388    ops/s
+i.g.j.inputStream.GSONBenchmark.actionLabel                  thrpt  16         6    1   453339.519    19370.342    ops/s
+```
+
+
+Keep in mind InputStream is Boon's ***worst*** type of input. Boon prefers Strings and char[] arrays or even Readers. 
+Boon was faster than Jackson and GSON. 
+Boon's top speed is a bit slower than before. 
+Jackson is quite a bit faster than before. 
+Bottom line new Jackson is faster than last years Jackson.
+
+
+## 2 Catalog.json
+
+
+```
+ ls -l ./data/citm_catalog.json 
+-rw-r--r--  1 rick  staff  1727204 Feb 15 10:58 ./data/citm_catalog.json
+```
+
+Catalog.json is very large file 1.7 million bytes (not your typical JSON REST message).
+
+#### Catalog.json test results - last year
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+B3.1   inputStream.MainBoonBenchmark.citmCatalog              thrpt  16         6    1      916.947       80.432    ops/s
+B3.1   inputStream.BoonClassicEagerNoLazyParse.citmCatalog    thrpt  16         6    1      823.975      132.482    ops/s
+J2.2.3 inputStream.JacksonASTBenchmark.citmCatalog            thrpt  16         6    1      589.181      166.807    ops/s
+J2.2.3 inputStream.MainJacksonObjectBenchmark.citmCatalog     thrpt  16         6    1      652.972       71.581    ops/s
+G2.2.4 inputStream.GSONBenchmark.citmCatalog                  thrpt  16         6    1      428.367       42.671    ops/s
+```
+
+#### Catalog.json results - this year.
+
+The two most common ways to use Boon are faster than Jackson and GSON.
+GSON comes last. (Boon does not work on Android. GSON does. GSON has features that Boon does not have.)
+
+```
+
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.MainBoonBenchmark.citmCatalog              thrpt  16         6    1      951.169      209.841    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.citmCatalog    thrpt  16         6    1      822.647      112.471    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.citmCatalog            thrpt  16         6    1      607.581      238.377    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.citmCatalog     thrpt  16         6    1      477.328      396.118    ops/s
+i.g.j.inputStream.GSONBenchmark.citmCatalog                  thrpt  16         6    1      422.189       37.380    ops/s
+```
+
+Boon still dominates this test. Jackson and GSON performance stayed about the same.
+
+
+## 3 Medium.json
+
+#### Medium.json example derived from json.org example
+```javascript
+{
+    "web-app": {
+        "servlet": [
+            {
+                "servlet-name": "cofaxCDS",
+                "servlet-class": "org.cofax.cds.CDSServlet",
+                "init-param": {
+                    "configGlossary:installationAt": "Philadelphia, PA",
+                    "configGlossary:adminEmail": "ksm@pobox.com",
+                    "configGlossary:poweredBy": "Cofax",
+                    "configGlossary:poweredByIcon": "/images/cofax.gif",
+                    "configGlossary:staticPath": "/content/static",
+                    "templateProcessorClass": "org.cofax.WysiwygTemplate",
+                    "templateLoaderClass": "org.cofax.FilesTemplateLoader",
+                    "templatePath": "templates"
+                }
+            },
+            {
+                "servlet-name": "cofaxAdmin",
+                "servlet-class": "org.cofax.cds.AdminServlet"
+            },
+            {
+                "servlet-name": "cofaxTools",
+                "servlet-class": "org.cofax.cms.CofaxToolsServlet",
+                "init-param": {
+                    "templatePath": "toolstemplates/",
+                    "log": 1,
+                    "logLocation": "/usr/local/tomcat/logs/CofaxTools.log",
+                    "logMaxSize": "",
+                    "dataLog": 1,
+                    "dataLogLocation": "/usr/local/tomcat/logs/dataLog.log",
+                    "dataLogMaxSize": "",
+                    "removePageCache": "/content/admin/remove?cache=pages&id=",
+                    "removeTemplateCache": "/content/admin/remove?cache=templates&id=",
+                    "fileTransferFolder": "/usr/local/tomcat/webapps/content/fileTransferFolder",
+                    "lookInContext": 1,
+                    "adminGroupID": 4,
+                    "betaServer": true
+                }
+            }
+        ],
+        "servlet-mapping": {
+            "cofaxCDS": "/",
+            "cofaxEmail": "/cofaxutil/aemail/*",
+            "cofaxAdmin": "/admin/*",
+            "fileServlet": "/static/*",
+            "cofaxTools": "/tools/*"
+        },
+        "taglib": {
+            "taglib-uri": "cofax.tld",
+            "taglib-location": "/WEB-INF/tlds/cofax.tld"
+        }
+    }
+}
+```
+
+
+#### Medium.json test results
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+B3.1   inputStream.MainBoonBenchmark.medium                   thrpt  16         6    1   682067.781    52270.553    ops/s
+B3.1   inputStream.BoonClassicEagerNoLazyParse.medium         thrpt  16         6    1   549962.692    36941.989    ops/s
+J2.2.3 inputStream.JacksonASTBenchmark.medium                 thrpt  16         6    1   475866.719    38988.982    ops/s
+J2.2.3 inputStream.MainJacksonObjectBenchmark.medium          thrpt  16         6    1   475456.689    38501.866    ops/s
+G2.2.4 inputStream.GSONBenchmark.medium                       thrpt  16         6    1   295852.086    24960.280    ops/s
+```
+
+```
+Benchmark                                                Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.MainBoonBenchmark.medium              thrpt  16         6    1   670396.586    65248.070    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.medium            thrpt  16         6    1   547300.503    44235.288    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.medium    thrpt  16         6    1   540831.403    44539.893    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.medium     thrpt  16         6    1   515770.903    35295.339    ops/s
+i.g.j.inputStream.GSONBenchmark.medium                  thrpt  16         6    1   267791.647    46771.860    ops/s
+```
+
+Boon still wins, but Jackson has all but caught up. 
+GSON has seems to be slower than GSON of a year ago in every test so far.
+You can see that Jackson has really closed the gap.
+
+## 4 Menu.json
+
+#### Menu.json
+```
+{"menu": {
+    "id": "file",
+    "value": "File",
+    "popup": {
+        "menuitem": [
+            {"value": "New", "onclick": "CreateNewDoc()"},
+            {"value": "Open", "onclick": "OpenDoc()"},
+            {"value": "Close", "onclick": "CloseDoc()"}
+        ]
+    }
+}}
+
+```
+
+#### Menu.json results
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+J2.2.3  inputStream.JacksonASTBenchmark.menu                   thrpt  16         6    1  2132017.111   139445.156    ops/s
+J2.2.3  inputStream.MainJacksonObjectBenchmark.menu            thrpt  16         6    1  2036669.325    87085.051    ops/s
+B3.1    inputStream.MainBoonBenchmark.menu                     thrpt  16         6    1  1380527.369    22350.116    ops/s
+B3.1    inputStream.BoonClassicEagerNoLazyParse.menu           thrpt  16         6    1  1347166.503    36819.154    ops/s
+G2.2.4  inputStream.GSONBenchmark.menu                         thrpt  16         6    1   935867.572    24596.416    ops/s
+```
+
+```
+
+Benchmark                                              Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.JacksonASTBenchmark.menu            thrpt  16         6    1  2180811.642   127473.432    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.menu     thrpt  16         6    1  2061951.119   198824.860    ops/s
+i.g.j.inputStream.MainBoonBenchmark.menu              thrpt  16         6    1  1391164.608    27873.080    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.menu    thrpt  16         6    1  1346734.028    35046.873    ops/s
+i.g.j.inputStream.GSONBenchmark.menu                  thrpt  16         6    1   894889.644    44450.778    ops/s
+```
+
+Jackson still wins. GSON is slower than before. Boon is in second. 
+
+
+
+## 4 Sgml.json results
+
+#### sgml.json example from json.org
+```javascript
+{
+    "glossary": {
+        "title": "example glossary",
+        "GlossDiv": {
+            "title": "S",
+            "GlossList": {
+                "GlossEntry": {
+                    "ID": "SGML",
+                    "SortAs": "SGML",
+                    "GlossTerm": "Standard Generalized Markup Language",
+                    "Acronym": "SGML",
+                    "Abbrev": "ISO 8879:1986",
+                    "GlossDef": {
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+                        "GlossSeeAlso": ["GML", "XML"]
+                    },
+                    "GlossSee": "markup"
+                }
+            }
+        }
+    }
+}
+```
+
+#### sgml results
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+J2.2.3   inputStream.MainJacksonObjectBenchmark.sgml            thrpt  16         6    1  1326772.733    49568.557    ops/s
+J2.2.3   inputStream.JacksonASTBenchmark.sgml                   thrpt  16         6    1  1288946.039    75802.893    ops/s
+B3.1     inputStream.MainBoonBenchmark.sgml                     thrpt  16         6    1  1270249.339    54173.833    ops/s
+B3.1     inputStream.BoonClassicEagerNoLazyParse.sgml           thrpt  16         6    1  1195814.106    28508.660    ops/s
+G2.2.4   inputStream.GSONBenchmark.sgml                         thrpt  16         6    1   801282.614    29110.599    ops/s
+```
+
+Jackson wins. Boon comes in second. GSON last.
+
+
+```
+Benchmark                                              Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.JacksonASTBenchmark.sgml            thrpt  16         6    1  1578970.333    68122.531    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.sgml     thrpt  16         6    1  1304251.231   948931.514    ops/s
+i.g.j.inputStream.MainBoonBenchmark.sgml              thrpt  16         6    1  1284568.858    67883.329    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.sgml    thrpt  16         6    1  1178632.208    47253.439    ops/s
+i.g.j.inputStream.GSONBenchmark.sgml                  thrpt  16         6    1   739552.831    91499.350    ops/s
+```
+
+Jackson increased its lead over Boon. There is little doubt Jackson is getting faster.
+GSON was slower than before. Boon is about the same. 
+
+## 5 Webxml.json
+
+#### webxml.json taken from json.org example
+```
+{"web-app": {
+    "servlet": [
+        {
+            "servlet-name": "cofaxCDS",
+            "servlet-class": "org.cofax.cds.CDSServlet",
+            "init-param": {
+                "configGlossary:installationAt": "Philadelphia, PA",
+                "configGlossary:adminEmail": "ksm@pobox.com",
+                "configGlossary:poweredBy": "Cofax",
+                "configGlossary:poweredByIcon": "/images/cofax.gif",
+                "configGlossary:staticPath": "/content/static",
+                "templateProcessorClass": "org.cofax.WysiwygTemplate",
+                "templateLoaderClass": "org.cofax.FilesTemplateLoader",
+                "templatePath": "templates",
+                "templateOverridePath": "",
+                "defaultListTemplate": "listTemplate.htm",
+                "defaultFileTemplate": "articleTemplate.htm",
+                "useJSP": false,
+                "jspListTemplate": "listTemplate.jsp",
+                "jspFileTemplate": "articleTemplate.jsp",
+                "cachePackageTagsTrack": 200,
+                "cachePackageTagsStore": 200,
+                "cachePackageTagsRefresh": 60,
+                "cacheTemplatesTrack": 100,
+                "cacheTemplatesStore": 50,
+                "cacheTemplatesRefresh": 15,
+                "cachePagesTrack": 200,
+                "cachePagesStore": 100,
+                "cachePagesRefresh": 10,
+                "cachePagesDirtyRead": 10,
+                "searchEngineListTemplate": "forSearchEnginesList.htm",
+                "searchEngineFileTemplate": "forSearchEngines.htm",
+                "searchEngineRobotsDb": "WEB-INF/robots.db",
+                "useDataStore": true,
+                "dataStoreClass": "org.cofax.SqlDataStore",
+                "redirectionClass": "org.cofax.SqlRedirection",
+                "dataStoreName": "cofax",
+                "dataStoreDriver": "com.microsoft.jdbc.sqlserver.SQLServerDriver",
+                "dataStoreUrl": "jdbc:microsoft:sqlserver://LOCALHOST:1433;DatabaseName=goon",
+                "dataStoreUser": "sa",
+                "dataStorePassword": "dataStoreTestQuery",
+                "dataStoreTestQuery": "SET NOCOUNT ON;select test='test';",
+                "dataStoreLogFile": "/usr/local/tomcat/logs/datastore.log",
+                "dataStoreInitConns": 10,
+                "dataStoreMaxConns": 100,
+                "dataStoreConnUsageLimit": 100,
+                "dataStoreLogLevel": "debug",
+                "maxUrlLength": 500}},
+        {
+            "servlet-name": "cofaxEmail",
+            "servlet-class": "org.cofax.cds.EmailServlet",
+            "init-param": {
+                "mailHost": "mail1",
+                "mailHostOverride": "mail2"}},
+        {
+            "servlet-name": "cofaxAdmin",
+            "servlet-class": "org.cofax.cds.AdminServlet"},
+
+        {
+            "servlet-name": "fileServlet",
+            "servlet-class": "org.cofax.cds.FileServlet"},
+        {
+            "servlet-name": "cofaxTools",
+            "servlet-class": "org.cofax.cms.CofaxToolsServlet",
+            "init-param": {
+                "templatePath": "toolstemplates/",
+                "log": 1,
+                "logLocation": "/usr/local/tomcat/logs/CofaxTools.log",
+                "logMaxSize": "",
+                "dataLog": 1,
+                "dataLogLocation": "/usr/local/tomcat/logs/dataLog.log",
+                "dataLogMaxSize": "",
+                "removePageCache": "/content/admin/remove?cache=pages&id=",
+                "removeTemplateCache": "/content/admin/remove?cache=templates&id=",
+                "fileTransferFolder": "/usr/local/tomcat/webapps/content/fileTransferFolder",
+                "lookInContext": 1,
+                "adminGroupID": 4,
+                "betaServer": true}}],
+    "servlet-mapping": {
+        "cofaxCDS": "/",
+        "cofaxEmail": "/cofaxutil/aemail/*",
+        "cofaxAdmin": "/admin/*",
+        "fileServlet": "/static/*",
+        "cofaxTools": "/tools/*"},
+
+    "taglib": {
+        "taglib-uri": "cofax.tld",
+        "taglib-location": "/WEB-INF/tlds/cofax.tld"}}}
+```
+
+####  Webxml.json results - last year
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+B3.1 inputStream.MainBoonBenchmark.webxml                     thrpt  16         6    1   399344.789    31852.236    ops/s
+B3.1 inputStream.BoonClassicEagerNoLazyParse.webxml           thrpt  16         6    1   302062.886    67363.148    ops/s
+J2.2.3 inputStream.MainJacksonObjectBenchmark.webxml          thrpt  16         6    1   248671.050    11008.792    ops/s
+J2.2.3 inputStream.JacksonASTBenchmark.webxml                 thrpt  16         6    1   244296.611    14607.306    ops/s
+G2.2.4 inputStream.GSONBenchmark.webxml                       thrpt  16         6    1   181470.906    13357.719    ops/s
+```
+
+
+####  Webxml.json results - this year
+```
+Benchmark                                                Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.MainBoonBenchmark.webxml              thrpt  16         6    1   421927.131    60057.406    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.webxml    thrpt  16         6    1   319399.786    20683.475    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.webxml            thrpt  16         6    1   266783.178    75455.568    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.webxml     thrpt  16         6    1   231595.658   167274.028    ops/s
+i.g.j.inputStream.GSONBenchmark.webxml                  thrpt  16         6    1   171615.533     8318.273    ops/s
+```
+
+GSON is slower than last year. 
+Boon still beats Jackson. 
+Jackson speed is about the same as last year. 
+
+
+## 6 Widget results
+
+#### widget.json
+```
+{
+    "nums": [12, 12345678, 999.999, 123456789.99],
+    "nums2": [12, 12345678, 999.999, 123456789.99],
+    "nums3": [12, 12345678, 999.999, 123456789.99],
+    "widget": {
+    "debug": "on",
+    "window": {
+        "title": "Sample Konfabulator Widget",
+        "name": "main_window",
+        "width": 500,
+        "height": 500
+    },
+    "image": {
+        "src": "Images/Sun.png",
+        "name": "sun1",
+        "hOffset": 250,
+        "vOffset": 250,
+        "alignment": "center"
+    },
+    "text": {
+        "data": "Click Here",
+        "size": 36,
+        "style": "bold",
+        "name": "text1",
+        "hOffset": 250,
+        "vOffset": 100,
+        "alignment": "center",
+        "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
+    }
+}}
+```
+
+#### widget results - last year
+```
+Benchmark                                                     Mode Thr     Count  Sec         Mean   Mean error    Units
+B3.1 inputStream.MainBoonBenchmark.widget                   thrpt  16         6    1  1010618.794    36468.037    ops/s
+B3.1 inputStream.BoonClassicEagerNoLazyParse.widget         thrpt  16         6    1   960779.153    41151.984    ops/s
+J2.2.3 inputStream.JacksonASTBenchmark.widget                 thrpt  16         6    1   850219.664   200569.611    ops/s
+J2.2.3 inputStream.MainJacksonObjectBenchmark.widget          thrpt  16         6    1   723535.892   172845.248    ops/s
+G2.2.4 inputStream.GSONBenchmark.widget                       thrpt  16         6    1   538796.167    44211.603    ops/s
+```
+
+```
+Benchmark                                                Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.inputStream.MainBoonBenchmark.widget              thrpt  16         6    1  1050934.786    71870.483    ops/s
+i.g.j.inputStream.BoonClassicEagerNoLazyParse.widget    thrpt  16         6    1   934062.186    77441.050    ops/s
+i.g.j.inputStream.JacksonASTBenchmark.widget            thrpt  16         6    1   869588.761    40179.851    ops/s
+i.g.j.inputStream.MainJacksonObjectBenchmark.widget     thrpt  16         6    1   654270.603   571207.121    ops/s
+i.g.j.inputStream.GSONBenchmark.widget                  thrpt  16         6    1   523862.197    19705.881    ops/s
+```
+
+Boon still wins. Jackson comes in second. 
+
+
+## Object serialization
+
+Recent claims to fame for Jackson is that it does really well at object serialization. 
+If you look at the objects in that test compared to the objects in your use case, I think you
+will find that this tests more closely mimics your use cases.
+
+
+```
+
+LAST YEAR (2015)
+Benchmark                                               Mode Thr     Count  Sec         Mean   Mean error    Units
+B3.1   MainBoonSerializer.roundTriper                  thrpt  16         6    1   328510.939    14217.845    ops/s
+B3.1   BoonPropertySerializer.roundTriper              thrpt  16         6    1   282245.964    15387.027    ops/s
+J2.2.3 JacksonByteArraySerializer.roundTriper          thrpt  16         6    1   240122.811    23774.726    ops/s
+J2.2.3 MainJacksonSerializer.roundTriper               thrpt  16         6    1   220473.686    18722.839    ops/s
+G2.2.4 JavaSerialization.roundTriper                   thrpt  16         6    1    50916.564    17777.360    ops/s
+
+
+LAST YEAR (2016)
+Benchmark                                          Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.MainBoonSerializer.roundTriper            thrpt  16         6    1   318184.000    27525.620    ops/s
+i.g.j.s.BoonPropertySerializer.roundTriper        thrpt  16         6    1   258852.192    18612.599    ops/s
+i.g.j.s.JacksonByteArraySerializer.roundTriper    thrpt  16         6    1   246392.133    10781.491    ops/s
+i.g.j.s.MainJacksonSerializer.roundTriper         thrpt  16         6    1   207144.294    13827.822    ops/s
+i.g.j.s.JavaSerialization.roundTriper             thrpt  16         6    1    53132.281    20399.930    ops/s
+
+## Boon beats Jackson by the same amounts. Boon and Jackson beat built-in Java Serialization. 
+
+B3.1   MainBoonSerializer.serializeSmall               thrpt  16         6    1  1216248.794    46498.182    ops/s
+B3.1   BoonPropertySerializer.serializeSmall           thrpt  16         6    1   945956.739    60602.106    ops/s
+J2.2.3 MainJacksonSerializer.serializeSmall            thrpt  16         6    1   666121.661    29678.550    ops/s
+J2.2.3 JacksonByteArraySerializer.serializeSmall       thrpt  16         6    1   645838.142    30845.635    ops/s
+JDK    JavaSerialization.serializeSmall                thrpt  16         6    1   381869.922    12082.881    ops/s
+
+## Boon beats Jackson. Boon and Jackson beat built-in Java Serialization. Boon is up to twice as fast as Jackson.
+
+
+B3.1   MainBoonSerializer.serializeBig                 thrpt  16         6    1      499.483       24.778    ops/s
+JDK    JavaSerialization.serializeBig                  thrpt  16         6    1      171.025       14.088    ops/s
+J2.2.3 MainJacksonSerializer.serializeBig              thrpt  16         6    1      178.042       20.493    ops/s
+
+## Boon beats Jackson by a large amount. Boon is 3x as fast as Jackson.
+
+LAST YEAR
+B3.1   MainBoonSerializer.roundTripBig                 thrpt  16         6    1       88.272        7.634    ops/s
+JDK    JavaSerialization.roundTripBig                  thrpt  16         6    1       77.311       15.047    ops/s
+J2.2.3 MainJacksonSerializer.roundTripBig              thrpt  16         6    1       69.419        8.073    ops/s
+
+THIS YEAR
+
+Benchmark                                       Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.MainBoonSerializer.roundTripBig        thrpt  16         6    1       95.881        6.157    ops/s
+i.g.j.s.JavaSerialization.roundTripBig         thrpt  16         6    1       74.000       21.018    ops/s
+i.g.j.s.MainJacksonSerializer.roundTripBig     thrpt  16         6    1       69.058        5.166    ops/s
+
+
+
+## Boon beats Jackson. Java built-in serialization did not in fact win. 
+Boon somehow got faster. I don't remember how.
+
+J2.2.3 MainJacksonSerializer.mediaContentOutput        thrpt  16         6    1   124009.494    10267.780    ops/s
+B3.1   MainBoonSerializer.mediaContentOutput           thrpt  16         6    1   115775.147    10908.197    ops/s
+
+## Jackson beats Boon. It happens. Not by much.
+
+LAST YEAR
+J2.2.3 MainJacksonSerializer.mediaContentRoundTrip     thrpt  16         6    1    38430.056     1971.078    ops/s
+B3.1   MainBoonSerializer.mediaContentRoundTrip        thrpt  16         6    1    32240.800     2504.600    ops/s
+
+THIS YEAR
+Benchmark                                                Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.MainJacksonSerializer.mediaContentRoundTrip     thrpt  16         6    1    44557.456     8473.692    ops/s
+i.g.j.s.MainBoonSerializer.mediaContentRoundTrip        thrpt  16         6    1    32644.261     1519.072    ops/s
+
+## Jackson beats boon by a wider margin. Whatever is slowing Boon down got worse. 
+
+B3.1   MainBoonSerializer.stringPerfParser             thrpt  16         6    1   113554.114     7897.732    ops/s
+J2.2.3 MainJacksonSerializer.stringPerfParser          thrpt  16         6    1    20759.494     9204.439    ops/s
+
+## Boon wins by a large amount. Boon is 5x faster.
+
+B3.1   MainBoonSerializer.stringPerfSerializer         thrpt  16         6    1   554179.186    22021.402    ops/s
+J2.2.3 MainJacksonSerializer.stringPerfSerializer      thrpt  16         6    1    67292.828    31446.157    ops/s
+
+## Boon wins by a large amount. Boon is way faster.
+
+```
+
+I did not run them all again. I ran some again. 
+
+MediaContent looks like a real use case from a project that I worked on, and Jackson has now increased its lead over 
+Boon. 
+IMO MediaContent is a very real use case, and Jackson did better at the round trip, and Jackson this year beat Jackson 
+of last year.
+ 
+I am pretty sure I know how to close the gap.
+
+
+
+## Bottom line 2016
+
+Ok. Remember these are now the latest libs. There was a time when Boon beat Jackson in every category that we came up with.
+This is no longer the case. And areas where Jackson lead last year, it is increasing its lib.
+
+
+If we tested against Strings and not input stream. How does Jackson do then?
+
+#### SGML string results - 2015
+```
+Benchmark                                            Mode Thr       Count  Sec         Mean   Mean error    Units
+B3.1   MainBoonBenchmark.sgml                       thrpt  16         6    1  3132765.703   488743.267    ops/s
+B3.1   BoonClassicBenchmark.sgml                    thrpt  16         6    1  2240134.331   415512.869    ops/s
+J2.2.3 JacksonASTBenchmark.sgml                     thrpt  16         6    1  1204352.319   165227.661    ops/s
+J2.2.3 MainJacksonObjectBenchmark.sgml              thrpt  16         6    1  1119923.928    93494.831    ops/s
+```
+
+#### SGML string results - 2016
+
+```
+Benchmark                                             Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.MainBoonBenchmark.sgml                       thrpt  16         6    1  2767467.083   780382.673    ops/s
+i.g.j.s.BoonClassicBenchmark.sgml                    thrpt  16         6    1  2210146.731   117245.145    ops/s
+i.g.j.s.JacksonASTBenchmark.sgml                     thrpt  16         6    1  1481095.017   362792.414    ops/s
+i.g.j.s.MainJacksonObjectBenchmark.sgml              thrpt  16         6    1  1210560.164   769112.546    ops/s
+```
+
+
+Since this is what Boon is optimized for, it still does quite a bit better than Jackson.
+Like I said, InputStream is Boon's worst nightmare and it still beats Jackson in 4 out of six tests.
+
+
+#### SGML byte array  (which you might see in a ByteBuffer) -- 2015
+```
+Benchmark                                           Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonFastBenchMarkDirect.sgml  (classic)    thrpt  16         6    1  2136028.347   404900.671    ops/s
+i.g.j.b.MainBoonBenchmark.sgml                     thrpt  16         6    1  2015809.689   135842.712    ops/s
+i.g.j.b.JacksonASTBenchmark.sgml                   thrpt  16         6    1  1525995.442   237860.309    ops/s
+i.g.j.b.MainJacksonObjectBenchmark.sgml            thrpt  16         6    1  1286543.425   175809.889    ops/s
+```
+
+
+#### SGML byte array  (which you might see in a ByteBuffer) -- 2016
+```
+
+Benchmark                                           Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.b.BoonFastBenchMarkDirect.sgml               thrpt  16         6    1  2250499.228   411934.000    ops/s
+i.g.j.b.MainBoonBenchmark.sgml                     thrpt  16         6    1  2020676.697   127595.390    ops/s
+i.g.j.b.JacksonASTBenchmark.sgml                   thrpt  16         6    1  1683515.742   370702.183    ops/s
+i.g.j.b.MainJacksonObjectBenchmark.sgml            thrpt  16         6    1  1288524.417   702727.012    ops/s
+
+```
+
+
+Boon still wins by a 20% margin, but last year it was 25%. 
+
+In one category (input stream), Jackson was faster 1/3 of the time. 
+In every other category of media type, Boon was consistently faster.
+
+
+## Analysis of this years results
+
+
+Boon is still a faster parser overall. There are some areas of Object serialization where Jackson clearly wins. 
+Back when Boon could beat Jackson in every category, optimizing Boon was just no fun.
+Jackson started moving ahead last year (perhaps before).
+Now that it looks like Jackson can beat Boon at certain forms of Object serialization, optimizing Boon will be fun again.
+
+Jackson is a bigger project. Jackson has many more modules than Boon and has features that Boon does not.
+The same is true for GSON. Boon may not be the parser/serializer for your project. 
+
+It seems Boon is not only slower at large primitive array serialization, but may also suffer issues with ENUM serialization. 
+Expect some updates. 
