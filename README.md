@@ -2185,3 +2185,61 @@ The same is true for GSON. Boon may not be the parser/serializer for your projec
 
 It seems Boon is not only slower at large primitive array serialization, but may also suffer issues with ENUM serialization. 
 Expect some updates. 
+
+
+## Ok after some optimization (Boon 0.34-SNAPSHOT) - 2/15/2016
+
+
+The tests that we did the worst in was IMO the Media object serialization.
+I have been able to make up some ground.
+
+#### Round trip
+```
+Benchmark                                               Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.MainBoonSerializer.mediaContentRoundTrip       thrpt  16         6    1    40540.997     9280.249    ops/s
+i.g.j.s.MainJacksonSerializer.mediaContentRoundTrip    thrpt  16         6    1    45749.775     2806.050    ops/s
+```
+
+Boon loses but by a lot less.
+
+#### Output only 
+```
+Benchmark                                            Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.MainBoonSerializer.mediaContentOutput       thrpt  16         6    1   126265.697    25038.867    ops/s
+i.g.j.s.MainJacksonSerializer.mediaContentOutput    thrpt  16         6    1   119529.267     7194.402    ops/s
+```
+
+Boon wins but not by much. (A win is better than a lost).
+
+#### Output only
+```
+
+Benchmark                                            Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.MainBoonSerializer.mediaContentOutput       thrpt  16         6    1   131508.503    13648.508    ops/s
+i.g.j.s.MainJacksonSerializer.mediaContentOutput    thrpt  16         6    1   136027.053     6737.593    ops/s
+
+```
+
+Jackson wins. Basically they are tied on output.
+ 
+#### Output only
+``` 
+Benchmark                                            Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.MainBoonSerializer.mediaContentOutput       thrpt  16         6    1   135484.875    21498.107    ops/s
+i.g.j.s.MainJacksonSerializer.mediaContentOutput    thrpt  16         6    1   134850.422     3140.462    ops/s
+```
+
+Boon wins. Basically they are tied on output.
+
+
+```
+ java -jar target/microbenchmarks.jar ".*serialization.*mediaContentRoundTrip"  -wi 3 -i 3 -f 2 -t 16
+```
+
+Ok. Tried many things but this seems to be about the same for a while.
+
+```
+Benchmark                                               Mode Thr     Count  Sec         Mean   Mean error    Units
+i.g.j.s.MainBoonSerializer.mediaContentRoundTrip       thrpt  16         6    1    41587.456     5608.243    ops/s
+i.g.j.s.MainJacksonSerializer.mediaContentRoundTrip    thrpt  16         6    1    46867.097     1136.188    ops/s
+```

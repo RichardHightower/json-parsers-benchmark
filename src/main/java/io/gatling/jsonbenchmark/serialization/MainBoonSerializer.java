@@ -2,6 +2,7 @@ package io.gatling.jsonbenchmark.serialization;
 
 import data.media.MediaContent;
 import io.gatling.jsonbenchmark.serialization.model.StringPerformance;
+import org.boon.core.Sys;
 import org.boon.json.*;
 
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
@@ -19,6 +20,8 @@ public class MainBoonSerializer {
     private final JsonSerializer serializer = new JsonSerializerFactory()
             .setSerializeAsSupport(false).useFieldsOnly().create();
     private final JsonParserAndMapper parser = new JsonParserFactory().create();
+
+    private static Object object = Sys.contextToHold();
 
 
 

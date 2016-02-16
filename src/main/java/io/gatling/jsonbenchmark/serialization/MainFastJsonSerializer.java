@@ -38,29 +38,29 @@ public class MainFastJsonSerializer {
         return JSON.toJSONString(mediaContent);
     }
 
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
+    //@GenerateMicroBenchmark
+    //@OutputTimeUnit(TimeUnit.SECONDS)
     public void mediaContentOutput(BlackHole bh) throws Exception {
         bh.consume(mediaContentOutput ( TestObjects.MEDIA_CONTENT ));
     }
 
 
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
+    //@GenerateMicroBenchmark
+    //@OutputTimeUnit(TimeUnit.SECONDS)
     public void mediaContentRoundTrip(BlackHole bh) throws Exception {
         bh.consume(mediaContentRoundTrip ( TestObjects.MEDIA_CONTENT ));
     }
 
 
 
-    @GenerateMicroBenchmark
-    @OutputTimeUnit( TimeUnit.SECONDS)
+    //@GenerateMicroBenchmark
+    //@OutputTimeUnit( TimeUnit.SECONDS)
     public void serializeSmall(BlackHole bh) throws Exception {
         bh.consume(serialize(TestObjects.OBJECT));
     }
 
-    @GenerateMicroBenchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
+    //@GenerateMicroBenchmark
+    //@OutputTimeUnit(TimeUnit.SECONDS)
     public void roundTriper(BlackHole bh) throws Exception {
         bh.consume(roundTrip ( TestObjects.OBJECT ));
     }
