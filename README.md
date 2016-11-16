@@ -8,8 +8,7 @@ Simple opinionated Java for the novice to expert level Java Programmer.
 Java Boon - Benchmarks
 ===
 
-#### Boon comes with a fast JSON parser. This parser was forked / merged into Groovy 2.3. The Boon and Groovy 2.3 JSON 
-parsers are a lot faster than mainstream JSON parsers.####
+#### Boon comes with a fast JSON parser. This parser was forked / merged into Groovy 2.3. The Boon and Groovy 2.3 JSON parsers are a lot faster than mainstream JSON parsers.####
 
 
 "Rick / Andrey duo spent a fair amount of time optimizing our JSON support, making Groovy 2.3’s JSON support usually 
